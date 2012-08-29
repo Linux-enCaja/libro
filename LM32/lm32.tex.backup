@@ -373,7 +373,7 @@ En la línea \textit{48} se almacena el valor del registro \textit{ra} en la pila
 
 En la línea \textit{49} se hace un llamado a la función \textit{save\_all}:
 
- \lstset{language=C}
+ \lstset{language=C, numbers=none}
 \begin{lstlisting}
 	addi    sp, sp, -128
 	sw      (sp+4), r1
@@ -397,7 +397,7 @@ En la línea \textit{49} se almacena el valor de la señal \textit{ip} (interrupt 
 
 En las líneas \textit{51} - \textit{53} se llena con unos la señal \textit{IP}, lo que equivale a una restauración de esta señal, y puede verse como una forma de informarle al procesador que las interrupciones ya fueron atendidas. Finalmente en la línea \textit{54} se hace un llamado a la función \textit{\_restore\_all\_and\_eret}:
 
-\lstset{language=C}
+\lstset{language=C, numbers=none}
 \begin{lstlisting}
         lw      r1, (sp+4)
         ...
@@ -459,7 +459,7 @@ La figura \ref{eret_ret} muestra el camino de datos asociado a las instrucciones
 En la Figura \ref{interrupt_flow} se resume el proceso de atención a la interrupción. La solicitud de atención por parte de un periférico recibe el nombre de \textbf{IRQ} (interrupt request) y la rutina que atiende esta solicitud recibe el nombre de \textit{ISR} (interrupt service routine)
 
   \begin{figure}
-    \begin{center} \includegraphics[scale=.2]{./LM32/images/interrupt_process.pdf} \end{center}
+    \begin{center} \includegraphics[scale=.5]{./LM32/images/interrupt_process.pdf} \end{center}
     \caption{Flujo asociado a la atención de una interrupción}\label{interrupt_flow}
   \end{figure}
 
@@ -468,10 +468,17 @@ En la Figura \ref{interrupt_flow} se resume el proceso de atención a la interrup
 %********************************************************************************************************************
 
 \section{Arquitectura del SoC LM32}
-Explicar el componente hardware y software,explicar la estructura sw y hw de los proyectos
+En la figura \ref{SoC_block_diagram} se muestra el flujo de diseño software y hardware que debe seguirse para realizar aplicaciones con el MICO32. 
 
 
   \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/LM32_SoC_block_diagram.pdf} \end{center}
+    \caption{Diagrama de bloques del SoC LM32}\label{SoC_block_diagram}
+  \end{figure}
+
+  
+  
+\begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
     \caption{Flujo de diseño para el procesador LM32}\label{soft_SoC_design_flow}
   \end{figure}
