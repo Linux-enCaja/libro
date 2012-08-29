@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.7.16)  30 JUL 2012 07:43
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.7.16)  27 AUG 2012 09:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -444,8 +444,8 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 ) (./ASM.aux
-LaTeX Info: Redefining \. on input line 14.
-LaTeX Info: Redefining \% on input line 14.
+LaTeX Info: Redefining \. on input line 17.
+LaTeX Info: Redefining \% on input line 17.
 
 
 LaTeX Warning: Label `caja_multiplicador' multiply defined.
@@ -675,15 +675,9 @@ LaTeX Info: Redefining \% on input line 17.
 )
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 254.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 254.
+Package rerunfilecheck Info: File `ASM.out' has not changed.
+(rerunfilecheck)             Checksum: 475961E9A3B16CA9B3D1C6BAFD82F1B9;1437.
 
-
-Package rerunfilecheck Warning: File `ASM.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `ASM.out':
-(rerunfilecheck)             Before: 5930CD5DE7A4EFE50D12EECF46A6C77A;1390
-(rerunfilecheck)             After:  475961E9A3B16CA9B3D1C6BAFD82F1B9;1437.
 
 LaTeX Warning: There were undefined references.
 

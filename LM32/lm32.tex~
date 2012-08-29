@@ -468,7 +468,7 @@ En la Figura \ref{interrupt_flow} se resume el proceso de atención a la interrup
 %********************************************************************************************************************
 
 \section{Arquitectura del SoC LM32}
-En la figura \ref{soft_SoC_design_flow} 
+En la figura \ref{soft_SoC_design_flow} se muestra el flujo de diseño software y hardware que debe seguirse para realizar aplicaciones con el MICO32. 
 
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
