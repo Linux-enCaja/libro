@@ -468,9 +468,19 @@ En la Figura \ref{interrupt_flow} se resume el proceso de atención a la interrup
 %********************************************************************************************************************
 
 \section{Arquitectura del SoC LM32}
-En la figura \ref{soft_SoC_design_flow} se muestra el flujo de diseño software y hardware que debe seguirse para realizar aplicaciones con el MICO32. 
+En la sección anterior se explicó el funcionamiento detallado de cada grupo de instrucciones del procesador MICO32; en esta sección se realizará una descripción de un SoC (sistema sobre silicio) basado en el procesador MICO32; esta arquitectura permitirá entender los SoC modernos desde el punto de vista estructural y de programación. En la figura \ref{SoC_block_diagram} se muestra el diagrama de bloques del SoC \textit{LM32}, el cual se basa en el procesador MICO32. 
+
 
   \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/LM32_SoC_block_diagram.pdf} \end{center}
+    \caption{Diagrama de bloques del SoC LM32}\label{SoC_block_diagram}
+  \end{figure}
+
+
+  
+  
+  
+\begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
     \caption{Flujo de diseño para el procesador LM32}\label{soft_SoC_design_flow}
   \end{figure}
