@@ -1,0 +1,29 @@
+\BOOKMARK [0][-]{section*.1}{\315ndice general}{}
+\BOOKMARK [0][-]{chapter.1}{Introducci\363n}{}
+\BOOKMARK [1][-]{section*.2}{Sistemas Embebidos}{chapter.1}
+\BOOKMARK [2][-]{section*.3}{\277Por qu\351 los Sistemas Embebidos?}{section*.2}
+\BOOKMARK [1][-]{section.1.1}{Estado de la Industria Electr\363nica en Colombia}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{El Conocimiento como Bien P\372blico}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Transferencia Tecnol\363gica}{chapter.1}
+\BOOKMARK [2][-]{section*.9}{Tecnolog\355a}{section.1.3}
+\BOOKMARK [2][-]{section*.10}{Concepto de Transferencia Tecnol\363gica}{section.1.3}
+\BOOKMARK [2][-]{section*.11}{Tipos de Transferencia Tecnol\363gica}{section.1.3}
+\BOOKMARK [2][-]{section*.12}{Canales para la Transferencia de Tecnolog\355a}{section.1.3}
+\BOOKMARK [2][-]{section*.13}{Obst\341culos para una Transferencia Exitosa}{section.1.3}
+\BOOKMARK [2][-]{section*.14}{Recomendaciones para una Transferencia Exitosa}{section.1.3}
+\BOOKMARK [2][-]{section*.15}{Metodolog\355a Propuesta}{section.1.3}
+\BOOKMARK [0][-]{chapter.2}{Implementaci\363n de tareas Software utilizando procesadores Soft Core}{}
+\BOOKMARK [1][-]{section.2.1}{Introducci\363n}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Arquitectura del procesador LM32}{chapter.2}
+\BOOKMARK [2][-]{section*.25}{Banco de Registros}{section.2.2}
+\BOOKMARK [2][-]{section*.26}{Registro de estado y control}{section.2.2}
+\BOOKMARK [1][-]{section.2.3}{Set de Instrucciones del procesador Mico32}{chapter.2}
+\BOOKMARK [2][-]{section*.32}{Instrucciones aritm\351ticas}{section.2.3}
+\BOOKMARK [2][-]{section*.35}{Saltos}{section.2.3}
+\BOOKMARK [2][-]{section*.38}{Comunicaci\363n con la memoria de datos}{section.2.3}
+\BOOKMARK [2][-]{section*.42}{Interrupciones}{section.2.3}
+\BOOKMARK [2][-]{section*.44}{Retorno de funci\363n y de excepci\363n}{section.2.3}
+\BOOKMARK [1][-]{section.2.4}{Arquitectura del SoC LM32}{chapter.2}
+\BOOKMARK [2][-]{section*.45}{Bus wishbone}{section.2.4}
+\BOOKMARK [2][-]{section*.48}{Comunicaci\363n con perif\351ricos}{section.2.4}
+\BOOKMARK [0][-]{section*.54}{Bibliograf\355a}{}

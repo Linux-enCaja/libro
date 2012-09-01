@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: embedded_book.aux
+The style file: unsrt.bst
+Database file #1: biblio.bib
+Warning--empty year in WM91
+Warning--empty journal in ETPoSSI(09
+Warning--empty journal in IAI
+Warning--empty year in IAI
+Warning--can't use both author and editor fields in CMS06
+Warning--can't use both author and editor fields in AEAR85
+You've used 27 entries,
+            1791 wiz_defined-function locations,
+            599 strings with 8176 characters,
+and the built_in function-call counts, 3895 in all, are:
+= -- 312
+> -- 170
+< -- 1
++ -- 71
+- -- 44
+* -- 139
+:= -- 707
+add.period$ -- 80
+call.type$ -- 27
+change.case$ -- 22
+chr.to.int$ -- 0
+cite$ -- 33
+duplicate$ -- 226
+empty$ -- 408
+format.name$ -- 44
+if$ -- 847
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 27
+newline$ -- 137
+num.names$ -- 28
+pop$ -- 104
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 79
+stack$ -- 0
+substring$ -- 0
+swap$ -- 26
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 6
+while$ -- 27
+width$ -- 29
+write$ -- 272
+(There were 6 warnings)
