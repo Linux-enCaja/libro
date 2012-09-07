@@ -463,69 +463,161 @@ En la Figura \ref{interrupt_flow} se resume el proceso de atención a la interrup
     \caption{Flujo asociado a la atención de una interrupción}\label{interrupt_flow}
   \end{figure}
 
+
+
+
+
+
+
+
+
 %********************************************************************************************************************
 %********************************************************                              SECCIÓN   ARQUITECTURA SoC
 %********************************************************************************************************************
 
 \section{Arquitectura del SoC LM32}
-En la sección anterior se explicó el funcionamiento detallado de cada grupo de instrucciones del procesador MICO32; en esta sección se realizará una descripción de un SoC (sistema sobre silicio) basado en el procesador MICO32; esta arquitectura permitirá entender los SoC modernos desde el punto de vista estructural y de programación. En la figura \ref{SoC_block_diagram} se muestra el diagrama de bloques del SoC \textit{LM32}, el cual se basa en el procesador MICO32. 
-
+En la sección anterior se explicó el funcionamiento detallado de cada grupo de instrucciones del procesador MICO32; en esta sección se realizará una descripción de un SoC (sistema sobre silicio) basado en el procesador MICO32; esta arquitectura permitirá entender los SoC modernos desde el punto de vista estructural y de programación
 
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/LM32_SoC_block_diagram.pdf} \end{center}
     \caption{Diagrama de bloques del SoC LM32}\label{SoC_block_diagram}
   \end{figure}
 
-  
-  
-\begin{figure}
-    \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
-    \caption{Flujo de diseño para el procesador LM32}\label{soft_SoC_design_flow}
-  \end{figure}
+
+En la figura \ref{SoC_block_diagram} se muestra el diagrama de bloques del SoC \textit{LM32}, el cual tiene como unidad de procesamiento central el procesador MICO32; esta CPU se conecta a una serie de periféricos a través de el bus \textit{wishbone}. Ka funcionalidad del SoC está determinada por los periféricos implementados, en esta sección se realizará una descripción de cuatro periféricos básicos para el desarrollo de operaciones básicas de entrada/salida:
+
+\begin{itemize}
+ \item Boot-RAM: Esta memoria almacena la aplicación que se ejecutará al inicializar el SoC.
+ \item UART (Universal Asynchronous Receiver-Transmitter): Puerto serie que permite comunicarse con el exterior y es utilizado como medio de depuración. 
+ \item TIMER: Encargado de generar bases de tiempo precisas, de vital importancia en el funcionamiento de la mayoría de las aplicaciones.
+ \item GPIO: Pines de entrada/salida de propósito general.
+\end{itemize}
+
+Adicionalmente, existe un módulo llamado \textit{conbus} que realiza la interconexión entre los periféricos y el procesador, su arquitectura y funcionamiento se explicarán más adelante.
 
 
 \subsection{Bus wishbone}
-
-\subsubsection{Señales principales}
+El bus \textit{wishbone} es un bus diseñado para comunicar los diferentes comonentes de un SoC, este bus es abierto y puede ser utilizado libremente. A continueación se listan las señales que componen este bus:
 
 \begin{itemize}
  \item \textit{ack\_o}: La activación de esta señal indica la terminación normal de un ciclo del bus. 
  \item \textit{addr\_i}: Bus de direcciones. 
- \item \textit{cyc\_i}: Esta señal se activa que un ciclo de bus válido se encuentra en progreso.
+ \item \textit{cyc\_i}: Esta señal se activa cuando un ciclo de bus válido se encuentra en progreso.
  \item \textit{sel\_i}: Estas señales indican cuando se coloca un dato válido en el bus \textit{dat\_i} durante un ciclo de escritura, y cuando deberían estar presentes en el bus \textit{dat\_o} durante un ciclo de lectura. El número de señales depende de la granularidad del puerto. El LM32 maneja una granularidad de 8 bits sobre un bus de 32 bits, por lo tanto existen 4 señales para seleccionar el byte deseado (\textit{sel\_i(3:0)}). 
- \item \textit{stb\_i}: Cuando se activa esta señal se indica al esclavo que ha sido seleccionado. Un esclavo wishbone debe responder a las otras señales únicamente cuando se activa esta señal. El esclavo debe activar la señal \textit{ack\_o} como respuesta a la activación de \textit{stb\_i}.
- 
- \item \textit{we\_i}: Esta señal indica la dirección del flujo de datos, en un ciclo de lectura tiene un nivel lógico bajo y en escritura tiene un nivel lógico alto. 
-
+ \item \textit{stb\_i}: Esta señal se activa cuando se selecciona un esclavo; el cual debe responder a las otras señales únicamente cuando se activa esta señal. El esclavo debe activar la señal \textit{ack\_o} como respuesta a la activación de \textit{stb\_i}.
+ \item \textit{we\_i}: Esta señal indica la dirección del flujo de datos; en un ciclo de lectura tiene un nivel lógico bajo y en escritura tiene un nivel lógico alto. 
  \item \textit{dat\_i}: Bus de datos de entrada.
  \item \textit{dat\_o}: Bus de datos de salida.
 \end{itemize}
 
+En la figura \ref{uart_read_waves} se muestra un ciclo de lectura típico a un periférico con dirección de memoria \textit{0xF0000000}, en ella podemos observar la activación de las señales \textit{wb\_cyc\_i} y \textit{wb\_stb\_i} indicando un ciclo de bus válido y la selección del esclavo, el valor de \textit{wb\_we\_i} indica que el acceso es de lectura, a lo que el esclavo debe responder colocando el dato requerido por el procesador en el bus de salida \textit{wb\_dat\_o} y con la activación de la señal \textit{wb\_ack\_o}
 
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_read_waves.pdf} \end{center}
     \caption{Ciclo de lectura del bus wishbone}\label{uart_read_waves}
   \end{figure}
 
+En la figura \ref{uart_block_write} se muestra la escritura del valor \textit{0x2A} a la dirección de memoria \textit{0xF0000004}, las formas de onda son similares a las del ciclo de lectura, salvo que el valor de la señal \textit{wb\_we\_i} es uno indicando la escritura.
+
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_read_waves.pdf} \end{center}
     \caption{Ciclo de escritura del bus wishbone}\label{uart_write_waves}
   \end{figure}
 
-  
-  
-\subsubsection{Interface del bus wishbone}
-explicar como funciona el conmax, mostrar diagrama de flujo y simulación
+
+\subsubsection{Interface del bus wishbone (conmax)}
+
+El bus wishbone tiene una arquitectura maestro/esclavo en la que solo los maestros pueden iniciar las operaciones de lectura y escritura y únicamente el esclavo al que se le hace el requerimiento debe responder. Para coordinar la comunicación entre múltiples maestros se debe incluir un árbitro, que en el LM32 recibe el nombre de \textit{conmax}. La figura \ref{conbus} muestra el diagrama de bloques de este árbitro.
 
   \begin{figure}
     \begin{center} \includegraphics[scale=.35]{./LM32/images/conbus.pdf} \end{center}
     \caption{Circuito de interconexión del bus wishbone}\label{conbus}
   \end{figure}
+  
+  
+Una de las funciones del árbitro \textit{conmax} es fijarle un rango de direcciones único a cada periférico, por esta razón todo árbitro debe tener un decodificador de direcciones (módulo \textit{ADDRESS DECODER} en la figura \ref{conbus}) que tiene como entradas los bits más significativos del bus de direcciones, en este caso solo se usan dos bits (mx\_adr\_i[29:28]) ya que solo se cuenta con cuatro periféricos; este decodificador activa las señales \textit{slave\_sel[3:0]} de acuerdo a la definición en el archivo \textit{system.v}:
+
+\lstset{language=verilog}
+\begin{lstlisting}
+ conbus #(
+  .s_addr_w(2),
+  .s0_addr(2'b00),	// bram     0x00000000 
+  .s1_addr(2'b01),	// uart     0x20000000 
+  .s2_addr(2'b11),	// timer    0x60000000 
+  .s3_addr(2'b10)	// gpio     0x40000000 
+ ) conbus0(
+\end{lstlisting}
+
+Asignado las direcciones de memoria \textit{0x00000000 - 0x1FFFFFFF}, \textit{0x20000000 - 0x3FFFFFFF}, \textit{0x60000000 - 0x7FFFFFFF} y \textit{0x40000000 - 0x5FFFFFFF} a la BRAM, UART, TIMER y GPIO respectivamente, la activación de \textit{slave\_sel[3:0]} hace que se active su correspondiente señal \textit{s0\_stb\_[3:0]} ( y se presenta un ciclo válido de bus ) indicándole al periférico que ha sido seleccionado para una operación de lectura o escritura.
+
+
+En la figura \ref{conbus_write} se muestra el circuito simplificado del árbitro \textit{conmax} para una operación de escritura; en ella se puede observar que todos los esclavos comparten las señales \textit{s0\_adr\_o, s0\_cti\_o, s0\_sel\_i, s0\_dat\_o, s0\_we\_o, s0\_cyc\_o y sx\_dat\_i}, las cuales son la salida de un multiplexor que selecciona entre las señales correspondientes a los diferentes maestros del SoC (m0 y m1 en este caso); las señales \textit{gnt[0] y gnt[1]} seleccionan al maestro que se conectará con todos los esclavos, por esta razón nunca se activarán las dos al tiempo. Las únicas señales que no comparten los esclavos wishbone son las que indican a los periféricos que han sido seleccionados para una transferencia de información \textit{s0\_stb\_[3:0]}.  \textit{slave\_sel\_[3:0]} 
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.35]{./LM32/images/conbus_write.pdf} \end{center}
+    \caption{Circuito equivalente a una operación de escritura para el árbitro del bus wishbone}\label{conbus_write}
+  \end{figure}
+
+En la figura \ref{conbus_read} se muestra el circuito simplificado del árbitro \textit{conmax} para una operación de lectura; en ella podemos observar que los buses de datos de los periféricos \textit{s[3:0]\_dat\_i} se conectan a los buses de datos de los maestros \textit{m[1:0]\_dat\_o}; las señales \textit{slave\_sel\_[3:0]} se activan una a la vez y seleccionan el esclavo que se conectará con el maestro.
+
+ \begin{figure}
+    \begin{center} \includegraphics[scale=.35]{./LM32/images/conbus_read.pdf} \end{center}
+    \caption{Circuito equivalente a una operación de lectura para el árbitro del bus wishbone}\label{conbus_read}
+  \end{figure}
+
+Para ilustrar de forma gráfica la operación del árbitro se implementó un programa que escribe los siguientes valores a las direcciones de los periféricos UART, TIMER y GPIO:
+
+\begin{enumerate}
+ \item \textit{0xAA} a la dirección  del esclavo 1 \textit{0x20000004}
+ \item \textit{0x55} a la dirección  del esclavo 3 \textit{0x40000000}
+ \item \textit{0xFF} a la dirección  del esclavo 2 \textit{0x60000000}
+\end{enumerate}
+
+Como podemos ver en la figura \ref{conbus_waves}, las señales \textit{gnt[0]} y \textit{gnt[1]} se activan de forma alterna y solo esta activa una de ellas, cuando se escribe el valor \textit{0xAA} a la dirección \textit{0x20000004} se activan las señales  \textit{slave\_sel\_[1]} y \textit{s1\_stb\_o} indicando la activacíón del primer periférico; similarmente, cuando se escribe el valor \textit{0x55} a la dirección \textit{0x40000000} se activan las señales  \textit{slave\_sel\_[3]} y \textit{s3\_stb\_o} indicando la activacíón del tercer periférico y finalmente, cuando se escribe el valor \textit{0xFF} a la dirección \textit{0x60000000} se activan las señales  \textit{slave\_sel\_[2]} y \textit{s2\_stb\_o} indicando la activacíón del segundo periférico.
+  
+ \begin{figure}
+    \begin{center} \includegraphics[scale=.35]{./LM32/images/conbus_signals.pdf} \end{center}
+    \caption{Formas de onda del proceso de comunicación entre la CPU y los periféricos usando el bus wishbone}\label{conbus_waves}
+ \end{figure}
+
+
+ 
+ 
+\subsection{Arquitectura de los periféricos}
+En esta subsección se realizará un estudio de la arquitectura de los esclavos wishbone, se analizarán tres periféricos: GPIO, UART y TIMER
+
+\subsubsection{Periférico GPIO}
+En todo SoC es necesario contar con pines de entrada/salida de propósito general, este sencillo periférico permite controlar la dirección de un pin, controlar el valor de un pin de salida y leer el valor de un pin de entrada; en la figura \ref{gpio_full} se muestra el diagrama de bloques de este periférico.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/gpio.pdf} \end{center}
+    \caption{Ejemplo de periférico wishbone: GPIO}\label{gpio_full}
+  \end{figure}
+
+La dirección del pin es fijada con un buffer tri-estado que a su vez es controlado por el valor almacenado en el registro \textit{gpio\_dir} los registros \textit{gpio\_o} y \textit{gpio\_input} almacenan los valores escritos y leidos de los pines respectivamente.
+
+Para entender el comportamiento de este periférico analizaremos los circuitos de lectura y escritura de forma separada. En la figura \ref{gpio_read} se muestra el circuito de lectura; el valor del registro \textit{gpio\_input} es almacenado en un registro que está conectado al bus de datos de salida del periférico \textit{wb\_dat\_o} cuando la señal \textit{wb\_rd} sea igual a 1 y la señal \textit{ack} sea igual a cero. \textit{wb\_rd} es igual a 1 cuando se presente un ciclo de bus válido, se seleccione el periférico y se realice una operación de lectura.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/gpio_read.pdf} \end{center}
+    \caption{Circuito equivalente de lectura del periférico GPIO}\label{gpio_read}
+  \end{figure}
+
+El circuito simplificado de escritura se muestra en la figura \ref{gpio_write}; en este periférico el bus de datos proveniente del maestro puede almacenarse en los registros \textit{gpio\_dir} y \textit{gpio\_o}; el multiplexor controlado por \textit{wb\_adr\_i[3:2]} selecciona donde será almacenado el dato. La transferencia al registro seleccionado se realiza únicamente cuando la señal \textit{wb\_wr} sea igual a 1 y la señal \textit{ack} sea igual a cero. \textit{wb\_wr} es igual a 1 cuando se presente un ciclo de bus válido, se seleccione el periférico y se realice una operación de escritura.
+
+
+    \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/gpio_write.pdf} \end{center}
+    \caption{Circuito equivalente de escritura del periférico GPIO}\label{gpio_write}
+  \end{figure}
+
+Tanto en la operación de lectura como en la de escritura se debe generar la señal \textit{wb\_ack\_o} para indicarle al maestro que la solicitud de comunicación ha sido recibida y atendida; para esto se implementó el circuito compuesto de las 2 compuertas AND, una compuerta OR y un FLIP FLOP, este circuito hace que la señal \textit{ack} sea igual a 1 cuando cualquiera de las señales \textit{wb\_rd} o \textit{wb\_wr} sea igual a 1 y el estado de la señal \textit{ack} sea igual a 0; es decir, cuando el dispositivo pasa del estado no seleccionado a ser seleccionado para una operación de lectura o escritura.
 
 
 
-\subsection{Comunicación con periféricos}
-EXplicación de la UART y del TIMER globales interface en C.
+\subsubsection{Periférico UART}
+
+En la figura \ref{uart_block_full} se muestra el diagrama de bloques de un periférico un poco más complejo una UART, su arquitectura se basa en un módulo que implementa las tareas de comunicación que se encuentra descrito en el archivo \textit{uart.v}; en el archivo \textit{wb\_uart.v} se hace la adaptación de esta unidad funcional al bus wishbone, esta arquitectura permite que el módulo funcional pueda ser conectado a diferentes buses sin tener que re-escribir todo el código.
 
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_block_full.pdf} \end{center}
@@ -533,47 +625,94 @@ EXplicación de la UART y del TIMER globales interface en C.
   \end{figure}
 
 
-  
-  \begin{figure}
-    \begin{center} \includegraphics[scale=.6]{./LM32/images/timer.pdf} \end{center}
-    \caption{Ejemplo de periférico wishbone: TIMER}\label{timer}
-  \end{figure}
+Del diagrama de bloques de la UART podemos observar que su arquitectura es similar a la del GPIO, existen los mismos bloques de interconexión con los buses de datos de entrada y de salida y se utiliza el mismo circuito para generar la señal \textit{ack}.
+
+El circuito simplificado de salida se muestra en la figura \ref{uart_block_read}, se observa que existen dos valores que pueden ser leídos desde el procesador: la señal \textit{rx\_data} y los bits de estado \textit{tx\_}, \textit{tx\_error} y \textit{tx\_avail}; en este caso la línea de dirección \textit{wb\_adr\_i[2]} selecciona la información que será transmitida al procesador.
 
 
-
-\subsubsection{Lectura}
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_block_read.pdf} \end{center}
     \caption{Circuito equivalente de lectura de la UART}\label{uart_block_read}
   \end{figure}
-  
 
+  \textit{wb\_adr\_i[3:2]}
 
-\subsubsection{Escritura}
+El circuito de escritura se muestra en la figura \ref{uart_block_write}, en este ejemplo el bus de datos proveniente del maestro se conecta directamente a la señal \textit{tx\_data} ya que este periférico no permite modificar otros parámetros. Por esta razón el circuito solo transmite un 1 a la señal \textit{uart\_txd} lo que hace que la uart transmita el valor fijado por la señal \textit{tx\_data}.
+
     \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_block_write.pdf} \end{center}
     \caption{Circuito equivalente de escritura de la UART}\label{uart_block_write}
   \end{figure}
 
-
-\subsubsection{Interfaz Software}
+  
+\subsubsection{Periférico TIMER}
+En la figura \ref{timer} se muestra el diagrama de bloques resumido del periférico TIMER; el cual posee 6 registros que pueden ser modificados y leídos por el procesador. De nuevo la arquitectura de este periférico es similar a los anteriores así como el circuito de generación de la señal \textit{ack}
 
   \begin{figure}
-    \begin{center} \includegraphics[scale=.6]{./LM32/images/peripheral_soc.pdf} \end{center}
-    \caption{Asignación de la dirección de memoria a los periféricos}\label{peripheral_soc}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/timer.pdf} \end{center}
+    \caption{Ejemplo de periférico wishbone: TIMER}\label{timer}
   \end{figure}
 
+En la figura \ref{timer_read} se muestra el circuito de lectura del periférico timer. La diferecia frente a los anteriores es la posibilidad de leer 6 diferentes variables; por esta razón se utilizan tres señales del bus de direcciones \textit{wb\_adr\_i\_[5:3]}.
+  
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/timer_read.pdf} \end{center}
+    \caption{Circuito equivalente de lectura del periférico TIMER}\label{timer_read}
+  \end{figure}
 
+En la figura \ref{timer_write} se muestra el diagrama de escritura del timer, de forma similar al circuito de lectura la señal \textit{wb\_adr\_i\_[5:3]} selecciona el registro que almacenará el valor proveniente del procesador.
+
+    \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/timer_write.pdf} \end{center}
+    \caption{Circuito equivalente de escritura del periférico TIMER}\label{timer_write}
+  \end{figure}
+
+ 
+\subsection{Interfaz Software}
+En la subsección anterior se hizo una descripción de los diferentes componentes de la configiración básica del SoC LM32; aquí, se explicará como controlar desde un programa en C la comunicación con los periféricos. 
+
+\subsubsection{Estructura de datos del periférico}
+Para facilitar el acceso a los diferentes registros de un periférico es conveniente declarar un nuevo tipo de dato que haga una representación de su mapa de memoria.
+
+En la figura \ref{gpio_sw_interface} se muestra el diagrama de bloques del GPIO y la declaración del tipo de dato \textit{gpio\_t}; el multiplexor que selecciona el sitio donde se almacenará el dato proveniente del procesador está controlado por las líneas de dirección \textit{wb\_adr\_i[3:2]} cuando estas señales tengan el valor de \textit{01} o lo que es lo mismo la dirección termine en \textit{0x04} se seleccionará el registro \textit{gpio\_o}; si estas señales tengan el valor de \textit{10} o lo que es lo mismo la dirección termine en \textit{0x08} se seleccionará el registro \textit{gpio\_dir}. De aquí la posición de los elementos \textit{write} y \textit{w\_dir} de la estructura \textit{gpio\_t}; al ser declarada la variable \textit{read} como \textit{uint32\_t} se reservan cuatro bytes (0x00, 0x01, 0x02 y 0x03) para almacenar esta variable, la siguiente posición de memoria (0x04) corresponde a la variable \textit{write}, la cual es declarada como un tipo de dato \textit{uint32\_t} por lo que se reservan cuatro bytes para su almacenamiento (0x04, 0x05, 0x06 y 0x07), en la siguiente posición de memoria (0x08) se almacenará la variable \textit{w\_dir} y se reservarán cuatro bytes (0x08, 0x09, 0x0A y 0x0B) para su almacenamiento. 
+
+Como puede observarse en la figura \ref{gpio_sw_interface}, el contenido del registro \textit{gpio\_input} siempre está disponible sin importar el valor de la dirección, lo que indica que el dato estará disponible siempre que se seleccione el periférico para una operación de lectura, en este caso se colocó en la primera posición de memoria por conveniencia.
+
+Todos los tipos de datos declarados en la estructura \textit{gpio\_t} son del tipo \textit{volatile}. este tipo de dato le indica al compilador que no realice optimizaciones sobre esta variable.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/gpio_sw_interface.pdf} \end{center}
+    \caption{Definición de la dirección de los registros internos del GPIO}\label{gpio_sw_interface}
+  \end{figure}
+
+En la figura \ref{uart_sw_interface} se observa la declaración del tipo de dato \textit{uart\_t} y su relaciín con el circuito interno de la UART. Aquí, \textit{wb\_adr\_i[2]} controla el valor que será pasado al bus de datos del maestro; si \textit{wb\_adr\_i[2]} es 0, se transmite el valor del registro \textit{UCR}, si el valor de \textit{wb\_adr\_i[2]} es 1, se transmitirá el valor de la señak \textit{rx\_data}. Al definir la variable \textit{ucr} al comienzo de la estructura y al asignarle el tipo \textit{uint32\_t} se reservan los bytes 0x00, 0x01, 0x02 y 0x03 para su almacenamiento; al declarar a continuación la variable \textit{uint32\_t} \textit{rxtx} se reservan los siguientes cuatro bytes (0x04, 0x05, 0x06 y 0x07) para su almacenamiento.
+  
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_sw_interface.pdf} \end{center}
     \caption{Definición de la dirección de los registros internos de la UART}\label{uart_sw_interface}
   \end{figure}
 
+Finalmente, en la figura \ref{timer_sw_interface} se muestra la declaración del tipo de dato \textit{timer\_t} y su relación con los registros internos del periférico.
+  
   \begin{figure}
     \begin{center} \includegraphics[scale=.6]{./LM32/images/timer_sw_interface.pdf} \end{center}
     \caption{Definición de la dirección de los registros internos del TIMER}\label{timer_sw_interface}
   \end{figure}
 
+
+ \subsubsection{Dirección de memoria de los periféricos}
+ 
+ Una vez creados los tipos de datos que representan los registros internos de los periféricos se debe asignar un valor a la dirección base de cada uno de ellos, esta dirección debe ser la misma que le asigna el decodificador de direcciones del árbitro wishbone. En la figura \textit{peripheral_soc} se muestra el valor que deben tomar estas direcciones.
+ 
+ 
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/peripheral_soc.pdf} \end{center}
+    \caption{Asignación de la dirección de memoria a los periféricos}\label{peripheral_soc}
+  \end{figure}
+
+  
+  
+  
 
 \subsubsection{}
 
