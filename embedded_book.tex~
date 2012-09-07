@@ -98,11 +98,19 @@
 %%% --------------------------------------------------------
 
 
+<<<<<<< HEAD
+  \input intro                  %
+%  \input educacion_embebidos    %
+% \input FSM/ASM
+  \input ./LM32/lm32 
+\bibliography{biblio}
+=======
 %   \input intro                  %
 %   \input educacion_embebidos    %
 %  \input FSM/ASM
    \input ./LM32/lm32 
  \bibliography{biblio}
+>>>>>>> e340f2ef6749b671563c078362f035f73eab08f0
   
 % 
 % \chapter{A chapter title}
@@ -134,18 +142,3 @@
   
 
 ?`?`?`?`?`?`?`?`?`?`?`?`?`?`
-
-
-
-
-
-
-
-\begin{figure}
-    \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
-    \caption{Flujo de diseño para el procesador LM32}\label{soft_SoC_design_flow}
-  \end{figure}
-
-  
-  
-  

@@ -1,64 +1,75 @@
 \select@language {spanish}
 \changetocdepth {2}
 \contentsline {chapter}{\'Indice general}{\es@scroman {i}}{section*.1}
-\contentsline {chapter}{\chapternumberline {1}Introducci\'on}{1}{chapter.1}
-\contentsline {subsection}{Sistemas Embebidos}{3}{section*.2}
-\contentsline {subsection}{\IeC {\textquestiondown }Por qu\'e los Sistemas Embebidos?}{4}{section*.3}
-\contentsline {subsubsection}{Mercado de los sistemas embebidos}{4}{section*.4}
-\contentsline {subsubsection}{Penetraci\'on de los sistemas embebidos}{4}{section*.5}
-\contentsline {section}{\numberline {1.1}Estado de la Industria Electr\'onica en Colombia}{4}{section.1.1}
-\contentsline {subsubsection}{Apropiaci\'on de conocimiento y transferencia tecnol\'ogica}{5}{section*.6}
-\contentsline {subsubsection}{Situaci\'on de la industria electr\'onica en Colombia}{6}{section*.7}
-\contentsline {subsubsection}{Causas del atraso tecnol\'ogico en Colombia}{6}{section*.8}
-\contentsline {section}{\numberline {1.2}El Conocimiento como Bien P\'ublico}{7}{section.1.2}
-\contentsline {section}{\numberline {1.3}Transferencia Tecnol\'ogica}{10}{section.1.3}
-\contentsline {subsection}{Tecnolog\IeC {\'\i }a}{11}{section*.9}
-\contentsline {subsection}{Concepto de Transferencia Tecnol\'ogica}{12}{section*.10}
-\contentsline {subsection}{Tipos de Transferencia Tecnol\'ogica}{13}{section*.11}
-\contentsline {subsection}{Canales para la Transferencia de Tecnolog\IeC {\'\i }a}{14}{section*.12}
-\contentsline {subsection}{Obst\'aculos para una Transferencia Exitosa}{16}{section*.13}
-\contentsline {subsection}{Recomendaciones para una Transferencia Exitosa}{17}{section*.14}
-\contentsline {subsection}{Metodolog\IeC {\'\i }a Propuesta}{21}{section*.15}
-\contentsline {subsubsection}{Elecci\'on}{21}{section*.16}
-\contentsline {subsubsection}{Adquisici\'on}{22}{section*.17}
-\contentsline {subsubsection}{Adaptaci\'on}{22}{section*.18}
-\contentsline {subsubsection}{Absorci\'on y asimilaci\'on}{23}{section*.19}
-\contentsline {subsubsection}{Aplicaci\'on}{23}{section*.20}
-\contentsline {subsubsection}{Difusi\'on y Desarrollo}{24}{section*.21}
-\contentsline {subsubsection}{Factores Formales e Informales}{24}{section*.22}
-\contentsline {subsubsection}{Factores formales}{24}{section*.23}
-\contentsline {subsubsection}{Factores informales}{26}{section*.24}
-\contentsline {chapter}{\chapternumberline {2}Implementaci\'on de tareas Software utilizando procesadores Soft Core}{29}{chapter.2}
-\contentsline {section}{\numberline {2.1}Introducci\'on}{29}{section.2.1}
-\contentsline {section}{\numberline {2.2}Arquitectura del procesador LM32}{30}{section.2.2}
-\contentsline {subsection}{Banco de Registros}{30}{section*.25}
-\contentsline {subsection}{Registro de estado y control}{30}{section*.26}
-\contentsline {subsubsection}{Contador de Programa (PC)}{32}{section*.27}
-\contentsline {subsubsection}{EID Exception ID}{32}{section*.28}
-\contentsline {subsubsection}{IE Habilitaci\'on de interrupci\'on}{33}{section*.29}
-\contentsline {subsubsection}{IM M\'ascara de interrupci\'on}{33}{section*.30}
-\contentsline {subsubsection}{IP Interrupci\'on pendiente}{33}{section*.31}
-\contentsline {section}{\numberline {2.3}Set de Instrucciones del procesador Mico32}{33}{section.2.3}
-\contentsline {subsection}{Instrucciones aritm\'eticas}{33}{section*.32}
-\contentsline {subsubsection}{Entre registros}{34}{section*.33}
-\contentsline {subsubsection}{Inmediatas}{34}{section*.34}
-\contentsline {subsection}{Saltos}{36}{section*.35}
-\contentsline {subsubsection}{Condicionales}{36}{section*.36}
-\contentsline {subsubsection}{Llamado a funci\'on y salto incondicional}{36}{section*.37}
-\contentsline {subsection}{Comunicaci\'on con la memoria de datos}{43}{section*.38}
-\contentsline {subsubsection}{Tipos de datos}{43}{section*.39}
-\contentsline {subsubsection}{Escritura a la memoria de datos}{45}{section*.40}
-\contentsline {subsubsection}{Lectura}{46}{section*.41}
-\contentsline {subsection}{Interrupciones}{46}{section*.42}
-\contentsline {subsubsection}{Rutina de atenci\'on a la interrupci\'on}{49}{section*.43}
-\contentsline {subsection}{Retorno de funci\'on y de excepci\'on}{53}{section*.44}
-\contentsline {section}{\numberline {2.4}Arquitectura del SoC LM32}{53}{section.2.4}
-\contentsline {subsection}{Bus wishbone}{53}{section*.45}
-\contentsline {subsubsection}{Se\~nales principales}{53}{section*.46}
-\contentsline {subsubsection}{Interface del bus wishbone}{55}{section*.47}
-\contentsline {subsection}{Comunicaci\'on con perif\'ericos}{55}{section*.48}
-\contentsline {subsubsection}{Lectura}{55}{section*.49}
-\contentsline {subsubsection}{Escritura}{55}{section*.50}
-\contentsline {subsubsection}{Interfaz Software}{55}{section*.51}
-\contentsline {subsubsection}{}{55}{section*.52}
-\contentsline {chapter}{Bibliograf\'{\i }a}{63}{section*.54}
+\contentsline {chapter}{\chapternumberline {1}Implementaci\'on de tareas Software utilizando procesadores Soft Core}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introducci\'on}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Arquitectura del procesador LM32}{4}{section.1.2}
+\contentsline {subsection}{Banco de Registros}{4}{section*.2}
+\contentsline {subsection}{Registro de estado y control}{4}{section*.3}
+\contentsline {subsubsection}{Contador de Programa (PC)}{6}{section*.4}
+\contentsline {subsubsection}{EID Exception ID}{6}{section*.5}
+\contentsline {subsubsection}{IE Habilitaci\'on de interrupci\'on}{7}{section*.6}
+\contentsline {subsubsection}{IM M\'ascara de interrupci\'on}{7}{section*.7}
+\contentsline {subsubsection}{IP Interrupci\'on pendiente}{7}{section*.8}
+\contentsline {section}{\numberline {1.3}Set de Instrucciones del procesador Mico32}{7}{section.1.3}
+\contentsline {subsection}{Instrucciones aritm\'eticas}{7}{section*.9}
+\contentsline {subsubsection}{Entre registros}{8}{section*.10}
+\contentsline {subsubsection}{Inmediatas}{8}{section*.11}
+\contentsline {subsection}{Saltos}{10}{section*.12}
+\contentsline {subsubsection}{Condicionales}{10}{section*.13}
+\contentsline {subsubsection}{Llamado a funci\'on y salto incondicional}{10}{section*.14}
+\contentsline {subsection}{Comunicaci\'on con la memoria de datos}{17}{section*.15}
+\contentsline {subsubsection}{Tipos de datos}{17}{section*.16}
+\contentsline {subsubsection}{Escritura a la memoria de datos}{19}{section*.17}
+\contentsline {subsubsection}{Lectura}{20}{section*.18}
+\contentsline {subsection}{Interrupciones}{20}{section*.19}
+\contentsline {subsubsection}{Rutina de atenci\'on a la interrupci\'on}{23}{section*.20}
+\contentsline {subsection}{Retorno de funci\'on y de excepci\'on}{27}{section*.21}
+\contentsline {section}{\numberline {1.4}Arquitectura del SoC LM32}{27}{section.1.4}
+\contentsline {subsection}{Bus wishbone}{30}{section*.22}
+\contentsline {subsubsection}{Interface del bus wishbone (conmax)}{30}{section*.23}
+\contentsline {subsection}{Arquitectura de los perif\'ericos}{33}{section*.24}
+\contentsline {subsubsection}{Perif\'erico GPIO}{34}{section*.25}
+\contentsline {subsubsection}{Perif\'erico UART}{36}{section*.26}
+\contentsline {subsubsection}{Perif\'erico TIMER}{37}{section*.27}
+\contentsline {subsection}{Interfaz Software}{37}{section*.28}
+\contentsline {subsubsection}{Estructura de datos del perif\'erico}{40}{section*.29}
+\contentsline {subsubsection}{Direcci\'on de memoria de los perif\'ericos}{40}{section*.30}
+\contentsline {subsubsection}{}{42}{section*.31}
+\contentsline {chapter}{Bibliograf\'{\i }a}{43}{section*.33}
+\contentsline {chapter}{\chapternumberline {2}Implementaci\'on de tareas Software utilizando procesadores Soft Core}{45}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introducci\'on}{45}{section.2.1}
+\contentsline {section}{\numberline {2.2}Arquitectura del procesador LM32}{46}{section.2.2}
+\contentsline {subsection}{Banco de Registros}{46}{section*.34}
+\contentsline {subsection}{Registro de estado y control}{46}{section*.35}
+\contentsline {subsubsection}{Contador de Programa (PC)}{48}{section*.36}
+\contentsline {subsubsection}{EID Exception ID}{48}{section*.37}
+\contentsline {subsubsection}{IE Habilitaci\'on de interrupci\'on}{49}{section*.38}
+\contentsline {subsubsection}{IM M\'ascara de interrupci\'on}{49}{section*.39}
+\contentsline {subsubsection}{IP Interrupci\'on pendiente}{49}{section*.40}
+\contentsline {section}{\numberline {2.3}Set de Instrucciones del procesador Mico32}{49}{section.2.3}
+\contentsline {subsection}{Instrucciones aritm\'eticas}{49}{section*.41}
+\contentsline {subsubsection}{Entre registros}{50}{section*.42}
+\contentsline {subsubsection}{Inmediatas}{50}{section*.43}
+\contentsline {subsection}{Saltos}{52}{section*.44}
+\contentsline {subsubsection}{Condicionales}{52}{section*.45}
+\contentsline {subsubsection}{Llamado a funci\'on y salto incondicional}{52}{section*.46}
+\contentsline {subsection}{Comunicaci\'on con la memoria de datos}{59}{section*.47}
+\contentsline {subsubsection}{Tipos de datos}{59}{section*.48}
+\contentsline {subsubsection}{Escritura a la memoria de datos}{61}{section*.49}
+\contentsline {subsubsection}{Lectura}{62}{section*.50}
+\contentsline {subsection}{Interrupciones}{62}{section*.51}
+\contentsline {subsubsection}{Rutina de atenci\'on a la interrupci\'on}{65}{section*.52}
+\contentsline {subsection}{Retorno de funci\'on y de excepci\'on}{69}{section*.53}
+\contentsline {section}{\numberline {2.4}Arquitectura del SoC LM32}{69}{section.2.4}
+\contentsline {subsection}{Bus wishbone}{72}{section*.54}
+\contentsline {subsubsection}{Interface del bus wishbone (conmax)}{72}{section*.55}
+\contentsline {subsection}{Arquitectura de los perif\'ericos}{75}{section*.56}
+\contentsline {subsubsection}{Perif\'erico GPIO}{76}{section*.57}
+\contentsline {subsubsection}{Perif\'erico UART}{78}{section*.58}
+\contentsline {subsubsection}{Perif\'erico TIMER}{79}{section*.59}
+\contentsline {subsection}{Interfaz Software}{79}{section*.60}
+\contentsline {subsubsection}{Estructura de datos del perif\'erico}{82}{section*.61}
+\contentsline {subsubsection}{Direcci\'on de memoria de los perif\'ericos}{82}{section*.62}
+\contentsline {subsubsection}{}{84}{section*.63}
+\contentsline {chapter}{Bibliograf\'{\i }a}{85}{section*.65}
