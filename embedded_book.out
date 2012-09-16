@@ -1,33 +1,17 @@
-\BOOKMARK [0][-]{section*.1}{\315ndice general}{}% 1
-\BOOKMARK [0][-]{chapter.1}{Implementaci\363n de tareas Software utilizando procesadores Soft Core}{}% 2
-\BOOKMARK [1][-]{section.1.1}{Introducci\363n}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.2}{Arquitectura del procesador LM32}{chapter.1}% 4
-\BOOKMARK [2][-]{section*.2}{Banco de Registros}{section.1.2}% 5
-\BOOKMARK [2][-]{section*.3}{Registro de estado y control}{section.1.2}% 6
-\BOOKMARK [1][-]{section.1.3}{Set de Instrucciones del procesador Mico32}{chapter.1}% 7
-\BOOKMARK [2][-]{section*.9}{Instrucciones aritm\351ticas}{section.1.3}% 8
-\BOOKMARK [2][-]{section*.12}{Saltos}{section.1.3}% 9
-\BOOKMARK [2][-]{section*.15}{Comunicaci\363n con la memoria de datos}{section.1.3}% 10
-\BOOKMARK [2][-]{section*.19}{Interrupciones}{section.1.3}% 11
-\BOOKMARK [2][-]{section*.21}{Retorno de funci\363n y de excepci\363n}{section.1.3}% 12
-\BOOKMARK [1][-]{section.1.4}{Arquitectura del SoC LM32}{chapter.1}% 13
-\BOOKMARK [2][-]{section*.22}{Bus wishbone}{section.1.4}% 14
-\BOOKMARK [2][-]{section*.24}{Arquitectura de los perif\351ricos}{section.1.4}% 15
-\BOOKMARK [2][-]{section*.28}{Interfaz Software}{section.1.4}% 16
-\BOOKMARK [0][-]{section*.33}{Bibliograf\355a}{}% 17
-\BOOKMARK [0][-]{chapter.2}{Implementaci\363n de tareas Software utilizando procesadores Soft Core}{}% 18
-\BOOKMARK [1][-]{section.2.1}{Introducci\363n}{chapter.2}% 19
-\BOOKMARK [1][-]{section.2.2}{Arquitectura del procesador LM32}{chapter.2}% 20
-\BOOKMARK [2][-]{section*.34}{Banco de Registros}{section.2.2}% 21
-\BOOKMARK [2][-]{section*.35}{Registro de estado y control}{section.2.2}% 22
-\BOOKMARK [1][-]{section.2.3}{Set de Instrucciones del procesador Mico32}{chapter.2}% 23
-\BOOKMARK [2][-]{section*.41}{Instrucciones aritm\351ticas}{section.2.3}% 24
-\BOOKMARK [2][-]{section*.44}{Saltos}{section.2.3}% 25
-\BOOKMARK [2][-]{section*.47}{Comunicaci\363n con la memoria de datos}{section.2.3}% 26
-\BOOKMARK [2][-]{section*.51}{Interrupciones}{section.2.3}% 27
-\BOOKMARK [2][-]{section*.53}{Retorno de funci\363n y de excepci\363n}{section.2.3}% 28
-\BOOKMARK [1][-]{section.2.4}{Arquitectura del SoC LM32}{chapter.2}% 29
-\BOOKMARK [2][-]{section*.54}{Bus wishbone}{section.2.4}% 30
-\BOOKMARK [2][-]{section*.56}{Arquitectura de los perif\351ricos}{section.2.4}% 31
-\BOOKMARK [2][-]{section*.60}{Interfaz Software}{section.2.4}% 32
-\BOOKMARK [0][-]{section*.65}{Bibliograf\355a}{}% 33
+\BOOKMARK [0][-]{chapter.1}{Implementaci\363n de tareas Software utilizando procesadores Soft Core}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Introducci\363n}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Arquitectura del procesador LM32}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Banco de Registros}{section.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.2.2}{Registro de estado y control}{section.1.2}% 5
+\BOOKMARK [1][-]{section.1.3}{Set de Instrucciones del procesador Mico32}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.3.1}{Instrucciones aritm\351ticas}{section.1.3}% 7
+\BOOKMARK [2][-]{subsection.1.3.2}{Saltos}{section.1.3}% 8
+\BOOKMARK [2][-]{subsection.1.3.3}{Comunicaci\363n con la memoria de datos}{section.1.3}% 9
+\BOOKMARK [2][-]{subsection.1.3.4}{Interrupciones}{section.1.3}% 10
+\BOOKMARK [2][-]{subsection.1.3.5}{Retorno de funci\363n y de excepci\363n}{section.1.3}% 11
+\BOOKMARK [1][-]{section.1.4}{Arquitectura del SoC LM32}{chapter.1}% 12
+\BOOKMARK [2][-]{subsection.1.4.1}{Bus wishbone}{section.1.4}% 13
+\BOOKMARK [2][-]{subsection.1.4.2}{Arquitectura de los perif\351ricos}{section.1.4}% 14
+\BOOKMARK [2][-]{subsection.1.4.3}{Interfaz Software}{section.1.4}% 15
+\BOOKMARK [1][-]{section.1.5}{Programaci\363n del SoC LM32}{chapter.1}% 16
+\BOOKMARK [2][-]{subsection.1.5.1}{Ejemplo de programaci\363n}{section.1.5}% 17

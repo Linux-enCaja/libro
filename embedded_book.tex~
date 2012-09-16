@@ -1,4 +1,4 @@
-\documentclass[leter,10pt]{memoir}
+\documentclass{book}
 \usepackage{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage[spanish,es-noshorthands]{babel}
@@ -44,32 +44,32 @@
 \usepackage{longtable}
 
 
-\usepackage{palatino}
-\newfont{\pplbxviii}{pplbc scaled 1800}%
-\newfont{\pplbcxii}{pplbc scaled 1200}% Palatino Bold + Small Caps 
+% \usepackage{palatino}
+% \newfont{\pplbxviii}{pplbc scaled 1800}%
+% \newfont{\pplbcxii}{pplbc scaled 1200}% Palatino Bold + Small Caps 
 % \usepackage[svgnames]{xcolor}
 
 % Chapter Style
-\makechapterstyle{daleif3}{
+% \makechapterstyle{daleif3}{
 %\renewcommand\chapternamenum{}
 %\renewcommand\printchaptername{}
-\renewcommand{\chaptitlefont}{%
-\color[cmyk]{.3,1.0,.85,.25}%
+% \renewcommand{\chaptitlefont}{%
+% \color[cmyk]{.3,1.0,.85,.25}%
 % \scshape\large\centering}
-\scshape\huge\centering}
-\renewcommand{\chapnumfont}{%
-\color[cmyk]{.3,1.0,.85,.25}
-\scshape}
-\renewcommand{\chapnamefont}{%
-\color[cmyk]{.3,1.0,.85,.25}%
 % \scshape\huge\centering}
-\scshape\large\centering}
-}
+% \renewcommand{\chapnumfont}{%
+% \color[cmyk]{.3,1.0,.85,.25}
+% \scshape}
+% \renewcommand{\chapnamefont}{%
+% \color[cmyk]{.3,1.0,.85,.25}%
+% \scshape\huge\centering}
+% \scshape\large\centering}
+% }
 
 \usepackage{hyperref}
 \usepackage{memhfixc} % Needed after hyperref ?
 
-\chapterstyle{daleif3} 
+% \chapterstyle{daleif3} 
 
 \begin{document}
 \bibliographystyle{unsrt}
@@ -78,8 +78,8 @@
 %%% --------------------------------------------------------
 %%% titlepage
 %%% --------------------------------------------------------
-\title{\pplbxviii Metodología de Diseño e Implementación de Sistemas Embebidos\\\Large ---Utilizando Herramientas Abiertas---}
-\author{\pplbcxii Carlos Iván Camargo Bareño}
+\title{Metodología de Diseño e Implementación de Sistemas Embebidos\\\Large ---Utilizando Herramientas Abiertas---}
+\author{Carlos Iván Camargo Bareño}
 \date{}
 \maketitle
 \thispagestyle{empty}
@@ -88,7 +88,7 @@
 %%% --------------------------------------------------------
 \frontmatter
 %%% --------------------------------------------------------
-\settocdepth{subsection}
+% \settocdepth{subsection}
 
 \tableofcontents
 
@@ -98,19 +98,13 @@
 %%% --------------------------------------------------------
 
 
-<<<<<<< HEAD
-  \input intro                  %
+
+%   \input intro                  %
 %  \input educacion_embebidos    %
 % \input FSM/ASM
   \input ./LM32/lm32 
 \bibliography{biblio}
 =======
-%   \input intro                  %
-%   \input educacion_embebidos    %
-%  \input FSM/ASM
-   \input ./LM32/lm32 
- \bibliography{biblio}
->>>>>>> e340f2ef6749b671563c078362f035f73eab08f0
   
 % 
 % \chapter{A chapter title}

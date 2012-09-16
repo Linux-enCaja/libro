@@ -2,10 +2,6 @@ This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: embedded_book.aux
 The style file: unsrt.bst
-Illegal, another \bibdata command---line 277 of file embedded_book.aux
- : \bibdata
- :         {biblio}
-I'm skipping whatever remains of this command
 I found no \citation commands---while reading file embedded_book.aux
 Database file #1: biblio.bib
 You've used 0 entries,
@@ -49,4 +45,4 @@ warning$ -- 0
 while$ -- 0
 width$ -- 0
 write$ -- 2
-(There were 2 error messages)
+(There was 1 error message)

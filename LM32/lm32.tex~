@@ -703,7 +703,7 @@ Finalmente, en la figura \ref{timer_sw_interface} se muestra la declaración del 
 
  \subsubsection{Dirección de memoria de los periféricos}
  
-%  Una vez creados los tipos de datos que representan los registros internos de los periféricos se debe asignar un valor a la dirección base de cada uno de ellos, esta dirección debe ser la misma que le asigna el decodificador de direcciones del árbitro wishbone. En la figura \textit{peripheral_soc} se muestra el valor que deben tomar estas direcciones.
+Una vez creados los tipos de datos que representan los registros internos de los periféricos se debe asignar un valor a la dirección base de cada uno de ellos, esta dirección debe ser la misma que le asigna el decodificador de direcciones del árbitro wishbone. En la figura \ref{peripheral_soc} se muestra el valor que deben tomar estas direcciones.
  
  
   \begin{figure}
@@ -711,11 +711,234 @@ Finalmente, en la figura \ref{timer_sw_interface} se muestra la declaración del 
     \caption{Asignación de la dirección de memoria a los periféricos}\label{peripheral_soc}
   \end{figure}
 
-  
-  
-  
 
-\subsubsection{}
+
+%********************************************************************************************************************
+%********************************************************           SECCIÓN Programación del SoC LM32
+%********************************************************************************************************************
+
+\section{Programación del SoC LM32}
+
+En esta sección se realizará una explicación detallada del flujo de diseño software que seguirse para implementar aplicaciones en el SoC LM32 (ver figura \ref{soft_SoC_design_flow}). El desarrollo de aplicaciones en el SoC posee dos componentes: hardware y software, el componente hardware implementa tareas en forma de periféricos, mientras que el componente software las implementa como una serie de instrucciones que son ejecutadas de forma secuencial en el procesador MICO32. 
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_SoC_design_flow.pdf} \end{center}
+    \caption{Flujo de diseño para el procesador LM32}\label{soft_SoC_design_flow}
+  \end{figure}
+
+El SoC LM32 ejecuta las instrucciones que están almacenadas en la memoria \textit{BOOT RAM} en la posición de memoria \textit{0x00}; para generar las instrucciones que serán ejecutadas es necesario generar un archivo de inicialización (\textit{bootram\_file = image.ram}) para la \textit{BOOT RAM}, la herramienta de síntesis lee este archivo de inicialización y al momento de crear el bloque de memoria inicializa el contenido con dicho archivo.
+
+En la figura \ref{soft_SoC_design_flow} se muestra como se genera el archivo \textit{image.srec} que contine las instrucciones que forman la aplicación. Todas las aplicaciones software se encuentran dentro del directorio \textit{firmware} y existe un subdirectorio para cada aplicación \textit{hw-test} para este caso. 
+
+\subsubsection{Compilación}
+La aplicación \textit{hw-test} tiene tres archivos fuente: \textit{crt0ram.S, soc-hw.c} y \textit{main.c}, estos archivos deben ser compilados por la herramienta \textit{GCC} para generar archivos que contengan la funcionalidad de cada archivo fuente implementado en el lenguaje del MICO32, estos archivos reciben el nombre de objetos y sus nombre son los mismos que los archivos fuentes pero con la extensión \textit{.o} (crt0ram.o main.o soc-hw.o). Adicionalmente, los objetos suministran información sobre las funciones y señales globales que se declaran en ellos, esta información recibe el nombre de \textit{símbolo}. 
+
+\subsubsection{Enlazado}
+A continuación se debe generar un archivo ejecutable que integre el código de los diferentes objetos, esta tarea la realiza el \textit{enlazador LD}. El enlazador analiza todos los objetos y crea una lista de símbolos clasificándolos en símbolos resueltos o no resueltos; un símbolo se considera resuelto cuando se encuentra el código que lo implementa en cualquiera de los objetos que se van a enlazar, si al finalizar de enlazar todos los objetos no se resuelve un símbolo el enlazador no podrá generar el ejecutable y emitirá un mensaje de error.
+
+El archivo ejecutable que se genera utiliza el formato \textit{ELF} (\textit{Executable and Linkable Format}) el cuál es un estándar para objetos, librerías y ejecutables. Un ejecutable \textit{ELF} está compuesto por diferentes secciones (\textit{link view}) o segmentos (\textit{execution view}). Si un programador está interesado en obtener información de secciones sobre tablas de símbolos, código ejecutable específico o información de enlazado dinámico debe utilizar \textit{link view}. Pero si busca información sobre segmentos, como por ejemplo, la localización de los segmentos \textit{text} o \textit{data} debe utilizar \textit{execution view}. Este archivo posee un encabezado que describe el layout del archivo, proporcionando información de la forma de acceder a las secciones. Las secciones pueden almacenar código ejecutable, datos, información de enlazado dinámico, datos de depuración, tablas de símbolos,comentarios, tablas de cadenas, y notas. Las secciones más importantes son:
+
+\begin{itemize}
+ \item \textbf{.bss}            Datos no inicializados. (RAM)
+ \item \textbf{.comment}        Información de la versión.
+ \item \textbf{.data y .data1}  Datos inicializados.    (RAM)
+ \item \textbf{.debug}          Información para depuración simbólica. 
+ \item \textbf{.dynamic}        Información sobre enlace dinámico 
+ \item \textbf{.dynstr}         Strings necesarios para el enlace dinámico 
+ \item \textbf{.dynsym}         Tabla de símbolos utilizada para enlace dinámico.
+ \item \textbf{.fini}           Código de terminación de proceso.
+ \item \textbf{.init}           Código de inicialización de proceso.
+ \item \textbf{.line}           Información de número de línea para depuración simbólica.
+ \item \textbf{.rodata y .rodta1} Datos de solo-lectura (ROM)
+ \item \textbf{.shstrtab}       Nombres de secciones.
+ \item \textbf{.symtab}         Tabla de símbolos.
+ \item \textbf{.text}           Instrucciones ejecutables (ROM)
+\end{itemize}
+
+\subsubsection{Script de enlazado}
+
+El enlazador permite definir donde serán ubicados los diferentes segmentos del archivo ELF por medio de un archivo de enlace que recibe el nombre de \textit{script de enlazado}; de esta forma podemos ajustar el ejecutable a plataformas con diferentes configuraciones de memoria, lo que brinda un grado mayor de flexibilidad de la cadena de herramientas GNU. El archivo de enlazado en este ejemplo tiene el nombre de \textit{linker.ld} y se muestra a continuación.
+
+
+\lstset{emph={[4]text,rodata,data,bss}, emphstyle={[4]\color{red}}, emph={[2]ram,base},emphstyle={[2]\color{blue}}}
+
+\begin{lstlisting}
+OUTPUT_FORMAT("elf32-lm32")
+ENTRY(_start)
+__DYNAMIC = 0;
+_RAM_START = 0x00000000;
+_RAM_SIZE  = 0x1000;
+_RAM_END   = _RAM_START + _RAM_SIZE;
+
+MEMORY {
+  ram    : ORIGIN = 0x00000000, LENGTH = 0x1000          /*  4k */
+}
+SECTIONS
+{
+  .text: 
+  {
+    _ftext = .;
+    *(.text .stub .text.* .gnu.linkonce.t.*)
+    _etext = .;
+  } > ram
+  .rodata:
+  {
+	. = ALIGN(4);
+	_frodata = .;
+    *(.rodata .rodata.* .gnu.linkonce.r.*)
+    *(.rodata1)
+	_erodata = .;
+  } > ram
+  .data: 
+  {
+	. = ALIGN(4);
+	_fdata = .;
+    *(.data .data.* .gnu.linkonce.d.*)
+    *(.data1)
+    _gp = ALIGN(16);
+    *(.sdata .sdata.* .gnu.linkonce.s.*)
+    _edata = .;
+  } > ram
+  .bss:
+  {
+	. = ALIGN(4);
+    _fbss = .;
+    *(.dynsbss)
+    *(.sbss .sbss.* .gnu.linkonce.sb.*)
+    *(.scommon)
+    *(.dynbss)
+    *(.bss .bss.* .gnu.linkonce.b.*)
+    *(COMMON)
+    _ebss = .;
+    _end = .;
+  } > ram
+}
+PROVIDE(_fstack = ORIGIN(ram) + LENGTH(ram) - 4);
+\end{lstlisting}
+
+En este archivo se declara la posición inicial de la memoria (\textit{\_RAM\_START}), su longitud (\textit{\_RAM\_SIZE}) y se declaran las diferentes memorias que posee el sistema, para este caso solo existe la memoria \textit{BOOT RAM} que recibe el nombre de \textit{ram}. Las secciones son declaradas en el orden que serán almacenadas, en la \textit{ram} iniciando con la sección \textit{text} en la posición de memoria \textit{0x00000000}; el enlazador coloca todo el lenguaje de máquina extraido de los objetos generados a partir del código fuente a partir de esta dirección; a continuación coloca las constantes utilizadas en el código (como los \#define, las cadenas de caracteres a ser impresas) que hacen parte de la sección \textit{rodata}; después las variables inicializadas que hacen parte de la sección \textit{data} y finalmente las variables sin inicializar de la sección \textit{bss}. Adicionalmente, este archivo declara un espacio de memoria llamado \textit{\_fstack}, el cual realizará las funciones de 
+la pila. Al finalizar el proceso de enlazado se genera un archivo ejecutable llamado \textit{image}.
+
+\subsubsection{Utilitarios binarios}
+El formato ELF no puede ser utilizado directamente para generar la memoria de programa del procesador; para ello, se debe extraer de este la información correspondiente a las secciones \textit{text}, \textit{rodata} y \textit{data}. Para realizar esta tarea la cadena de herramientas GNU proporcciona la utilidad \textit{objcopy}, la cual puede generar un archivo de salida en varios formatos, en este caso se genera el archivo \textit{image.srec} con formato S-record.
+
+\subsubsection{Inicialización de la memoria BRAM}
+
+El bloque de memoria bram se utiliza como memoria de programa, memoria RAM y pila; por este motivo es necesario inicializarla con los datos de la aplicación. La inicialización de esta memoria se realiza en el archivo \textit{rtl/wb\_bram/wb\_bram.v}:
+
+\lstset{language=verilog}
+\begin{lstlisting}
+initial 
+begin
+	if (mem_file_name != "none")
+	begin
+		$readmemh(mem_file_name, ram);
+	end
+end
+\end{lstlisting}
+
+Donde el parámetro \textit{mem\_file\_name} es pasado desde el archivo \textit{system.v}
+
+\lstset{language=verilog}
+\begin{lstlisting}
+parameter   bootram_file     = "../firmware/hw-test/image.ram",
+...
+...
+wb_bram #(
+  .adr_width( 12 ),
+  .mem_file_name( bootram_file )
+)
+ 
+\end{lstlisting}
+
+El archivo \textit{image.ram} es un archivo de texto plano donde se inicializan todas las 0x1000 posiciones de memoria, este archivo es generado por la utilidad \textit{srec2vram}.
+
+
+\subsection{Ejemplo de programación}
+En esta sección se explicará de forma detallada un ejemplo que ayudará a entender como se deben escribir las aplicaciones para este tipo de arquitectura. El código fuente de este ejemplo se encuentra en el directorio \textit{firmware/hw-test} y está compuesto por los archivos que se muestran en la figura \ref{soft_design_flow}.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/soft_design_flow.pdf} \end{center}
+    \caption{Flujo de diseño para el procesador LM32}\label{soft_design_flow}
+  \end{figure}
+
+El proceso de compilación requiere ejecutar una serie de comandos que pueden llegar a ser un poco engorrosos en la fase de diseño; por esta razón, la comunidad del software libre creó una aplicación que permite automatizar este proceso, esta utilidad recibe el nombre de \textit{make}; \textit{make} lee los pasos que debe ejecutar para compilar y generar los archivos necesarios para la aplicación desde un script que recibe el nombre de \textit{Makefile}. 
+
+\subsubsection{Makefile}
+En esta subsección se explicará el contenido del archivo Makefile para el ejemplo bajo estudio; en el siguiente listado se muestra la primera parte del archivo:
+
+
+\begin{lstlisting}
+LM32_CC=lm32-linux-gcc
+LM32_LD=lm32-linux-ld
+LM32_OBJCOPY=lm32-linux-objcopy
+LM32_OBJDUMP=lm32-linux-objdump
+
+SREC2VRAM ?= ../../tools/srec2vram/srec2vram
+VRAMFILE=image.ram
+
+CFLAGS=-MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled   
+-mmultiply-enabled -mdivide-enabled -msign-extend-enabled
+LDFLAGS=-nostdlib -nodefaultlibs -Tlinker.ld 
+SEGMENTS = -j .text -j .rodata -j .data
+\end{lstlisting}
+
+
+En este segmento del archivo Makefile se declaran variables locales que serán utilizadas posteriormente. Es costumbre crear una variable global con el nombre de los ejecutables de: el compilador (\textit{LM32\_CC}), el enlazador (\textit{LM32\_LD}), manipulador de binarios (\textit{LM32\_OBJCOPY}) y utilidad para generar el listado del código en assembler del ejecutable (\textit{LM32\_OBJDUMP}); esto con el fín de que el mismo Makefile pueda ser usado con diferentes cadena de herramientas.
+
+Adicionalmente, se define el sitio del ejecutable \textit{srec2vram} que como se mencionó anteriormente genera el archivo de inicialización de la memoria BRAM; se define el nombre de la imagen que contiene la memoria de programa (\textit{srec2vram}).   
+
+Las variables \textit{CFLAGS} y \textit{LDFLAGS} son parámetros que se pasan al compilador y al enlazador respectivamente; \textit{-Tlinker.ld}, le indica al enlazador que utilice el archivo \textit{linker.ld} para definir la distribución de memoria del ejecutable.
+
+En la siguiente sección del archivo Makefile se realizan las tareas necesarias para generar el archivo \textit{image.ram}
+
+
+\begin{lstlisting}
+all: image.srec $(VRAMFILE) 
+
+crt0ram.o: crt0ram.S
+	$(LM32_CC) $(CFLAGS) -c crt0ram.S
+
+main.o: main.c
+	$(LM32_CC) $(CFLAGS) -c main.c
+
+soc-hw.o: soc-hw.c
+	$(LM32_CC) $(CFLAGS) -c soc-hw.c
+
+image: crt0ram.o main.o soc-hw.o
+	$(LM32_LD) $(LDFLAGS) -Map image.map -N -o image crt0ram.o main.o soc-hw.o
+
+image.lst: image
+	$(LM32_OBJDUMP) -h -S $< > $@
+
+image.srec: image.lst
+	$(LM32_OBJCOPY) $(SEGMENTS) -O srec image image.srec
+
+$(VRAMFILE): image.srec
+	$(SREC2VRAM) image.srec 0x00000000 0x1000 > $(VRAMFILE)
+
+clean:
+	rm -f image image.lst image.bin image.srec image.map  *.o *.d 
+\end{lstlisting}
+
+
+Cada cadena de caracteres que termina con dos puntos \textbf{:} es un posible parámetro que puede ser pasado a la herramienta \textit{make}, la que se encarga de leer el Makefile y ejecutar las operaciones en él asignadas. Al ejecutar el comando \textit{make} sin parámetros este busca en el directorio donde fué ejecutado un archivo con el nombre \textit{Makefile} o \textit{makefile} y ejecutará lo que encuentre en la etiqueta \textit{all}; los nombres que aparecen después de los dos puntos, son dependencias que se deben ejecutar antes de realizar las acciones propias; en este caso se deben buscar las etiquetas \textit{image.srec} y \textit{\$(VRAMFILE)} y ejecutarlas.
+
+Para ejecutar \textit{image.srec} es necesario ejecutar antes \textit{image.lst}, la cual a su vez requiere que se ejecute \textit{image}, este tipo de encadenamientos son típicos en estos archivos y son necesarios para seguir el flujo de compilación. Para ejecutar las acciones de \textit{image} es necesario ejecutar \textit{crt0ram.o}, \textit{main.o} y \textit{soc-hw.o} las cuales compilan el código fuente \textit{crt0ram.S, main.c} y \textit{soc-hw.c} para generar los objetos correspondientes; una vez creados los objetos se pueden ejecutar la acción de \textit{image}: \textit{\$(LM32\_LD) \$(LDFLAGS) -Map image.map -N -o image crt0ram.o main.o soc-hw.o}, este comando llama al enlazador para que cree el ejecutable \textit{image} a partir de los objetos \textit{crt0ram.o}, \textit{main.o} y \textit{soc-hw.o}. A continuación se ejecutarán las operaciones de \textit{image.lst}, seguidas por las de \textit{image.srec} y \textit{\$(VRAMFILE}.
+
+El siguiente es el resultado de ejecutar el comando \textit{make}:
+
+\begin{lstlisting}[language=shell]
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c crt0ram.S
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c main.c
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c soc-hw.c
+lm32-linux-ld -nostdlib -nodefaultlibs -Tlinker.ld  -Map image.map -N -o image crt0ram.o main.o soc-hw.o
+lm32-linux-objdump -h -S image > image.lst
+lm32-linux-objcopy -j .text -j .rodata -j .data -O srec image image.srec
+../../tools/srec2vram/srec2vram image.srec 0x00000000 0x1000 > image.ram
+Extracting [00000000,00001000) (size=0x1000)
+\end{lstlisting}
+
 
 
 
