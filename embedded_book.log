@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.7.16)  15 SEP 2012 21:19
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2012.7.16)  3 OCT 2012 20:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1133,32 +1133,33 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.30  \item \textit
-                   {Write back}: Los resultados producidos por la instrucció...
+l.30  \item[M]
+               \textit{Memory}: Para instrucciones más complejas como acceso...
 [1
 
-] <./LM32/images/lm32_block_diagram.pdf, id=122, 730.73pt x 672.5125pt>
+] <./LM32/images/lm32_block_diagram.pdf, id=118, 730.73pt x 672.5125pt>
 File: ./LM32/images/lm32_block_diagram.pdf Graphic file (type pdf)
 
 <use ./LM32/images/lm32_block_diagram.pdf>
 Package pdftex.def Info: ./LM32/images/lm32_block_diagram.pdf used on input lin
-e 35.
+e 36.
 (pdftex.def)             Requested size: 438.44138pt x 403.5106pt.
 
-Overfull \hbox (20.1877pt too wide) in paragraph at lines 35--35
+Overfull \hbox (20.1877pt too wide) in paragraph at lines 36--36
  [] 
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 39.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 41.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.76 \end{table}
-                 [2 <./LM32/images/lm32_block_diagram.pdf>] [3]
+l.42 
+      [2 <./LM32/images/lm32_block_diagram.pdf>]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 43.
+ [3]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
@@ -1168,449 +1169,448 @@ File: lstlang2.sty 2004/09/05 1.3 listings language file
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2004/09/05 1.3 listings language file
 )
-LaTeX Font Info:    Try loading font information for OML+ptm on input line 154.
+LaTeX Font Info:    Try loading font information for OML+ptm on input line 145.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlptm.fd
 File: omlptm.fd 
 )
 LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <8> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 154.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 145.
 
-<./LM32/images/arith_register.pdf, id=156, 1616.0375pt x 2595.6975pt>
+<./LM32/images/arith_register.pdf, id=149, 1616.0375pt x 2595.6975pt>
 File: ./LM32/images/arith_register.pdf Graphic file (type pdf)
 
 <use ./LM32/images/arith_register.pdf>
-Package pdftex.def Info: ./LM32/images/arith_register.pdf used on input line 16
-2.
+Package pdftex.def Info: ./LM32/images/arith_register.pdf used on input line 15
+3.
 (pdftex.def)             Requested size: 323.20177pt x 519.13031pt.
  [4]
-<./LM32/images/arith_immediate.pdf, id=179, 1616.0375pt x 2608.74625pt>
+<./LM32/images/arith_immediate.pdf, id=174, 1616.0375pt x 2608.74625pt>
 File: ./LM32/images/arith_immediate.pdf Graphic file (type pdf)
 
 <use ./LM32/images/arith_immediate.pdf>
 Package pdftex.def Info: ./LM32/images/arith_immediate.pdf used on input line 1
-75.
+66.
 (pdftex.def)             Requested size: 323.20177pt x 521.74002pt.
 
-Overfull \hbox (37.44136pt too wide) in paragraph at lines 188--189
+Overfull \hbox (37.44136pt too wide) in paragraph at lines 179--180
 \OT1/ptm/m/it/10 lect[]call[]immediate \OT1/ptm/m/n/10 en-tre las se[]nales \OT
 1/ptm/m/it/10 call[]immediate \OT1/ptm/m/n/10 (para in-struc-ciones de lla-ma-d
 o a fun-ci[]on) y \OT1/ptm/m/it/10 branch[]immediate\OT1/ptm/m/n/10 ;
  []
 
-<./LM32/images/branch_condition.pdf, id=181, 2090.81125pt x 2686.035pt>
+<./LM32/images/branch_condition.pdf, id=176, 2090.81125pt x 2686.035pt>
 File: ./LM32/images/branch_condition.pdf Graphic file (type pdf)
 
 <use ./LM32/images/branch_condition.pdf>
 Package pdftex.def Info: ./LM32/images/branch_condition.pdf used on input line 
-192.
+183.
 (pdftex.def)             Requested size: 418.15485pt x 537.1975pt.
 
-<./LM32/images/loop_example.pdf, id=183, 645.41125pt x 142.5325pt>
+<./LM32/images/loop_example.pdf, id=178, 645.41125pt x 142.5325pt>
 File: ./LM32/images/loop_example.pdf Graphic file (type pdf)
 
 <use ./LM32/images/loop_example.pdf>
-Package pdftex.def Info: ./LM32/images/loop_example.pdf used on input line 199.
+Package pdftex.def Info: ./LM32/images/loop_example.pdf used on input line 190.
 
 (pdftex.def)             Requested size: 387.24974pt x 85.52014pt.
  [5] [6 <./LM32/images/arith_register.pdf>] [7 <./LM32/images/arith_immediate.p
 df>] [8 <./LM32/images/branch_condition.pdf>]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 212.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 203.
 
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 212.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 203.
 
-<./LM32/images/branch_call_immediate.pdf, id=301, 2115.905pt x 2640.86626pt>
+<./LM32/images/branch_call_immediate.pdf, id=296, 2115.905pt x 2640.86626pt>
 File: ./LM32/images/branch_call_immediate.pdf Graphic file (type pdf)
 
 <use ./LM32/images/branch_call_immediate.pdf>
 Package pdftex.def Info: ./LM32/images/branch_call_immediate.pdf used on input 
-line 239.
+line 230.
 (pdftex.def)             Requested size: 423.17351pt x 528.1639pt.
 
-Overfull \hbox (4.91983pt too wide) in paragraph at lines 239--239
+Overfull \hbox (4.91983pt too wide) in paragraph at lines 230--230
  [] 
  []
 
-<./LM32/images/branch_call.pdf, id=302, 1829.83624pt x 2640.86626pt>
+<./LM32/images/branch_call.pdf, id=297, 1829.83624pt x 2640.86626pt>
 File: ./LM32/images/branch_call.pdf Graphic file (type pdf)
 
 <use ./LM32/images/branch_call.pdf>
-Package pdftex.def Info: ./LM32/images/branch_call.pdf used on input line 245.
+Package pdftex.def Info: ./LM32/images/branch_call.pdf used on input line 236.
 (pdftex.def)             Requested size: 365.96077pt x 528.1639pt.
  [9 <./LM32/images/loop_example.pdf>]
 [10 <./LM32/images/branch_call_immediate.pdf>] [11 <./LM32/images/branch_call.p
-df>] <./LM32/images/call_function.pdf, id=408, 766.865pt x 180.675pt>
+df>] <./LM32/images/call_function.pdf, id=402, 766.865pt x 180.675pt>
 File: ./LM32/images/call_function.pdf Graphic file (type pdf)
 
 <use ./LM32/images/call_function.pdf>
-Package pdftex.def Info: ./LM32/images/call_function.pdf used on input line 256
+Package pdftex.def Info: ./LM32/images/call_function.pdf used on input line 247
 .
 (pdftex.def)             Requested size: 460.12256pt x 108.40582pt.
 
-Overfull \hbox (41.86888pt too wide) in paragraph at lines 256--256
+Overfull \hbox (41.86888pt too wide) in paragraph at lines 247--247
  [] 
  []
 
-<./LM32/images/call_function_nested.pdf, id=410, 673.51625pt x 209.78375pt>
+<./LM32/images/call_function_nested.pdf, id=404, 673.51625pt x 209.78375pt>
 File: ./LM32/images/call_function_nested.pdf Graphic file (type pdf)
 
 <use ./LM32/images/call_function_nested.pdf>
 Package pdftex.def Info: ./LM32/images/call_function_nested.pdf used on input l
-ine 264.
+ine 255.
 (pdftex.def)             Requested size: 404.11287pt x 125.8712pt.
  [12 <./LM32/images/call_function.pdf> <./LM32/images/call_function_nested.pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/call_function_nested.pdf)
-: PDF inclusion: multiple pdfs with page group included in a single page
->] <./LM32/images/data_types.pdf, id=450, 873.2625pt x 419.5675pt>
+pdfTeX warning: pdflatex (file ./LM32/images/call_function_nested.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+>] <./LM32/images/data_types.pdf, id=444, 873.2625pt x 419.5675pt>
 File: ./LM32/images/data_types.pdf Graphic file (type pdf)
 
 <use ./LM32/images/data_types.pdf>
-Package pdftex.def Info: ./LM32/images/data_types.pdf used on input line 283.
+Package pdftex.def Info: ./LM32/images/data_types.pdf used on input line 274.
 (pdftex.def)             Requested size: 523.96153pt x 251.74243pt.
 
-Overfull \hbox (105.70786pt too wide) in paragraph at lines 283--283
+Overfull \hbox (105.70786pt too wide) in paragraph at lines 274--274
  [] 
  []
 
-<./LM32/images/char.pdf, id=454, 652.4375pt x 116.435pt>
+<./LM32/images/char.pdf, id=448, 652.4375pt x 116.435pt>
 File: ./LM32/images/char.pdf Graphic file (type pdf)
 
 <use ./LM32/images/char.pdf>
-Package pdftex.def Info: ./LM32/images/char.pdf used on input line 291.
+Package pdftex.def Info: ./LM32/images/char.pdf used on input line 282.
 (pdftex.def)             Requested size: 391.46552pt x 69.86153pt.
 
-<./LM32/images/short.pdf, id=455, 653.44125pt x 116.435pt>
+<./LM32/images/short.pdf, id=449, 653.44125pt x 116.435pt>
 File: ./LM32/images/short.pdf Graphic file (type pdf)
 
 <use ./LM32/images/short.pdf>
-Package pdftex.def Info: ./LM32/images/short.pdf used on input line 296.
+Package pdftex.def Info: ./LM32/images/short.pdf used on input line 287.
 (pdftex.def)             Requested size: 392.06776pt x 69.86153pt.
 
-<./LM32/images/int.pdf, id=456, 653.44125pt x 116.435pt>
+<./LM32/images/int.pdf, id=450, 653.44125pt x 116.435pt>
 File: ./LM32/images/int.pdf Graphic file (type pdf)
 
 <use ./LM32/images/int.pdf>
-Package pdftex.def Info: ./LM32/images/int.pdf used on input line 301.
+Package pdftex.def Info: ./LM32/images/int.pdf used on input line 292.
 (pdftex.def)             Requested size: 392.06776pt x 69.86153pt.
 
-Overfull \hbox (5.72223pt too wide) in paragraph at lines 307--308
+Overfull \hbox (5.72223pt too wide) in paragraph at lines 298--299
 []\OT1/ptm/m/n/10 El ac-ce-so a memo-ria de datos per-mite ex-ten-der las ca-pa
 ci-dades del proce-sador posi-bil-i-tan-do la conexi[]on
  []
 
 [13 <./LM32/images/data_types.pdf> <./LM32/images/char.pdf>]
-<./LM32/images/store.pdf, id=490, 2055.68pt x 2626.81375pt>
+<./LM32/images/store.pdf, id=484, 2055.68pt x 2626.81375pt>
 File: ./LM32/images/store.pdf Graphic file (type pdf)
 
 <use ./LM32/images/store.pdf>
-Package pdftex.def Info: ./LM32/images/store.pdf used on input line 317.
+Package pdftex.def Info: ./LM32/images/store.pdf used on input line 308.
 (pdftex.def)             Requested size: 411.12872pt x 525.35345pt.
 
-<./LM32/images/load.pdf, id=492, 2058.69125pt x 2627.8175pt>
+<./LM32/images/load.pdf, id=486, 2058.69125pt x 2627.8175pt>
 File: ./LM32/images/load.pdf Graphic file (type pdf)
 
 <use ./LM32/images/load.pdf>
-Package pdftex.def Info: ./LM32/images/load.pdf used on input line 328.
+Package pdftex.def Info: ./LM32/images/load.pdf used on input line 319.
 (pdftex.def)             Requested size: 411.73096pt x 525.5542pt.
  [14 <./LM32/images/short.pdf> <./LM32/images/int.pdf>] [15 <./LM32/images/stor
 e.pdf>] [16 <./LM32/images/load.pdf>]
-Overfull \hbox (32.17398pt too wide) in paragraph at lines 343--345
+Overfull \hbox (32.17398pt too wide) in paragraph at lines 334--336
 \OT1/ptm/m/it/10 da-ta[]bus[]error[]exception\OT1/ptm/m/n/10 , \OT1/ptm/m/it/10
  di-vide[]by[]zero[]exception \OT1/ptm/m/n/10 o \OT1/ptm/m/it/10 in-ter-rupt[]e
 xception\OT1/ptm/m/n/10 ; lo que ac-ti-var[]a la se[]nal \OT1/ptm/m/it/10 branc
 h[]taken[]m
  []
 
-<./LM32/images/exception_generation.pdf, id=588, 1828.8325pt x 1407.2575pt>
+<./LM32/images/exception_generation.pdf, id=583, 1828.8325pt x 1407.2575pt>
 File: ./LM32/images/exception_generation.pdf Graphic file (type pdf)
 
 <use ./LM32/images/exception_generation.pdf>
 Package pdftex.def Info: ./LM32/images/exception_generation.pdf used on input l
-ine 350.
+ine 341.
 (pdftex.def)             Requested size: 365.76003pt x 281.44652pt.
  [17 <./LM32/images/exception_generation.pdf>] [18]
-<./LM32/images/exception_csr.pdf, id=657, 2184.16pt x 2878.755pt>
+<./LM32/images/exception_csr.pdf, id=655, 2184.16pt x 2878.755pt>
 File: ./LM32/images/exception_csr.pdf Graphic file (type pdf)
 
 <use ./LM32/images/exception_csr.pdf>
-Package pdftex.def Info: ./LM32/images/exception_csr.pdf used on input line 439
+Package pdftex.def Info: ./LM32/images/exception_csr.pdf used on input line 430
 .
 (pdftex.def)             Requested size: 436.82426pt x 575.74081pt.
 
-Overfull \hbox (18.57059pt too wide) in paragraph at lines 439--439
+Overfull \hbox (18.57059pt too wide) in paragraph at lines 430--430
  [] 
  []
 
-<./LM32/images/eret_ret.pdf, id=659, 2078.76625pt x 2602.72375pt>
+<./LM32/images/eret_ret.pdf, id=657, 2078.76625pt x 2602.72375pt>
 File: ./LM32/images/eret_ret.pdf Graphic file (type pdf)
 
 <use ./LM32/images/eret_ret.pdf>
-Package pdftex.def Info: ./LM32/images/eret_ret.pdf used on input line 452.
+Package pdftex.def Info: ./LM32/images/eret_ret.pdf used on input line 443.
 (pdftex.def)             Requested size: 415.7459pt x 520.53554pt.
 
-<./LM32/images/interrupt_process.pdf, id=661, 737.75626pt x 456.70625pt>
+<./LM32/images/interrupt_process.pdf, id=659, 737.75626pt x 456.70625pt>
 File: ./LM32/images/interrupt_process.pdf Graphic file (type pdf)
 
 <use ./LM32/images/interrupt_process.pdf>
 Package pdftex.def Info: ./LM32/images/interrupt_process.pdf used on input line
- 462.
+ 453.
 (pdftex.def)             Requested size: 368.87723pt x 228.35255pt.
 
-<./LM32/images/LM32_SoC_block_diagram.pdf, id=662, 484.81125pt x 314.17375pt>
+<./LM32/images/LM32_SoC_block_diagram.pdf, id=660, 484.81125pt x 314.17375pt>
 File: ./LM32/images/LM32_SoC_block_diagram.pdf Graphic file (type pdf)
 
 <use ./LM32/images/LM32_SoC_block_diagram.pdf>
 Package pdftex.def Info: ./LM32/images/LM32_SoC_block_diagram.pdf used on input
- line 482.
+ line 467.
 (pdftex.def)             Requested size: 290.88899pt x 188.50569pt.
  [19] [20 <./LM32/images/exception_csr.pdf>] [21 <./LM32/images/eret_ret.pdf>] 
 [22 <./LM32/images/interrupt_process.pdf> <./LM32/images/LM32_SoC_block_diagram
 .pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/LM32_SoC_block_diagram.pd
-f): PDF inclusion: multiple pdfs with page group included in a single page
->] <./LM32/images/uart_read_waves.pdf, id=783, 653.44125pt x 159.59625pt>
+pdfTeX warning: pdflatex (file ./LM32/images/LM32_SoC_block_diagram.pdf): PDF i
+nclusion: multiple pdfs with page group included in a single page
+>] <./LM32/images/uart_read_waves.pdf, id=777, 653.44125pt x 159.59625pt>
 File: ./LM32/images/uart_read_waves.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_read_waves.pdf>
 Package pdftex.def Info: ./LM32/images/uart_read_waves.pdf used on input line 5
-16.
+01.
 (pdftex.def)             Requested size: 392.06776pt x 95.75847pt.
 File: ./LM32/images/uart_read_waves.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_read_waves.pdf>
 Package pdftex.def Info: ./LM32/images/uart_read_waves.pdf used on input line 5
-23.
+08.
 (pdftex.def)             Requested size: 392.06776pt x 95.75847pt.
- [23 <./LM32/images/uart_read_waves.pdf>] <./LM32/images/conbus.pdf, id=798, 11
-16.17pt x 432.61626pt>
+
+<./LM32/images/conbus.pdf, id=780, 1116.17pt x 432.61626pt>
 File: ./LM32/images/conbus.pdf Graphic file (type pdf)
 
 <use ./LM32/images/conbus.pdf>
-Package pdftex.def Info: ./LM32/images/conbus.pdf used on input line 533.
+Package pdftex.def Info: ./LM32/images/conbus.pdf used on input line 518.
 (pdftex.def)             Requested size: 390.66536pt x 151.41795pt.
-
-<./LM32/images/conbus_write.pdf, id=801, 797.98125pt x 258.9675pt>
+ [23 <./LM32/images/uart_read_waves.pdf>]
+<./LM32/images/conbus_write.pdf, id=796, 797.98125pt x 258.9675pt>
 File: ./LM32/images/conbus_write.pdf Graphic file (type pdf)
 
 <use ./LM32/images/conbus_write.pdf>
-Package pdftex.def Info: ./LM32/images/conbus_write.pdf used on input line 557.
+Package pdftex.def Info: ./LM32/images/conbus_write.pdf used on input line 542.
 
 (pdftex.def)             Requested size: 279.29762pt x 90.63997pt.
+ [24 <./LM32/images/conbus.pdf> <./LM32/images/conbus_write.pdf
 
-<./LM32/images/conbus_read.pdf, id=803, 307.1475pt x 176.66pt>
+pdfTeX warning: pdflatex (file ./LM32/images/conbus_write.pdf): PDF inclusion: 
+multiple pdfs with page group included in a single page
+>] <./LM32/images/conbus_read.pdf, id=833, 307.1475pt x 176.66pt>
 File: ./LM32/images/conbus_read.pdf Graphic file (type pdf)
 
 <use ./LM32/images/conbus_read.pdf>
-Package pdftex.def Info: ./LM32/images/conbus_read.pdf used on input line 564.
+Package pdftex.def Info: ./LM32/images/conbus_read.pdf used on input line 549.
 (pdftex.def)             Requested size: 107.50323pt x 61.83192pt.
- [24 <./LM32/images/conbus.pdf>]
-<./LM32/images/conbus_signals.pdf, id=834, 652.4375pt x 187.70125pt>
+
+<./LM32/images/conbus_signals.pdf, id=835, 652.4375pt x 187.70125pt>
 File: ./LM32/images/conbus_signals.pdf Graphic file (type pdf)
 
 <use ./LM32/images/conbus_signals.pdf>
-Package pdftex.def Info: ./LM32/images/conbus_signals.pdf used on input line 57
-9.
+Package pdftex.def Info: ./LM32/images/conbus_signals.pdf used on input line 56
+4.
 (pdftex.def)             Requested size: 228.35654pt x 65.69641pt.
 
-<./LM32/images/gpio.pdf, id=836, 705.63625pt x 375.4025pt>
+<./LM32/images/gpio.pdf, id=837, 705.63625pt x 375.4025pt>
 File: ./LM32/images/gpio.pdf Graphic file (type pdf)
 
 <use ./LM32/images/gpio.pdf>
-Package pdftex.def Info: ./LM32/images/gpio.pdf used on input line 593.
+Package pdftex.def Info: ./LM32/images/gpio.pdf used on input line 578.
 (pdftex.def)             Requested size: 423.38501pt x 225.24323pt.
 
-Overfull \hbox (5.13133pt too wide) in paragraph at lines 593--593
+Overfull \hbox (5.13133pt too wide) in paragraph at lines 578--578
  [] 
  []
 
-[25 <./LM32/images/conbus_write.pdf> <./LM32/images/conbus_read.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/conbus_read.pdf): PDF inc
-lusion: multiple pdfs with page group included in a single page
-> <./LM32/images/conbus_signals.pdf>]
-<./LM32/images/gpio_read.pdf, id=871, 615.29875pt x 280.04625pt>
+<./LM32/images/gpio_read.pdf, id=839, 615.29875pt x 280.04625pt>
 File: ./LM32/images/gpio_read.pdf Graphic file (type pdf)
 
 <use ./LM32/images/gpio_read.pdf>
-Package pdftex.def Info: ./LM32/images/gpio_read.pdf used on input line 602.
+Package pdftex.def Info: ./LM32/images/gpio_read.pdf used on input line 587.
 (pdftex.def)             Requested size: 369.1821pt x 168.02904pt.
+ [25 <./LM32/images/conbus_read.pdf> <./LM32/images/conbus_signals.pdf>] [26 <.
+/LM32/images/gpio.pdf> <./LM32/images/gpio_read.pdf
 
-<./LM32/images/gpio_write.pdf, id=873, 684.5575pt x 283.0575pt>
+pdfTeX warning: pdflatex (file ./LM32/images/gpio_read.pdf): PDF inclusion: mul
+tiple pdfs with page group included in a single page
+>] <./LM32/images/gpio_write.pdf, id=904, 684.5575pt x 283.0575pt>
 File: ./LM32/images/gpio_write.pdf Graphic file (type pdf)
 
 <use ./LM32/images/gpio_write.pdf>
-Package pdftex.def Info: ./LM32/images/gpio_write.pdf used on input line 610.
+Package pdftex.def Info: ./LM32/images/gpio_write.pdf used on input line 595.
 (pdftex.def)             Requested size: 410.73766pt x 169.8358pt.
- [26 <./LM32/images/gpio.pdf> <./LM32/images/gpio_read.pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/gpio_read.pdf): PDF inclu
-sion: multiple pdfs with page group included in a single page
->] <./LM32/images/uart_block_full.pdf, id=912, 607.26875pt x 398.48875pt>
+<./LM32/images/uart_block_full.pdf, id=906, 607.26875pt x 398.48875pt>
 File: ./LM32/images/uart_block_full.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_block_full.pdf>
 Package pdftex.def Info: ./LM32/images/uart_block_full.pdf used on input line 6
-23.
+08.
 (pdftex.def)             Requested size: 364.36406pt x 239.0951pt.
 
-<./LM32/images/uart_block_read.pdf, id=914, 565.11125pt x 351.3125pt>
+<./LM32/images/uart_block_read.pdf, id=908, 565.11125pt x 351.3125pt>
 File: ./LM32/images/uart_block_read.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_block_read.pdf>
 Package pdftex.def Info: ./LM32/images/uart_block_read.pdf used on input line 6
-34.
+19.
 (pdftex.def)             Requested size: 339.06937pt x 210.78911pt.
 
-<./LM32/images/uart_block_write.pdf, id=916, 576.1525pt x 270.00874pt>
+<./LM32/images/uart_block_write.pdf, id=910, 576.1525pt x 270.00874pt>
 File: ./LM32/images/uart_block_write.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_block_write.pdf>
 Package pdftex.def Info: ./LM32/images/uart_block_write.pdf used on input line 
-643.
+628.
 (pdftex.def)             Requested size: 345.69415pt x 162.00648pt.
 
-<./LM32/images/timer.pdf, id=918, 625.33624pt x 414.54875pt>
+<./LM32/images/timer.pdf, id=912, 625.33624pt x 414.54875pt>
 File: ./LM32/images/timer.pdf Graphic file (type pdf)
 
 <use ./LM32/images/timer.pdf>
-Package pdftex.def Info: ./LM32/images/timer.pdf used on input line 652.
+Package pdftex.def Info: ./LM32/images/timer.pdf used on input line 637.
 (pdftex.def)             Requested size: 375.20464pt x 248.73116pt.
 
-<./LM32/images/timer_read.pdf, id=920, 624.3325pt x 241.90375pt>
+<./LM32/images/timer_read.pdf, id=914, 624.3325pt x 241.90375pt>
 File: ./LM32/images/timer_read.pdf Graphic file (type pdf)
 
 <use ./LM32/images/timer_read.pdf>
-Package pdftex.def Info: ./LM32/images/timer_read.pdf used on input line 659.
+Package pdftex.def Info: ./LM32/images/timer_read.pdf used on input line 644.
 (pdftex.def)             Requested size: 374.60239pt x 145.14336pt.
+ [27 <./LM32/images/gpio_write.pdf>] [28 <./LM32/images/uart_block_full.pdf> <.
+/LM32/images/uart_block_read.pdf
 
-<./LM32/images/timer_write.pdf, id=922, 625.33624pt x 299.1175pt>
+pdfTeX warning: pdflatex (file ./LM32/images/uart_block_read.pdf): PDF inclusio
+n: multiple pdfs with page group included in a single page
+>] [29 <./LM32/images/uart_block_write.pdf> <./LM32/images/timer.pdf
+
+pdfTeX warning: pdflatex (file ./LM32/images/timer.pdf): PDF inclusion: multipl
+e pdfs with page group included in a single page
+>] <./LM32/images/timer_write.pdf, id=1015, 625.33624pt x 299.1175pt>
 File: ./LM32/images/timer_write.pdf Graphic file (type pdf)
 
 <use ./LM32/images/timer_write.pdf>
-Package pdftex.def Info: ./LM32/images/timer_write.pdf used on input line 666.
+Package pdftex.def Info: ./LM32/images/timer_write.pdf used on input line 651.
 (pdftex.def)             Requested size: 375.20464pt x 179.47188pt.
- [27 <./LM32/images/gpio_write.pdf>]
-[28 <./LM32/images/uart_block_full.pdf> <./LM32/images/uart_block_read.pdf
+ [30 <./LM32/images/timer_read.pdf> <./LM32/images/timer_write.pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/uart_block_read.pdf): PDF
- inclusion: multiple pdfs with page group included in a single page
->] [29 <./LM32/images/uart_block_write.pdf> <./LM32/images/timer.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/timer.pdf): PDF inclusion
-: multiple pdfs with page group included in a single page
->] [30 <./LM32/images/timer_read.pdf> <./LM32/images/timer_write.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/timer_write.pdf): PDF inc
-lusion: multiple pdfs with page group included in a single page
->] <./LM32/images/gpio_sw_interface.pdf, id=1058, 705.63625pt x 425.59pt>
+pdfTeX warning: pdflatex (file ./LM32/images/timer_write.pdf): PDF inclusion: m
+ultiple pdfs with page group included in a single page
+>] <./LM32/images/gpio_sw_interface.pdf, id=1054, 705.63625pt x 425.59pt>
 File: ./LM32/images/gpio_sw_interface.pdf Graphic file (type pdf)
 
 <use ./LM32/images/gpio_sw_interface.pdf>
 Package pdftex.def Info: ./LM32/images/gpio_sw_interface.pdf used on input line
- 685.
+ 670.
 (pdftex.def)             Requested size: 423.38501pt x 255.35596pt.
 
-Overfull \hbox (5.13133pt too wide) in paragraph at lines 685--685
+Overfull \hbox (5.13133pt too wide) in paragraph at lines 670--670
  [] 
  []
 
-<./LM32/images/uart_sw_interface.pdf, id=1060, 581.17125pt x 350.30875pt>
+<./LM32/images/uart_sw_interface.pdf, id=1056, 581.17125pt x 350.30875pt>
 File: ./LM32/images/uart_sw_interface.pdf Graphic file (type pdf)
 
 <use ./LM32/images/uart_sw_interface.pdf>
 Package pdftex.def Info: ./LM32/images/uart_sw_interface.pdf used on input line
- 692.
+ 677.
 (pdftex.def)             Requested size: 348.70544pt x 210.18686pt.
 
-<./LM32/images/timer_sw_interface.pdf, id=1062, 657.45625pt x 326.21875pt>
+<./LM32/images/timer_sw_interface.pdf, id=1058, 657.45625pt x 326.21875pt>
 File: ./LM32/images/timer_sw_interface.pdf Graphic file (type pdf)
 
 <use ./LM32/images/timer_sw_interface.pdf>
 Package pdftex.def Info: ./LM32/images/timer_sw_interface.pdf used on input lin
-e 699.
+e 684.
 (pdftex.def)             Requested size: 394.47679pt x 195.73274pt.
 
-Underfull \vbox (badness 1735) has occurred while \output is active []
-
- [31 <./LM32/images/gpio_sw_interface.pdf>] [32 <./LM32/images/uart_sw_interfac
-e.pdf> <./LM32/images/timer_sw_interface.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./LM32/images/timer_sw_interface.pdf): 
-PDF inclusion: multiple pdfs with page group included in a single page
->] <./LM32/images/peripheral_soc.pdf, id=1121, 557.08125pt x 129.48375pt>
+<./LM32/images/peripheral_soc.pdf, id=1060, 557.08125pt x 129.48375pt>
 File: ./LM32/images/peripheral_soc.pdf Graphic file (type pdf)
 
 <use ./LM32/images/peripheral_soc.pdf>
-Package pdftex.def Info: ./LM32/images/peripheral_soc.pdf used on input line 71
-0.
+Package pdftex.def Info: ./LM32/images/peripheral_soc.pdf used on input line 69
+5.
 (pdftex.def)             Requested size: 334.25133pt x 77.69083pt.
+ [31 <./LM32/images/gpio_sw_interface.pdf>] [32 <./LM32/images/uart_sw_interfac
+e.pdf> <./LM32/images/timer_sw_interface.pdf
 
-<./LM32/images/soft_SoC_design_flow.pdf, id=1123, 724.7075pt x 528.97626pt>
+pdfTeX warning: pdflatex (file ./LM32/images/timer_sw_interface.pdf): PDF inclu
+sion: multiple pdfs with page group included in a single page
+> <./LM32/images/peripheral_soc.pdf
+
+pdfTeX warning: pdflatex (file ./LM32/images/peripheral_soc.pdf): PDF inclusion
+: multiple pdfs with page group included in a single page
+>] <./LM32/images/soft_SoC_design_flow.pdf, id=1139, 724.7075pt x 528.97626pt>
 File: ./LM32/images/soft_SoC_design_flow.pdf Graphic file (type pdf)
 
 <use ./LM32/images/soft_SoC_design_flow.pdf>
 Package pdftex.def Info: ./LM32/images/soft_SoC_design_flow.pdf used on input l
-ine 725.
+ine 710.
 (pdftex.def)             Requested size: 434.82785pt x 317.3882pt.
 
-Overfull \hbox (16.57417pt too wide) in paragraph at lines 725--725
+Overfull \hbox (16.57417pt too wide) in paragraph at lines 710--710
  [] 
  []
 
-[33 <./LM32/images/peripheral_soc.pdf>] [34 <./LM32/images/soft_SoC_design_flow
-.pdf>]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 766.
+[33 <./LM32/images/soft_SoC_design_flow.pdf>]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 751.
 
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [35] [36]
-<./LM32/images/soft_design_flow.pdf, id=1260, 724.7075pt x 231.86626pt>
+) [34] [35]
+<./LM32/images/soft_design_flow.pdf, id=1240, 724.7075pt x 231.86626pt>
 File: ./LM32/images/soft_design_flow.pdf Graphic file (type pdf)
 
 <use ./LM32/images/soft_design_flow.pdf>
 Package pdftex.def Info: ./LM32/images/soft_design_flow.pdf used on input line 
-861.
+846.
 (pdftex.def)             Requested size: 434.82785pt x 139.12082pt.
 
-Overfull \hbox (16.57417pt too wide) in paragraph at lines 861--861
+Overfull \hbox (16.57417pt too wide) in paragraph at lines 846--846
  [] 
  []
 
-[37 <./LM32/images/soft_design_flow.pdf>]
+[36 <./LM32/images/soft_design_flow.pdf>]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 )
-Overfull \hbox (301.75365pt too wide) in paragraph at lines 932--933
+Overfull \hbox (301.75365pt too wide) in paragraph at lines 917--918
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (287.3535pt too wide) in paragraph at lines 933--934
+Overfull \hbox (287.3535pt too wide) in paragraph at lines 918--919
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (296.9536pt too wide) in paragraph at lines 934--935
+Overfull \hbox (296.9536pt too wide) in paragraph at lines 919--920
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (80.9514pt too wide) in paragraph at lines 935--936
+Overfull \hbox (80.9514pt too wide) in paragraph at lines 920--921
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][] 
  []
 
-) (./embedded_book.bbl [38]
+[37]) (./embedded_book.bbl [38]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
@@ -1631,13 +1631,13 @@ Package rerunfilecheck Info: File `embedded_book.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 128.
  ) 
 Here is how much of TeX's memory you used:
- 24441 strings out of 495059
- 440048 string characters out of 3182030
- 647409 words of memory out of 3000000
+ 24435 strings out of 495059
+ 440012 string characters out of 3182030
+ 648095 words of memory out of 3000000
  26683 multiletter control sequences out of 15000+200000
  39543 words of font info for 97 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 56i,10n,72p,1083b,1878s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,10n,72p,1083b,1948s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/f
@@ -1646,10 +1646,10 @@ w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on embedded_book.pdf (43 pages, 1302506 bytes).
+Output written on embedded_book.pdf (43 pages, 1301659 bytes).
 PDF statistics:
- 1458 PDF objects out of 1728 (max. 8388607)
- 1125 compressed objects within 12 object streams
- 341 named destinations out of 1000 (max. 500000)
+ 1450 PDF objects out of 1728 (max. 8388607)
+ 1117 compressed objects within 12 object streams
+ 335 named destinations out of 1000 (max. 500000)
  349 words of extra memory for PDF output out of 10000 (max. 10000000)
 

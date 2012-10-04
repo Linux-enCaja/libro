@@ -816,8 +816,8 @@ SECTIONS
 PROVIDE(_fstack = ORIGIN(ram) + LENGTH(ram) - 4);
 \end{lstlisting}
 
-En este archivo se declara la posición inicial de la memoria (\textit{\_RAM\_START}), su longitud (\textit{\_RAM\_SIZE}) y se declaran las diferentes memorias que posee el sistema, para este caso solo existe la memoria \textit{BOOT RAM} que recibe el nombre de \textit{ram}. Las secciones son declaradas en el orden que serán almacenadas, en la \textit{ram} iniciando con la sección \textit{text} en la posición de memoria \textit{0x00000000}; el enlazador coloca todo el lenguaje de máquina extraido de los objetos generados a partir del código fuente a partir de esta dirección; a continuación coloca las constantes utilizadas en el código (como los \#define, las cadenas de caracteres a ser impresas) que hacen parte de la sección \textit{rodata}; después las variables inicializadas que hacen parte de la sección \textit{data} y finalmente las variables sin inicializar de la sección \textit{bss}. Adicionalmente, este archivo declara un espacio de memoria llamado \textit{\_fstack}, el cual realizará las funciones de 
-la pila. Al finalizar el proceso de enlazado se genera un archivo ejecutable llamado \textit{image}.
+En este archivo se declara la posición inicial de la memoria (\textit{\_RAM\_START}), su longitud (\textit{\_RAM\_SIZE}) y se declaran las diferentes memorias que posee el sistema, para este caso solo existe la memoria \textit{BOOT RAM} que recibe el nombre de \textit{ram}. Las secciones son declaradas en el orden que serán almacenadas, en la \textit{ram} iniciando con la sección \textit{text} en la posición de memoria \textit{0x00000000}; el enlazador coloca todo el lenguaje de máquina extraido de los objetos generados a partir del código fuente a partir de esta dirección; a continuación coloca las constantes utilizadas en el código (como los \#define, las cadenas de caracteres a ser impresas) que hacen parte de la sección \textit{rodata}; después las variables inicializadas que hacen parte de la sección \textit{data} y finalmente las variables sin inicializar de la sección \textit{bss}, en esta sección se declaran dos variables globales \textit{\_fbss} y \textit{\_ebss} que son asignadas a las direcciones 
+donde comienza y termina la región respectivamente. Adicionalmente, este archivo declara dos espacios de memoria especiales llamados \textit{\_gp} el puntero global, localizado al final de la sección \textit{data} y \textit{\_fstack}, el cual realizará las funciones de la pila y se encuentra localizado al final de la memoria RAM. Al finalizar el proceso de enlazado se genera un archivo ejecutable llamado \textit{image}.
 
 \subsubsection{Utilitarios binarios}
 El formato ELF no puede ser utilizado directamente para generar la memoria de programa del procesador; para ello, se debe extraer de este la información correspondiente a las secciones \textit{text}, \textit{rodata} y \textit{data}. Para realizar esta tarea la cadena de herramientas GNU proporcciona la utilidad \textit{objcopy}, la cual puede generar un archivo de salida en varios formatos, en este caso se genera el archivo \textit{image.srec} con formato S-record.
@@ -905,7 +905,7 @@ main.o: main.c
 soc-hw.o: soc-hw.c
 	$(LM32_CC) $(CFLAGS) -c soc-hw.c
 
-image: crt0ram.o main.o soc-hw.o linker.ld
+image: crt0ram.o main.o soc-hw.o
 	$(LM32_LD) $(LDFLAGS) -Map image.map -N -o image crt0ram.o main.o soc-hw.o
 
 image.lst: image
@@ -924,9 +924,167 @@ clean:
 
 Cada cadena de caracteres que termina con dos puntos \textbf{:} es un posible parámetro que puede ser pasado a la herramienta \textit{make}, la que se encarga de leer el Makefile y ejecutar las operaciones en él asignadas. Al ejecutar el comando \textit{make} sin parámetros este busca en el directorio donde fué ejecutado un archivo con el nombre \textit{Makefile} o \textit{makefile} y ejecutará lo que encuentre en la etiqueta \textit{all}; los nombres que aparecen después de los dos puntos, son dependencias que se deben ejecutar antes de realizar las acciones propias; en este caso se deben buscar las etiquetas \textit{image.srec} y \textit{\$(VRAMFILE)} y ejecutarlas.
 
-Para ejecutar \textit{image.srec} es necesario ejecutar antes \textit{}
+Para ejecutar \textit{image.srec} es necesario ejecutar antes \textit{image.lst}, la cual a su vez requiere que se ejecute \textit{image}, este tipo de encadenamientos son típicos en estos archivos y son necesarios para seguir el flujo de compilación. Para ejecutar las acciones de \textit{image} es necesario ejecutar \textit{crt0ram.o}, \textit{main.o} y \textit{soc-hw.o} las cuales compilan el código fuente \textit{crt0ram.S, main.c} y \textit{soc-hw.c} para generar los objetos correspondientes; una vez creados los objetos se pueden ejecutar la acción de \textit{image}: \textit{\$(LM32\_LD) \$(LDFLAGS) -Map image.map -N -o image crt0ram.o main.o soc-hw.o}, este comando llama al enlazador para que cree el ejecutable \textit{image} a partir de los objetos \textit{crt0ram.o}, \textit{main.o} y \textit{soc-hw.o}. A continuación se ejecutarán las operaciones de \textit{image.lst}, seguidas por las de \textit{image.srec} y \textit{\$(VRAMFILE}.
+
+El siguiente es el resultado de ejecutar el comando \textit{make}:
+
+\begin{lstlisting}[language=sh]
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c crt0ram.S
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c main.c
+lm32-linux-gcc -MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -c soc-hw.c
+lm32-linux-ld -nostdlib -nodefaultlibs -Tlinker.ld  -Map image.map -N -o image crt0ram.o main.o soc-hw.o
+lm32-linux-objdump -h -S image > image.lst
+lm32-linux-objcopy -j .text -j .rodata -j .data -O srec image image.srec
+../../tools/srec2vram/srec2vram image.srec 0x00000000 0x1000 > image.ram
+Extracting [00000000,00001000) (size=0x1000)
+\end{lstlisting}
 
 
+\subsubsection{C Runtime}
+
+El archivo ``C Runtime'' (\textit{crt0ram.S}) posee rutinas de inicialización que deben realizarse antes de llamar a la función principal del programa en C; este archivo normelmente se escribe utilizando lenguaje ensamblador. A continuación explicaremos el contenido de este archivo:
 
 
+\begin{lstlisting}
+	.section    .text, "ax", @progbits        
+	.global     _start  
+	.global     irq_enable, irq_disable, irq_set_mask, irq_get_mask
+	.global     jump, halt
+	.global     get_sp, get_gp
+_start:    
+_reset_handler:
+	xor     r0, r0, r0
+	wcsr    IE, r0
+	mvhi    r1, hi(_reset_handler)
+	ori     r1, r1, lo(_reset_handler)
+	wcsr    EBA, r1
+	calli   _crt0
+	nop
+	nop
+\end{lstlisting}
+
+En la primera línea: \textit{.section    .text,} declara el inicio de la sección \textit{text} la cual contiene el código ejecutable, \textit{``ax'',@progbits} le indica al ensamblador que la sección es asignable (``a''), ejecutable (``x'') y contiena datos (``@progbits'').  En las líneas 3 al 5 se declaran las funciones globales que pueden ser utilizadas por cualquier función del programa. 
+
+La etiqueta \textit{\_start} que tiene la misma dirección que la variable \textit{\_reset\_handler} indica el inicio del vector de excepción \textit{reset}, que para esta arquitectura es la primera dirección de la memoria de programa. La primera instrucción \textit{xor     r0, r0, r0} hace la operación \textit{xor} entre el registro \textit{r0} con el mismo y almacena el contenido en \textit{r0}, recuerde que el valor de \textit{r0} siempre es cero, en la segunda instrucción \textit{wcsr    IE, r0} se hace \textit{IE = 0} con lo que se deshabilitan todas las interrupciones, algo que es común en la inicialización; con la tercera y cuarta instrucción se almacena la dirección a la que apunta \textit{\_reset\_handler} (0x0000000) en \textit{r1}, para posteriormente asignarsélo al registro \textit{EBA} (Exception Base Address), con lo que se inicializa la dirección base de las excepciones a la dirección \textit{0x00000000}; en la sexta línea se hace un llamado a la función \textit{\_crt0}, la cual se describirá 
+más adelante, después de esto aparecen dos instrucciones \textit{nop}, con lo que se completan 8 instrucciones, para la etiqueta \textit{\_reset\_handler}. Las primeras 8 instrucciones que ejecutará el programa corresponden al vector de reset, estas instrucciones se ejecutarán cada vez que se active la señal de \textit{reset}.
+
+A continuación aparece la etiqueta \textit{\_breakpoint\_handler} seguida por 8 instrucciones \textit{nop}, esto se hace cuando no se escribe una rutina que atienda a una determinada excepción; es decir, si se llegara a presentar la excepción \textit{breakpoint} el contador de programa saltaría a la dirección \textit{0x00000008} y no realizaría ninguna operación. Lo mismo se hace con las excepciones \textit{ibuserror}, \textit{watchpoint}, \textit{dbuserror}, \textit{divzero} y \textit{scall}, la única excepción que se maneja en este ejemplo es la interrupción la cual, ya fué explicada en la sección anterior.
+
+Las dos primeras instrucciones de la función \textit{\_crt0} almacenan el valor de la dirección \textit{\_fstack} (asignada en el archivo \textit{linker.ld}- en el registro \textit{sp}, con lo que se inicializa la pila\footnote{Esta dirección es asignada de forma dinámica cada vez que se realiza el proceso de enlazado}; las instrucciones 3 y 4 asignan el valor del puntero global a la dirección \textit{\_gp}; en las instrucciones 5 al 8 se asigna el valor de las direcciones \textit{\_fbss} y \textit{\_ebss} a los registros \textit{r1} y \textit{r3} respectivamente; en las líneas 10 al 13 se inicializa el contenido de la sección \textit{bss} con zeros, esto debido a que esta sección contendrá variables no inicalizadas, cuando toda la sección se llene con ceros se hará un llamado a la función \textit{callMain}.
+
+\lstset{numbers=left, firstnumber=0}
+\begin{lstlisting}
+_crt0:
+	mvhi    sp, hi(_fstack)
+	ori     sp, sp, lo(_fstack)
+	mvhi    gp, hi(_gp)
+	ori     gp, gp, lo(_gp)
+	mvhi    r1, hi(_fbss)
+	ori     r1, r1, lo(_fbss)
+	mvhi    r3, hi(_ebss)
+	ori     r3, r3, lo(_ebss)
+.clearBSS:
+	be      r1, r3, .callMain
+	sw      (r1+0), r0
+	addi    r1, r1, 4
+	bi      .clearBSS
+.callMain:
+	mvi     r1, 0
+	mvi     r2, 0
+	mvi     r3, 0
+	calli   main
+\end{lstlisting}
+
+Finalmente, en la función \textit{callMain} se hacen igual a creo los registros \textit{r1}, \textit{r2} y \textit{r3} (los cuales son usados para pasar parámetros) y se llama a la función \textit{main}. 
+
+
+\subsubsection{Función principal (main)}
+El archivo de inicialización hace un llamado a la función \textit{main} (no es obligatorio usar este nombre para la función principal), la cual debe incluirse en los archivos que hacen parte del código fuente y son pasados al enlazador, en este ejemplo se encuentra en el archivo \textit{main.c} y se lista a continuación.
+
+\begin{lstlisting}
+#include "soc-hw.h"
+int main()
+  {
+    uart_putstr("*Hello*\n");
+    uart_putstr("Entering Echo Test...\n");
+    while (1) {
+      uart_putchar(uart_getchar());
+    }
+  }
+\end{lstlisting}
+
+
+La función \textit{main} transmite por el puerto serie (UART) el mensaje ``\textit{*Hello*}'' y después entra en un ciclo infinito (\textit{while (1)}) en el que transmite lo que recibe por la UART. En el archivo \textit{soc-hw.h} se encuentran las declaraciones de las funciones y estructuras utilizadas por la UART:
+
+\begin{lstlisting}
+#define UART_DR   0x01 // RX Data Ready
+#define UART_ERR  0x02 // RX Error
+#define UART_BUSY 0x10 // TX Busy
+
+typedef struct {
+   volatile uint32_t ucr;
+   volatile uint32_t rxtx;
+} uart_t;
+
+void uart_putchar(char c);
+void uart_putstr(char *str);
+char uart_getchar();
+\end{lstlisting}
+
+Las definiciones \textit{UART\_DR}, \textit{UART\_ERR} y \textit{UART\_BUSY} se utilizan para hacer que el código sea más fácil de entender; es más entendible revisar la condición UART\_BUSY que el número \textit{0x10}, en la figura \ref{uart_sw_interface_2} se muestra el significado de estas definiciones
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_sw_interface_2.pdf} \end{center}
+    \caption{Significado de las definiciones \textit{UART\_DR}, \textit{UART\_ERR} y \textit{UART\_BUSY}}\label{uart_sw_interface_2}
+  \end{figure}
+
+La estructura \textit{uart\_t}, como se explicó anteriormente hace un mapeo de los registros de la UART y se utiliza para comunicarse con ellos; finalmente se declaran las funciones \textit{uart\_putchar}, \textit{uart\_putstr} y \textit{uart\_getchar}, las cuales son declaradas en el archivo \textit{soc-hw.c} y se listan a continuación:
+
+\begin{lstlisting}
+uart_t   *uart0  = (uart_t *)   0x20000000;
+
+char uart_getchar(){   
+	while (! (uart0->ucr & UART_DR)) ;
+	return uart0->rxtx;
+}
+
+void uart_putchar(char c){
+	while (uart0->ucr & UART_BUSY) ;
+	uart0->rxtx = c;
+}
+
+void uart_putstr(char *str){
+	char *c = str;
+	while(*c) {
+		uart_putchar(*c);
+		c++;
+	}
+}
+\end{lstlisting}
+
+
+En la primera línea de este código se declara el puntero \textit{uart0} como tipo \textit{uart\_t} y se le asigna la dirección \textit{0x20000000}; después de esto se muestra el código que implementa las funciones \textit{uart\_getchar}, \textit{uart\_putchar} y \textit{uart\_putstr}, las que se explicarán más adelante.
+
+
+Volviendo a la función \texit{main} la primera instrucción en ejecutarse es:
+
+\begin{lstlisting}
+ uart_putstr("*Hello*\n");
+\end{lstlisting}
+
+Esta instrucción hace un llamado a la función \textit{uart\_putstr} la cual a su vez hace un llamado de la función \textit{uart\_putchar} para transmitir caracter por caracter la cadena. En la figura \ref{uart_soc-hw1} se muestra el ciclo de ejecución de esta instrucción.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_soc-hw1.pdf} \end{center}
+    \caption{} y \textit{UART\_BUSY}}\label{uart_soc-hw1}
+  \end{figure}
+
+La función \textit{uart\_putchar} verifica el estado del flag \textit{FLAG\_BUSY} del registro \textit{ucr} para esperar a que se termine de transmitir un caracter (esto es necesario ya que la velocidad del procesador es mucho mayor que la de la UART), cuando se desactiva este flag se escribe en el registro \textit{rxtx} el valor a transmitir.
+
+  \begin{figure}
+    \begin{center} \includegraphics[scale=.6]{./LM32/images/uart_soc-hw2.pdf} \end{center}
+    \caption{} y \textit{UART\_BUSY}}\label{uart_soc-hw2}
+  \end{figure}
+
+En la figura \ref{uart_soc-hw2} se muestran la formas de onda de la ejecución de la instrucción \textit{uart\_putstr} el recuadro azul muestra el ciclo de lectura del registro \textit{ucr} cuya dirección es \textit{0x20000000} 
 

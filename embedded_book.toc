@@ -5,13 +5,13 @@
 \contentsline {subsection}{\numberline {1.2.1}Banco de Registros}{2}{subsection.1.2.1}
 \contentsline {subsection}{\numberline {1.2.2}Registro de estado y control}{3}{subsection.1.2.2}
 \contentsline {subsubsection}{Contador de Programa (PC)}{3}{section*.2}
-\contentsline {subsubsection}{EID Exception ID}{3}{section*.3}
-\contentsline {subsubsection}{IE Habilitaci\'on de interrupci\'on}{3}{section*.4}
+\contentsline {subsubsection}{IE Habilitaci\'on de interrupci\'on}{3}{section*.3}
+\contentsline {subsubsection}{EID Exception ID}{3}{section*.4}
 \contentsline {subsubsection}{IM M\'ascara de interrupci\'on}{4}{section*.5}
 \contentsline {subsubsection}{IP Interrupci\'on pendiente}{4}{section*.6}
 \contentsline {section}{\numberline {1.3}Set de Instrucciones del procesador Mico32}{4}{section.1.3}
 \contentsline {subsection}{\numberline {1.3.1}Instrucciones aritm\'eticas}{4}{subsection.1.3.1}
-\contentsline {subsubsection}{Entre registros}{5}{section*.7}
+\contentsline {subsubsection}{Entre registros}{4}{section*.7}
 \contentsline {subsubsection}{Inmediatas}{5}{section*.8}
 \contentsline {subsection}{\numberline {1.3.2}Saltos}{5}{subsection.1.3.2}
 \contentsline {subsubsection}{Condicionales}{5}{section*.9}
@@ -24,20 +24,20 @@
 \contentsline {subsubsection}{Rutina de atenci\'on a la interrupci\'on}{17}{section*.14}
 \contentsline {subsection}{\numberline {1.3.5}Retorno de funci\'on y de excepci\'on}{19}{subsection.1.3.5}
 \contentsline {section}{\numberline {1.4}Arquitectura del SoC LM32}{19}{section.1.4}
-\contentsline {subsection}{\numberline {1.4.1}Bus wishbone}{23}{subsection.1.4.1}
-\contentsline {subsubsection}{Interface del bus wishbone (conmax)}{24}{section*.15}
+\contentsline {subsection}{\numberline {1.4.1}Bus wishbone}{19}{subsection.1.4.1}
+\contentsline {subsubsection}{Interface del bus wishbone (conmax)}{23}{section*.15}
 \contentsline {subsection}{\numberline {1.4.2}Arquitectura de los perif\'ericos}{25}{subsection.1.4.2}
 \contentsline {subsubsection}{Perif\'erico GPIO}{25}{section*.16}
 \contentsline {subsubsection}{Perif\'erico UART}{27}{section*.17}
 \contentsline {subsubsection}{Perif\'erico TIMER}{27}{section*.18}
-\contentsline {subsection}{\numberline {1.4.3}Interfaz Software}{27}{subsection.1.4.3}
-\contentsline {subsubsection}{Estructura de datos del perif\'erico}{31}{section*.19}
-\contentsline {subsubsection}{Direcci\'on de memoria de los perif\'ericos}{33}{section*.20}
-\contentsline {section}{\numberline {1.5}Programaci\'on del SoC LM32}{33}{section.1.5}
+\contentsline {subsection}{\numberline {1.4.3}Interfaz Software}{30}{subsection.1.4.3}
+\contentsline {subsubsection}{Estructura de datos del perif\'erico}{30}{section*.19}
+\contentsline {subsubsection}{Direcci\'on de memoria de los perif\'ericos}{31}{section*.20}
+\contentsline {section}{\numberline {1.5}Programaci\'on del SoC LM32}{31}{section.1.5}
 \contentsline {subsubsection}{Compilaci\'on}{33}{section*.21}
 \contentsline {subsubsection}{Enlazado}{33}{section*.22}
-\contentsline {subsubsection}{Script de enlazado}{35}{section*.23}
-\contentsline {subsubsection}{Utilitarios binarios}{36}{section*.24}
-\contentsline {subsubsection}{Inicializaci\'on de la memoria BRAM}{36}{section*.25}
-\contentsline {subsection}{\numberline {1.5.1}Ejemplo de programaci\'on}{37}{subsection.1.5.1}
-\contentsline {subsubsection}{Makefile}{37}{section*.26}
+\contentsline {subsubsection}{Script de enlazado}{34}{section*.23}
+\contentsline {subsubsection}{Utilitarios binarios}{35}{section*.24}
+\contentsline {subsubsection}{Inicializaci\'on de la memoria BRAM}{35}{section*.25}
+\contentsline {subsection}{\numberline {1.5.1}Ejemplo de programaci\'on}{36}{subsection.1.5.1}
+\contentsline {subsubsection}{Makefile}{36}{section*.26}
