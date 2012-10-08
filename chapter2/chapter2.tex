@@ -1,0 +1,450 @@
+%%%%%%%%%%%%%%%%%%%%% chapter.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample chapter
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
+%\motto{Use the template \emph{chapter.tex} to style the various elements of your chapter content.}
+\chapter{Máquinas de Estado Algorítmicas (ASM)}
+\label{ASMChapter} % Always give a unique label
+% use \chaptermark{}
+% to alter or adjust the chapter heading in the running head
+
+\begin{svgraybox}
+\abstract{La lógica de transferencia de registros es una de las técnicas fundamentales para la descripción del comportamiento de los circuitos secuenciales, los cuales pueden ser implementados con un grupo de registros y una unidad que realiza operaciones arirméticas y/o lógicas que transfieren los datos de un registro a otro. La secuencia o flujo de datos al realizar ese proceso secuencial: registros, unidad aritmético-lógica, registros es lo que forma los algoritmos. Así, todo sistema secuencial (algoritmo) puede ser visto como la unión de un camino de datos (registros y operaciones) y una unidad de control que determina cuando y cuales operaciones se deben realizar, al igual que las transferencia o movimiento de datos entre registros.}
+\end{svgraybox}
+
+\section{Introducción}
+Para el diseño de circuitos digitales existen diferentes metodologías, técnicas y herramientas; las cuales corresponden a los diferentes niveles de abstracción en que se puede concebir un sistema. El nivel mas utilizado y por el cual podemos iniciar a comprender mejor el mundo digital es el nivel conocido como "RTL" (en inglés, Register Transfer Level) o Nivel de Transferencia de Registros, en donde los diseñadores abordan la solución de un problema al nivel de operaciones y de tranferencia entre registros, lo cual ocurre durante muchos ciclos de reloj [REF GAJSKI BUSCAR]. En este nivel de abstracción no se aborda el problema desde la perspectiva de las dimensiones geométricas o conexiones físicas concretas del sistema, sino que se aborda desde el nivel comportamental desarrollado por cada uno de los pasos que permiten realizar esa manipulación de datos almacenados en registros, hasta la ejecución de operaciones aritmetico lógicas; finalizando nuevamente en registros en donde se van guardando los resultados. Es este el punto de partida para abordar el desarrollo estructurado de soluciones en hardware, que para problemas de mediana y baja complejidad hacen que sea una solución acertada. Para problemas con complejidades altas, se hace necesario ir a un nivel de abstracción más alto, en donde los conceptos adquiridos en este capítulo son fundamentales para comprender.....lo que se explorará en los siguientes capítulos de este libro.sf 
+
+
+\section{Metodologías de diseño RTL}
+
+Uno de los métodos más conocidos para el diseño de circuitos digitales de cierta complejidad es el de máquinas de estado (FMS, en inglés Finite State Machine), en donde se usa la representación por medio de circulos y flechas los diversos estados por los que puede ir pasando un circuito al igual que las transiciones que definen el cambio de estado. 
+
+Los sistemas digitgales normalente están compuestos de un conjunto de periféricos o elementos básicos de librería ya sean elementos combinacionale so secuenciales (p.e decodificadores, multiplexores, sumadores, restadores, contadores, registors de desplaamiento) y finalmente una máquina de estados finita que se encarga de controlar los estados, las transiciones dentre estados y las salidas oi señales de controla para manipular todos los periféricos del sistema.
+
+POR LO GENERAL.... En el caso de tener un circuito con funciones principalmente numéricas, puede ser necesario hacer una descripción previa con un algoritmo, es decir una secuencia de operaciones. estas descripciones previas facilitan la impleementación llegnado a tener circuitos aritmético o lógicos basados en estados los cuales por medio de secuencias dan solución al algoritmo. 
+
+En el caso de máquinas de estados complejas con gran cantidad de estados y señales, la representación con circuilos y flechas puede llegar a ser confusa. es por esto que se hace necesario acompañar siempre cada descripción y de hecho comenzar la etapa de diseño utilizando los algoritmos que permitan manipular con rigor y consistencia las operaciones matemáticas necesarias para la ejecución de los iversos cálculos implicados. Pra esto se suelen emplear grafos que muestren dependencia entre operandos. A este tipo de notación se le conoce como máquinas de estado algorítmicas, en las cuales se tiene una representación gráfica intuitiva de las operaciones del circuito en cada ciclo de reloj. 
+
+
+\section{Máquinas de Estados Algorítmicas (ASM)}
+
+La lógica de transferencia de registros es una técnica ampliamente utilizada para la descripción a alto nivel del comportamiento de circuitos secuenciales; los cuales pueden ser vistos como un grupo de registros y operaciones aritméticas y/o lógicas que transfieren datos de un registro a otro. Todo sistema secuencial puede ser visto como la unión de un camino de datos (registros y operaciones) y una unidad de control que determina cuando realizar las operaciones y las transferencias (ver Figura \ref{asm_block_diagram}). 
+
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=6.879cm,height=5.08cm]{./chapter2/images/asm_block_diagram.pdf}
+  \caption{Estructura de una máquina de estados algorítmica.} \label{asm_block_diagram}
+\end{figure}
+
+En este capítulo la unión de una unidad de control y un camino de datos recibirá el nombre de máquina de estados algorimica (ASM), para diferenciarla de la máquina de estados finitos y para indicar la posibilidad de implementación de cualquier tipo de algorítmo. Los pasos que se realizan para el diseño e implementación de una máquina de estados algorítmica son los siguientes:
+
+\begin{enumerate}
+ \item Elaboración de un diagrama de flujo que describa la funcionalidad deseada. 
+ \item Identificación de los componentes del camino de datos.
+ \item Identificación de las señales necesarias para controlar el camino de datos e interconexión.
+ \item Especificación de la unidad de control utilizando diagramas de estado.
+ \item Implementación de los componentes del camino de datos y de la unidad de control utilizando lenguajes de descripción de hardware.
+ \item Simulación y pruebas
+\end{enumerate}
+
+
+\subsection{Ejemplo de ASM: Multiplicación de números binarios}
+
+El algoritmo de multiplicación que se implementará se basa en productos parciales; el primer producto parcial siempre es cero (ver Figura \ref{productos_parciales}, a continuación se realiza la multiplicación iniciando con el bit menos significativo del multiplicador, el resultado de la multiplicación se suma al primer producto parcial y se obtiene el segundo producto parcial; si el bit del multiplicador es {\textquoteleft}0{\textquoteright} no se afecta el contenido de PP, por lo que no se realiza la suma. A continuación se realiza la multiplicación del siguiente bit (a la izquierda del LSB) y el resultado se suma al producto parcial pero corrido un bit a la izquierda, esto para indicar que la potencia del siguiente bit tiene un grado más; este corrimiento se debe realizar ya que si un número binario se multiplica por 2 el resultado es el mismo número corrido a la izquierda, por ejemplo:
+
+{15 (1111) X 2 = 11110  = (30)};
+{15 (1111) X 4 = 111100 = (60)}
+
+Este proceso continúa hasta completar los bits del multiplicador y el último producto parcial es el resultado.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=6.879cm,height=5.08cm]{./chapter2/images/FSM-img12.png}
+  \caption{Multiplicación de numeros binarios usando productos parciales.} \label{productos_parciales}
+\end{figure}
+
+\subsubsection{Diagrama de Flujo}
+En la Figura \ref{flujo_multiplicador} se muestra un diagrama de flujo para la implementación de este algoritmo. El primer paso para realizar la multiplicación es hacer el producto parcial (PP) sea igual a cero, a continuación se realiza una verificación del bit menos significativo del multiplicador, esto se hace para sumar únicamente los resultados que no son cero. En este caso se utiliza un corrimiento a la izquierda para obtener el siguiente bit del multiplicador, si por ejemplo al número \textit{101\textbf{0}} se le realiza un corrimiento a la derecha se obtiene el número \textit{010\textbf{1}}, con lo que el bit menos significativo corresponde al segundo bit de \textit{1010}, si se realiza otro corrimiento a la derecha se obtiene \textit{001\textbf{0}} y de nuevo el bit menos significativo corresponde al tercer bit de \textit{1010}, al realizar de nuevo un corrimiento se obtiene \textit{000\textbf{1}}, con lo que tendríamos todas las cifras del multiplicador de forma consecutiva en el mit menos 
+significativo. Cuando se realiza un nuevo corrimiento el resultado es \textit{0000} lo que indica que el producto parcial no puede cambiar y podemos terminar el algortimo. Este método para finalizar el algoritmo produce que el número de iteraciones depende del valor del multiplicador; otra forma de terminar el algoritmo sin que dependa del valor del multiplicador se obtiene al contar el número de bits del multiplicador y realizar el corrimiento \textit{n} veces, donde \textit{n} es el número de bits del multiplicador.
+
+Para indicar que cada vez que se toma un bit del multiplicador, este tiene una potencia mayor que el bit anterior, debemos multiplicar el resultado por la base, la cual es 2 en este caso; como se mencionó anteriormente, multiplicar por 2 equivale a realizar un corrimiento a la izquierda, por lo que siempre que se tome un nuevo bit del multiplicador debemos correr a la izquierda el multiplicando.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.35]{./chapter2/images/Multipl.pdf}
+  \caption{Diagrama de flujo para la multiplicación de numeros binarios.} \label{flujo_multiplicador}
+\end{figure}
+
+Una vez conocido el funcionamiento del sistema se procede a realizar el diagrama de caja negra de entradas y salidas. En la Figura \ref{caja_multiplicador} se muestra el multiplicando y el multiplicador (A y B), señales de m bits cada una, el resultado de la multiplicación PP (Bus de 2m Bits), la señal de reloj (CLOCK). Las señales INIT y DONE se utilizan para iniciar el proceso de multiplicación e indicar que el resultado está disponible respectivamente; es importante que todo sistema digital posea la forma de interactuar con el exterior, ya que sin ello el sistema carecería de utilidad.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=11.458cm,height=5.055cm]{./chapter2/images/FSM-img14.png}
+  \caption{Diagrama de caja negra para el multiplicador de numeros binarios.} \label{caja_multiplicador}
+\end{figure}
+
+\subsubsection{Identificación de los componentes del camino de datos}
+
+A continuación se identifican los componentes del camino de datos, esto se realiza recorriendo el diagrama de flujo para encontrar las operaciones que se realizan. 
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.35]{./chapter2/images/Multipl2.pdf}
+  \caption{Identificación de los componentes del camino de datos para el multiplicador de numeros binarios.} \label{caja_multiplicador}
+\end{figure}
+
+En la figura \ref{datapath_multiplicador} se resaltan las operaciones que se deben realizar para la correcta operación del algorítmo; la primera es una operación de acumulación correspondiente a \textit{PP = PP + A}; la segunda operación que encontramos son los dos corrimientos a la izquierda y derecha del multiplicando (A) y el multiplicador (B) respectivamente, estas operaciones se realizan al mismo tiempo pero en módulos diferentes; el último módulo es un comparador que indica que el multiplicador es igual a cero, indicando que el algoritmo puede finalizar.
+
+
+\subsubsection{Identificación de las señales de control e interconexión del camino de datos}
+
+En la figura \ref{intercon_datapath_multiplicador} se muestra la interconexión de los componentes del camino de datos y las señales que lo controlan. 
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=1.2]{./chapter2/images/multipl_datapath.pdf}
+  \caption{Identificación de las señales de control e interconexión del camino de datos.} \label{intercon_datapath_multiplicador}
+\end{figure}
+
+La primera operación que aparece en el diagrama de flujo es la del acumulador, el cual acumula el valor de la salida del registro de corrimiento que almacena el multiplicando, de aquí obtenemos la conexión entre el registro de corrimiento (LSR) a la izquierda y el acumulador (ACC). La segunda operación que aparece es la de los registros de corrimiento, por lo que los valores del multiplicando y multiplicador deben cargarse para su posterior corrimiento a las unidades de corrimiento a la izquierda y derecha respectivamente. La salida del corrimiento a la derecha del multiplicador es comparada en cada ciclo para determinar si se llegó al final del algoritmo, por lo que la entrada del comparador es la salida del registro de corrimiento del multiplicador.
+
+Para determinar las señales de control de cada componente del camino de datos, se debe identificar su función y las operaciones que debe realizar; los registros de corrimiento deben permitir la carga de un valor inicial y el corrimiento de las mismas, esto se realiza con las señales \textit{LOAD} y \textit{SHIFT} respectivamente; el acumulador debe tener la posibilidad de inicializarse en cero y una señal para que sume el valor de la entrada al que tiene almacenado, esto se hace con las señales \textit{RESET} y \textit{ADD}; por último el comparador debe proporcionar una señal que indique que el valor de su entrada es igual a cero, \textit{Z} en este caso.
+
+Aunque es posible que la máquina de control maneje todas las señales de control del camino de datos, es mejor aguparlas de acuerdo a su activación; esto es, si una señal se activa al mismo tiempo que otra, se puede utilizar una señal que las controle a ambas. Para esto se utiliza el diagrama de flujo y se observa en que momento se realizan las operaciones: Se observa que se cargan los valores de los registros de corrimiento y se inicializa en cero el acumulador únicamenet al comenzar el algoritmo y durante la ejecución del mismo no se vuelve a relizar esta operación, por este motivo utilizaremos la misma señal (\textit{RESET}) para cargar los registros de desplazamiento e inicializar en cero el acumulador; la señal que controla el momento en que el acumulador se incrementa es única, ya que no se realiza ninguna operación en ese punto del algoritmo y en este caso recibe el nombre de \textit{ADD}; las operaciones de corrimiento se realizan en el mismo lugar, por lo que se puede utilizar una señal común, que en 
+este caso llamaremos \textit{SH}; por último la salida del comparador \textit{Z} y el bit menos significativo de B \textit{LSB} son señales de salida del camino de datos que le darán a la unidad de control la información necesaria para tomar la acción adecuada en los bloques de decisión.
+
+\subsubsection{Especificación de la unidad de control utilizando diagramas de estado}
+Una vez que se conoce el camino de datos, las señales que lo controlan y las señales que ayudarán a la unidad de control a tomar decisiones, se procede con la especificación de la unidad de control, la cual, es una máquina de estados finitos, por lo que la mejor forma de especificarla es utilizando un diagrama de estados; en la figura \ref{control_multiplicador} se muestra la relación entre el diagrama de flujo y el diagrama de estados.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.4]{./chapter2/images/Multipl3.pdf}
+  \caption{Diagrama de estados de la unidad de control del multiplicador binario.} 
+  \label{control_multiplicador}
+\end{figure}
+
+Como se puede observar, existe una relación muy estrecha entre el diagrama de estados y el diagrama de flujo, cada operación del diagrama de flujo corresponde a un estado de la máquina de control y las transiciones entre ellos son idénticas, observe las líneas del mismo color en la figura \ref{control_multiplicador}
+
+
+La máquina de estados debe iniciar en START y se queda en este estado siempre que la señal INIT tenga un valor de {\textquoteleft}0{\textquoteright}, En el estado INIT la señal RESET = {\textquoteleft}1{\textquoteright}, con lo que el valor del acumulador se hace cero y se cargan los registros A y B. Cuando INIT = {\textquoteleft}1{\textquoteright}, entramos al estado CHECK el cual evalúa la señal LSB, sí LSB = {\textquoteleft}0{\textquoteright}, no se debe realizar la suma de MD, pero si se debe realizar un corrimiento para obtener el siguiente bit del multiplicador y realizar el corrimiento necesario en MD. Si LSB = {\textquoteleft}1{\textquoteright} se debe sumar el valor de las salidas de LSR al valor del acumulador, y después se debe realizar un corrimiento. En el estado ADD se hace la salida ADD = {\textquoteleft}1{\textquoteright} para que el valor a la entrada del acumulador se sume al valor almacenado en él. En el estado SHIFT se realiza el corrimiento de RSR y LSR haciendo el valor de la señal SH = 
+1. 
+
+Para verificar el buen funcionamiento del diagrama de estado debemos realizar una prueba de escritorio: Supongamos que tenemos A = 7 y B = 5
+y que INIT = 1:
+
+
+
+%\begin{center}
+%\tablehead{}
+%\begin{supertabular}{|m{1.855cm}|m{0.791cm}|m{1.765cm}|m{1.038cm}|m{0.566cm}|m{0.95699996cm}|m{1.1719999cm}|m{1.467cm}|m{1.8179998cm}|}
+%\hline
+%\centering  ESTADO & \centering  SH & \centering  LSR & \centering  RSR & \centering  Z & \centering  LSB & \centering  ADD & \centering  DONE & \centering\arraybslash  ACC\\\hline
+%\centering  CHECK & \centering  0 & \centering  00000111 & \centering  0101 & \centering  0 & \centering  1 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00000000\\\hline
+%\centering  ADD & \centering  0 & \centering  00000111 & \centering  0101 & \centering  0 & \centering  1 & \centering  1 & \centering  0 &
+%\centering\arraybslash  00000111\\\hline
+%\centering  SHIFT & \centering  1 & \multicolumn{1}{m{1.765cm}}{\centering  00001110} & \centering  0010 & \centering  0 & \centering  0 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00000111\\\hline
+%\centering  CHECK & \centering  0 & \centering  00001110 & \centering  0010 & \centering  0 & \centering  0 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00000111\\\hline
+%\centering  SHIFT & \multicolumn{1}{m{0.791cm}}{\centering  1} & \multicolumn{1}{m{1.765cm}}{\centering 00011100} & \centering  0001 & \centering  0 & \centering  1 & \centering  0 & \centering  0 & 
+%\centering\arraybslash  00000111\\\hline
+%\centering  CHECK & \centering  0 & \centering  00011100 & \centering  0001 & \centering  0 & \centering  1 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00000111\\\hline
+%\centering  ADD & \centering  0 & \centering  00011100 & \centering  0001 & \centering  0 & \centering  1 & \centering  1 & \centering  0 &
+%\centering\arraybslash  00100011\\\hline
+%\centering  SHIFT & \multicolumn{1}{m{0.791cm}}{\centering  1} & \multicolumn{1}{m{1.765cm}}{\centering  00111000} & \centering  0000 & \centering  1 & \centering  0 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00100011\\\hline
+%\centering  CHECK & \centering  0 & \centering  00111000 & \centering  0000 & \centering  1 & \centering  0 & \centering  0 & \centering  0 &
+%\centering\arraybslash  00100011\\\hline
+%\centering  END1 & \centering  0 & \centering  00111000 & \centering  0000 & \centering  1 & \centering  0 & \centering  0 & \centering  1 &
+%\centering\arraybslash  00100011\\\hline
+%\centering  START & \centering  0 & \multicolumn{1}{m{1.765cm}}{\centering  00000111} & \multicolumn{1}{m{1.038cm}}{\centering  0101} & \multicolumn{1}{m{0.566cm}}{\centering  0} & \centering  1 & \centering  0 & \multicolumn{1}{m{1.467cm}}{\centering  0} & \centering\arraybslash  00000000\\\hline
+%\end{supertabular}
+%\end{center}
+
+Como puede observarse el resultado es correcto (35), en la tabla las casillas sombreadas corresponden a las señales que cambian de un estado
+a otro.
+
+\subsubsection{Implementación de los componentes del camino de datos y de la unidad de control}
+Existe abundante literatura sobre el uso de lenguajes de descripción de hardware para la implementación de sistemas digitales; por este motivo, en este libro no se presentará el código que implementa los diferentes módulos que hacen parte de las máquinas de estado algorítmicas estudiadas.
+
+Es muy importante anotar la importancia de la portabilidad del código, como es bien sabido existen varias empresas que suministran entornos de desarrollo que permiten la entrada de diseño utilizando diferentes medios; las herramientas gráficas utilizados por ellos no son compatibles entre sí, lo que hace imposible el paso de un diseño implementado en una herramienta gráfica a otra de otro fabricante; sin embargo, todas las herramientas aceptan texto con el estándard del lenguaje utilizad; por esto, se recomienda utilizar únicamente entrada de texto en las descripciones.
+
+\subsubsection{Simulación}
+Como se mencionó anteriormente, es posible realizar las simulaciones utilizando las herramientas gráficas de cada uno de los entornos de desarrollo que proporcionan los fabricantes de dispositivos lógicos programables, sin embargo, su uso dificulta la portabilidad del diseño. Por este motivo, se recomienda el uso de \textit{testbench} escritos con el lenguaje estándard. Como parte del proceso de diseño, cada módulo debe ser simulado antes de ser integrado en la descripción de más alto nivel.
+
+Es bueno tener en cuenta los diferentes niveles de simulación que se pueden realizar a un sistema bajo prueba; la simulación más rápida es la que tiene en cuenta únicamente el lengiaje de descripción de hardware utilizado, sin embargo, no es posible garantizar que los resultados del circuito sintetizado sean los mismos que la simulación del lenguaje; por esto, existe la simulación post-síntesis, en la que se simula el RTL (lógica de transferencia de registros) o las compuertas lógicas básicas obtenidas del proceso de síntesis, esta simulación garantiza que el circuito obtenido del proceso de síntesis se comporta como lo deseamos; el tercer nivel de simulación se obtiene cuando se adiciona un modelo de tiempo al diagrama de compuertas del nivel anterior, en este nivel, se tienen en cuenta las capacitancias de carga y la capacitancia de los caminos de interconexión para obtener el retardo de cada elemento del circuito, esta simulación es la más precisa y permite conocer la velocidad máxima a la que puede 
+operar el sistema, esta simulación en algunos entornos de desarrollo recibe el nombre de \textit{simulación post place \& route}.
+
+\subsubsection{Pruebas}
+Aunque la simulación es una buena herramienta para la detección de errores, es necesario realizar una prueba sobre el circuito configurado en el dispositivo lógico programable, para esto existen dos opciones: realizar el montaje de la aplicación y probar la funcionalidad del dispositivo configurado, dependiendo de la complejidad del sistema esta puede ser una tarea tediosa; la segunda opción es utilizar el puerto JTAG para aplicar los vectores de prueba y capturar los resultados, este proceso se describirá en la siguiente sección.
+
+
+\subsection{Implementación de un divisor de n bits sin signo}
+El proceso de división de números binarios es similar al de números decimales: Inicialmente se separan dígitos del Dividendo de izquierda a derecha hasta que la cifra así formada sea mayor o igual que el divisor. En la figura \ref{division} separamos el primer dígito de la derecha ( 0 ) y le restamos el divisor (la operación de resta se realizó en complemento a dos), el resultado de esta operación es un número negativo (los números negativos en representación complemento a dos comienzan por 1). Esto indica que el número es menor que el divisor, por lo tanto, colocamos un cero en el resultado parcial de la división (este dígito será el más significativo) y separamos los dos primeros dígitos (00) y repetimos el proceso.
+ 
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=6.668cm,height=10.502cm]{./chapter2/images/FSM-img23.png}
+  \caption{División de numeros binarios.} \label{division}
+\end{figure}
+
+Sólo hasta el sexto resultado parcial obtenemos un cero en la primera cifra de la resta (recuerde que en complemento a dos los números tienen una longitud fija en nuestro caso 4 bits, sí una operación provoca un bit adicional este se descarta, los bits descartados se encerraron en líneas punteadas en la Figura \ref{division}), lo que indica que el número es mayor o igual que el divisor, en este caso, se coloca un {\textquoteleft}1{\textquoteright} en el resultado parcial y se conserva el valor de la operación de resta, el cual se convierte en el nuevo residuo parcial, este proceso se repite hasta haber {\textquotedblleft}bajado {\textquotedblright} todos los dígitos del dividendo.
+
+En la figura 
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.35]{./chapter2/images/divisor.pdf}
+  \caption{Algoritmo para la división de numeros binarios.} \label{flujo_division}
+\end{figure}
+
+\subsubsection{Identificación de componentes del camino de datos e interconexión}
+En la figura \ref{flujo_comp_division} podemos observar como se obtienen los componentes del camino de datos a partir del diagrama de flujo del divisor; se necesita un registro de corrimiento a la izquierda donde se almacena el Dividendo (DV) y las cifras que se van separando (A), un contador que cuente el número de bits que se han ``bajado'', un restador (sumador en complemento a 2) para determinar si el número separado del dividendo ``cabe'' en el divisor (observando el bit más significativo MSB), y un comparador que indique que el valor del contador llegó a cero.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.35]{./chapter2/images/divisor2.pdf}
+  \caption{Identificación de componentes del camino de datos para la división de numeros binarios.} \label{flujo_comp_division}
+\end{figure}
+
+En la figura \ref{datapath_division} se muestra la interconexión de los elementos del camino de datos y se muestran las señales de control. De nuevo, las señales que se activan en el mismo punto del diagrama de flujo pueden agruparse, por esto, la señal de inicialización del registro A, la carga de DV y la inicialización del contador se realizará con la señal \textit{INIT}; el registro de desplazamiento a la izquierda va almacenando el resultado de la división a medida que se van utilizando los bits más significativos del dividendo, con esto se reduce el número de componentes, la señal \textit{DV0} ayuda a formar el resultado; la señal \textit{SH} realiza el corrimiento a la izquierda del registro \textit{\{A,DV\}} con lo que en \textit{A} queda el número que se va separando del dividendo y en \textit{DV} el resultado de la división; la señal \textit{LDA} carga el resultado de la resta entre A y el divisor únicamente cuando el resultado de la resta es positivo, esto es cuando la señal \textit{MSB} es igual a 
+1; la señal \textit{DEC} hace que el valor del contador disminuya en 1, y la salida \textit{Z} se hace 1 cuando el valor de este contador llega a cero indicando que el algoritmo terminó. 
+
+De lo anterior tenemos que la unidad de control tiene como entradas las señales: \textit{Reset}, \textit{Start}, \textit{MSB} y \textit{Z}; y como salidas: \textit{INIT}, \textit{DV0}, \textit{SH}, \textit{DEC} y \textit{LDA}; de nuevo los bloques de decisión del diagrama de flujo del algorítmo hacen referencia a las entradas de la unidad de control.
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.5]{./chapter2/images/divisor3.pdf}
+  \caption{Interconexión del camino de datos para la división de numeros binarios.} \label{datapath_division}
+\end{figure}
+
+
+\subsubsection{Unidad de control}
+En la Figura \ref{control_division1} se muestra la relación existente entre el diagrama de flujo y el diagrama de estados de la unidad de control del divisor binario.
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.4]{./chapter2/images/divisor4.pdf}
+  \caption{Diagrama de estados de la unidad de control para la división de numeros binarios.} \label{control_division1}
+\end{figure}
+
+
+
+\subsection{Contador de número de unos}
+En este ejemplo realizaremos un circuito que cuente el número de bits en una cadena de N bits: 
+
+
+
+\subsection{Circuito para determinar la raíz cuadrada de un número binario}
+
+
+rewruewpor upoewrupoew urpoewf
+
+
+\section{Pasando del hardware al software. Concepto de datapath}
+
+DATAPATH COMO ELEMENTO BASICO DE UNA CPU. HACERLO MAS GENERICO POR LOS TIPOS DE DATAPATHS EXPUESTOS LUEGO.
+
+Como se puede ver en los anteriores ejemplos, las arquitecturas encontradas dependen básicamente del problema que se esté trabajando. Se utiliza la transferencia de registros y e flujo de los datos para poder llegar acertadamente a una implementación, que a nivel de hardware es lo mas acertado. En este caso, la incorporación de periféricos específicos basados en celdas básicas se hace necesaria y de hecho es requisito fundamental para la implementación. Cualquier elemento que permita obtener una respuestas mas eficiente en cuanto a tiempo de ejecución se puede utilizar y solo hace falta optimizar la máquina de estados para que controle cada uno de los perifericos del sistema. Es así como aparece el concepto de concurrencia muy ligado a lo squ ees una solución en hardware. La concurrencia me permite realizar operaciones al mismo tiempo, siempre y cuando los datos que requieran dichas celdas básicas no sean los mismos, o que por lo menos su funcionalidad no esté relacionada. Basicamente lo que se quiere mostrar es que se pueden llevar a cabo varias operaciones al tiempo.
+
+
+\section{Camino de datos o datapath}
+
+FIGURA DE UN DATAPATH CON MAR PC Y MDR. GRAFICA BASICA DATAPATH.
+
+
+Dado que algunas veces se requiere tener un solo sistema que resuelva diferentes problemas, surge la necesidad de no tener alternativas netamente concurrente, en donde la incorporación de periféricos sea de manera indeterminada según la necesidad del diseñador. Para esto se hace necesario plantear estructuras mas genéricas en donde la implementación de los algoritmos dependa claramente de recursos que ya están disponibles y están dados por una arquitectura definida. 
+
+
+Dichas arquitecturas constan básicamente de 3 elementos. Una unidad aritmético - lógica la cual se encarga de realizar las operaciones que requiera el algoritmo. Es de notar que si la unidad aritmético lógica no realiza alguna operación del algoritmo, es necesario implementar dicha operación .... hacer el algoritmo para realizar dicha operación.
+
+En la medidad en que las unidades aritmetico - logicas tengan mas instrucciones, se hacen mas costosas porque tienen que tener todo el harwsare implementado para dicha función. Sin embargo eso representa que no se requeire ciclos de máquina o ciclos de instricción para relaizar dicha operación dado que la implementacióin de esa operación es netamente hardware.
+
+Lógicamente las arquitecturas no tienen implemenentadas todas las posibles funciones matemáticas o funciones artiméticas es necesario realizar algoritmos que suplan dichas funciones, para lo cual se utilizan los recursos disponibles en cuanto a funciones básicas de la unidad aritmetico logica.
+
+El otro elemento importante de la arquitectura básica es el banco de registros en donde se mantiene almacenada la información o los datos. En el caso genérico de esta ASM se tienen registros de propósito general, pero cuando hablemos de arquitecturas de compoutadores tendremos que hablar adicionalmente de registros de acceso a memoria, registros programados, registro especiales etc.
+
+Finalmente se tiene la unidad de control la cual se encarga de manipular las señales que controlan tanto la unidad aritmético - lógica como los registros. Dicha unidad de control genera señales como por ejemplo seleccionar la operación que quiere hacer la unidad aritmético lógica, generar señales de control como lectura o escritura sobre los registros etc.. Esta unidad se encarga de coordinar y realizar acciones necesarias para que se ejecuten las instrucciones. (En el caso de arquitectura de computadores nos referiremos también a instrucciones)
+
+Cada elemento se debe comunicar con los demás para poder realizar su función, lo que se logra por medio de una estructura de interconexción la cual se puede ahcer por medio de:
+a) Uno de conexción directa: CSe realiza la conexión cableda directamente de la salida de un elmento a la entrada del otro. En caso de requerirse lógica de enrutamiento, se emplean elementos digitales adecuados como ultiplexores.
+b)Uso de buses. Se define un conjunto de líneas para interconectar múltiples elementos entre sí. Se debe implementar una lógica de control que garantice enrutamiento del dispositivo fuente al destino. Debe evitarse que dos dispositivos sean fuente en el bus de la forma simultánea pues esto provocaría cortocircuitos en las líneas cuando estém sometidas a valores lógicos diferentes.
+
+En la FIG (datapath) se puede ver en esquema basado en buses.
+
+
+
+
+FALTA HABLAR DE LAS BANDERAS!
+
+
+
+
+
+
+\section{Tipos de datapaths}
+
+Existen diferentes arquitecturas sobre las cuales estan organizados los tres elementos básicos: control, unidad artimético  - lógica y banco de registros. A continuación se presentan dos esquemas básicos mas cónocidos:
+
+
+\subsection{Datapath con solo registro acumulador}
+
+En la figura XX y se puede ver el esquema típicode Von Neuman, en donde se tiene un dsatapath donde solo aparece un registro que se denomina acumunlador por la función que cumple. En este tipo de arquitectura no se tiene registros de propósito general para manipular los operandos dentro de..... Todo el trabajo se realiza en el acumulador.
+PAra realizar una operación el programador debe tomar el primer operando y llevarlo al acumulador, realizar la operacion con el acumulador siempre. El resultado se guarda en el acumulador nuevamente , Eventualmente se puede transferir a otro registro. 
+
+Ejemplos de procesadores basados en acumulador son el IAS de Von Neumann, el M6502 y el 6809 de Motorola. Este 
+último cuenta con dos acumuladores A y B
+
+VER FIGURA. HACERLA
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.4]{./chapter2/images/temp4.png}
+  \caption{datapath 1.} \label{temp4}
+\end{figure}
+
+
+
+
+\subsection{Datapath máquina de pila}
+
+Una máquina de pila es una arquitectura en donde el elemento principal de almacenamiento de datos es una pila, la cual se implementa como un área de memoria controlada por la máquina de estados y que no tienen acceso los programas del usuario. En las primeras máquinas de pila todos los operando se manejaban mediante la pila, hoy la pila se emplea como una estructura de datos auxiliar para la CPU.
+
+
+"Una máquina de pila es una computadora en la cual el elemento primario de almacenamiento de datos para la CPU es una 
+pila. Esta se implementa como un área de la memoria controlada por el CPU a la cual no tienen acceso los programas del 
+usuario. En las primeras máquinas de pila, todos los operandos se manejaban mediante la pila, hoy día, sin embargo, la pila se 
+emplea como una estructura de datos auxiliar para el CPU.  
+La ventaja principal de esta organización es que las manipulaciones de las pilas pueden ser realizadas en una alta 
+velocidad.  La alta velocidad es una característica deseable en una computadora que va proporcionar un servicio rápido de 
+interrupciones,  por ejemplo la IBM-370"
+
+"Las pilas más comunes son las de 
+empuje hacia abajo, es decir, que inician en la 
+dirección más alta de memoria y crecen en el 
+sentido de las direcciones de memoria más 
+bajas. La organización de la máquina de pila es 
+mostrada en la figura 2.4 . El registro SP es el 
+puntero a Pila, es un registro que siempre tiene 
+la dirección de la última palabra insertada en la 
+pila: Tope de pila o TOS (Top of Stack).  En 
+función de este registro, también se puede 
+obtener el elemento inmediato bajo TOS: 
+Próximo en pila o NOS (Next on Stack).   
+ En el evento de una operación 
+binaria, el primer operando será removido de la 
+pila y mantenido en el registro TEMP. El 
+segundo operando será directamente llevado de 
+la pila a la entrada derecha de la ALU, que en 
+nuestro ejemplo corresponde al  puerto x o 
+primer operando. El resultado de la operación 
+es almacenado en la cabeza o tope de la pila."
+
+
+"En la actualidad no existen ejemplos de esta organización en forma pura, sin embargo existieron máquinas que se 
+construyeron con esta arquitectura como las grandes computadoras  Burroughs B5500, B6500 y B6700 y la minicomputadora 
+HP3000. Una de las ventajas de esta arquitectura es que el compilador sólo necesita convertir a postfija las expresiones 
+algebraicas y luego hacer una traducción directa a ensamblador, empleando PUSH por cada aparición de variable y la 
+operación correspondiente con cada operando. El pop es un caso especial; que corresponde a la asignación y se evalúa al final 
+y además arrastra consigo al miembro izquierdo de la expresión"
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.4]{./chapter2/images/temp5.png}
+  \caption{datapath 1.} \label{temp5}
+\end{figure}
+
+
+
+\subsection{Datapath máquina de registros con acumulador}
+
+En este tipo de arquitecturas se utilizan muchos registros de propósito general para almacenar temporalmente los operandos. Este tipo de arquitecturas tiene la ventaja que los datos mas frecuentes se cargan solamente una vez desde la memoria principal.
+
+
+La organización de un procesador de Registros Generales es mostrada en la figura 2.5. En este estilo de diseño respecto al 
+manejo de los operandos, se promueve el uso de muchos registros de propósito general para almacenar los operandos 
+temporalmente dentro del CPU. Esto tiene la ventaja que los datos más frecuentes sólo se cargan una vez desde la memoria.  
+Una arquitectura típica consta de un banco o fichero de  m registros de propósito general (Ro... Rm-1).  Son llamados de 
+esta forma porque en cualquiera de ellos se pueden mantener datos, direcciones de memoria o el resultado de alguna 
+operación aritmética o lógica. El programador puede emplear estos registros para realizar las diferentes operaciones en un
+programa. Algunos procesadores tienen algún destino específico para algunos de ellos; el registro F (Flag)  o PSW (Processor 
+status Word) es un registro de banderas y/o códigos de condición que mantiene información importante del estado del 
+procesador o del desarrollo del programa. Por ejemplo, cuando el resultado de una operación fue cero (bandera Z = 1) o 
+cuando ocurrió un acarreo (bandera C = 1).
+
+Con procesadores de registros generales podemos tener instrucciones de dos y tres operandos. En máquinas 2 
+operandos, el destino o resultado de la operación  está implícito en uno de los dos operandos.  Este fenómeno se denomina 
+lectura destructiva de operandos, pues el valor del registro que es a la vez operando y destino se pierde por sobre escritura del 
+resultado. 
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.4]{./chapter2/images/temp6.png}
+  \caption{datapath 1.} \label{temp6}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.5]{./chapter2/images/temp1.png}
+  \caption{datapath 1.} \label{temp1}
+\end{figure}
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.5]{./chapter2/images/temp2.png}
+  \caption{datapath 1.} \label{temp2}
+\end{figure}
+
+
+
+\subsection{Datapath sin registro acumulador}
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=0.3]{./chapter2/images/temp3.png}
+  \caption{datapath 1.} \label{temp3}
+\end{figure}
+
+
+\subsection{Ejemplo basado en datapath: Valor absoluto}
+
+
+
+\subsection{Ejemplo basado en datapath: Multiplicación de números binarios}
+
+Implementación hardware ASM
+
+
+Implementación con registro acumulador
+
+
+
+Implementación sin registro acumulador
+
+
+
+
+
+SALTO ENTRE ESTO Y EL PROCESADOR. CONCEPTOS COMO INTRUCCIONES Y CICLO DE INS>TRUCCION.
+
+
+
+
+
