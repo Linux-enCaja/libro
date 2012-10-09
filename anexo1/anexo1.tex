@@ -67,7 +67,14 @@ clean:
 		rm -f *.o
 \end{lstlisting}
 
-Esta regla no tiene ninún inconveniente en su ejecución cuando no existe un archivo llamado \textit{clean} dentro de las rutas de búsquda del cosntructor, dado que no tiene nigún pre-requisito esta regla siempre se ejecuta al ser invocada. Pero si en la ruta del constructor existe un archivo de nombre \textit{clean} el constructor determina que el \textit{target} de dicha regla se encuentra al día y no se debe ejecutar sus comandos de construcción. Para evitar esto se declara la regla de la siguiente manera:
+La anterior regla se ejecuta sin ningún inconveniente cuando no existe un archivo llamado \textit{clean} dentro de las rutas de búsqueda del cosntructor, dado que no tiene ningún pre-requisito esta regla siempre se ejecuta al ser invocada. Pero si en la ruta del constructor existe un archivo de nombre \textit{clean} el constructor determina que el \textit{target} de dicha regla se encuentra al día y no se debe ejecutar sus comandos de construcción terminando su ejecución con la siguiente salida:
+
+\begin{lstlisting}
+\$ make clean
+make: 'clean' is upt to date.
+\end{lstlisting}
+
+Para prevenir este comportamiento indeseado se puede declarar la regla de la siguiente manera:
 
 \begin{lstlisting}
 .PHONY: clean
@@ -75,7 +82,21 @@ clean:
 		rm -f *.o
 \end{lstlisting}
 
-La regla \textit{}
+La regla \textit{.PHONY} fuerza la ejecución de esta regla independientemente si el \textit{target} está al día, todos los comandos de la regla se ejecutan cuando es invocada o es pre-requisito de otra regla en ejecución.
+
+Por otra parte existen reglas tipo \textit{PHONY} prestablecidas o estándares, estas reglas son definidas directamente por el constructor. Cada una de ellas se muestran en la siguiente tabla:
+
+\begin{tabular}{llr}
+\hline\noalign{\smallskip}
+Nombre de regla \textit{target} & Función (\$) \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\textbf{all} 		& 		Realiza todas las tareas necesarias para construir el proyecto
+\textbf{install}	& 		Instala la aplicación tomando los binaros compilados
+\textbf{clean}		&		Borra los binarios de la aplicación y los archivos generados en su construcción
+\textbf{distclean}	&		Borra todos los archivos generados que no hacen parte del codigo fuente de la 
+\noalign{\smallskip}\hline
+\end{tabular}
+
 
 \subsubsection{Reglas vacias}
 
@@ -89,7 +110,11 @@ La regla \textit{}
 \section{GCC}
 \subsection{Herramientas del GCC}
 
-
+\section{Glosario}
+binarios
+target
+reglas
+prerequisitos
 
 \section{bib}
 No olvidar colocar
