@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%% book.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for the chapters of your "monograph"
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[graybox,envcountchap,sectrefs]{svmono}
+
+% choose options for [] as required from the list
+% in the Reference Guide
+
+\usepackage{mathptmx}
+\usepackage{helvet}
+\usepackage{courier}
+%
+\usepackage{type1cm}         
+
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage{enumerate}
+
+
+% see the list of further useful packages
+% in the Reference Guide
+
+\makeindex             % used for the subject index
+                       % please use the style svind.ist with
+                       % your makeindex program
+
+%-------------------FES------------------------
+\usepackage{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning}
+\usetikzlibrary{patterns}
+\usetikzlibrary{arrows,shapes,snakes,automata,backgrounds,petri}
+\usepackage{rotating}
+
+%-------------------FES------------------------
+%---Packages imported JRB----------------------
+\usepackage{listings,color}
+
+\lstset{backgroundcolor=\color[gray]{.9}, frame=single,emph={EMPTY}, emphstyle=\color{white}, showstringspaces=false,
+        commentstyle=\itshape, commentstyle=\color[rgb]{0.083,0.545,0.083}, 
+        keywordstyle=\color{blue},
+        stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941}, 
+        morekeywords={printf}, tabsize=2, fontadjust=true, basicstyle=\footnotesize}
+
+\lstdefinestyle{numbered}{ backgroundcolor=\color{green!10}}
+\lstdefinestyle{numbered2}{ backgroundcolor=\color{yellow!10}}
+%---JRB----------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%-------------------FES------------------------
+\bibliographystyle{unsrt}   
+
+%-------------------FES------------------------
+
+
+\author{CIC, FES, DM, JRB}
+
+\title{Sistemas Embebidos}
+\subtitle{-- XXXX --}
+\maketitle
+
+\frontmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\include{./PagesBook/dedic}
+%\include{./PagesBook/foreword}
+%\include{./PagesBook/preface}
+%\include{./PagesBook/acknow}
+
+%\tableofcontents
+
+%\include{./PagesBook/acronym}
+
+
+\mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\include{./PagesBook/part}
+%\include{Chapter1/chapter1}		%INTRODUCCION (CAIN - FES)
+%\include{Chapter2/chapter2}	%MAQUINAS ESTADOS ALGORITMICAS (FES)
+%\include{Chapter3/chapter3}	%LM32 (CAIN)   
+%\include{Chapter4/chapter4}	%SO RTOS (DM)	
+%\include{Chapter5/chapter5}	%LINUX (JRB)
+%\include{Anexo1/anexo1}		%Herramientas (JRB)
+
+%\bibliography{biblio}
+
+%\include{appendix}
+
+%\backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\include{./PagesBook/glossary}
+%\include{./PagesBook/solutions}
+%\printindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\end{document}
+\include{anexo1/anexo1}
+\end{document}
