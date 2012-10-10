@@ -30,14 +30,17 @@ El desarrollo de aplicaciones a partir de herramientas libres se apoya en la her
 
 \subsection{Target, prerequisitos y reglas asociadas}
 
-La herramienta \textit{make} a través de las reglas descritas en el archivo \textit{Makefile} determina cual de los objetos o archivos del proyecto debe reconstruir, todo esto se realiza  basandose en la marca de tiempo del archivo de salida y la de los fuentes, si los fuentes que son prerequisitos de una regla tiene una marca de tiempo mas actual el constructor marca este archivo para su reconstrucción. Las reglas del constructor se componen de un \textit{target} o archivo de salida y  una serie de pre-requisitos para cada regla, estos pre-requisitos son los archivos que deben existir dentro de las rutas de búsqueda del constructor. A continuación se muestra un ejemplo de un \textit{Makefile} para compilar \textit{foo.c} en \textit{foo.o}
+La herramienta \textit{make} a través de las reglas descritas en el archivo \textit{Makefile} determina cual y cuando se debe reconstruir un archivo para completar la construcción del proyecto completo, todo esto se realiza  tomando la marca de tiempo del archivo de salida y la marca de los fuentes, si los fuentes que son prerequisitos de una regla tiene una marca de tiempo mas actual, el constructor determina que este archivo se debe reconstruir. Las reglas del constructor se componen de un \textit{target} o archivo de salida (generalmente un archivo de salida por regla) y una serie de pre-requisitos para cada regla, estos pre-requisitos son los archivos que deben existir dentro de las rutas de búsqueda del constructor. A continuación se muestra un ejemplo de la sintaxis de una regla para compilar \textit{foo.c} en \textit{foo.o}
 
 \begin{lstlisting}
 target1.o:	source1.c header1.h
 			gcc -c source1.c
 \end{lstlisting}
 
-En las reglas del constructor el nombre del archivo ubicado antes de los dos puntos (\textbf{:}) se le llama \textit{target} en este caso \textit{target1.o}\textbf{:}. La lista de archivos que suceden a los dos puntos (\textbf{:}) se le llama la lista de prerequisitos. Los prerequisitos son los archivos que el \textit{target} necesita para su construcción, en este caso \textit{source1.c} y \textit{header1.h}. El tipo de archivo del \textit{target} y los prerequisitos no tiene importancia. La linea que sigue a la del \textit{target} se le conoce como la primer linea de ejecución de la regla. Es necesario identar con un caracter de tabulación ($\rightarrow$) las lineas de comandos para que el constructor las ejecute correctamente, esta ejecución se realiza en una consola diferente a la en que se invoca el comando  \textit{make}.
+En las reglas del constructor, el nombre del archivo ubicado antes de los dos puntos (\textbf{:}) se le denomina \textit{target} en este caso \textit{target1.o}\textbf{:}. La lista de archivos que suceden a los dos puntos (\textbf{:}) se le llama la lista de prerequisitos.
+
+Los prerequisitos son los archivos que el \textit{target} necesita para su construcción, en este caso \textit{source1.c} y \textit{header1.h}. El tipo de archivo del \textit{target} y de los prerequisitos no tiene importancia dado que únicamente se verifica su existencía o marca de tiempo. La linea que sigue a la del \textit{target} se le conoce como la primer linea de ejecución de la regla \textit{recipe}. Es necesario identar con un caracter de tabulación ($\rightarrow$) las lineas de comandos para que el constructor las ejecute correctamente, esta ejecución se realiza en una consola diferente a la en que se invoca el comando \textit{make}. Cuando se tienen lineas muy extensas se puede usar el carácter \textit{backslash} \textbf{\\}
+
 
 \subsubsection{Tipos de reglas del constructor}
 
@@ -89,16 +92,23 @@ Por otra parte existen reglas tipo \textit{PHONY} prestablecidas o estándares, e
 \begin{tabular}{llr}
 \hline\noalign{\smallskip}
 Nombre de regla \textit{target} & Función (\$) \\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-\textbf{all} 		& 		Realiza todas las tareas necesarias para construir el proyecto
-\textbf{install}	& 		Instala la aplicación tomando los binaros compilados
-\textbf{clean}		&		Borra los binarios de la aplicación y los archivos generados en su construcción
-\textbf{distclean}	&		Borra todos los archivos generados que no hacen parte del codigo fuente de la 
+\noalign{\smallskip}\hline\noalign{\smallskip}\\
+\textbf{all} 		& 		Realiza todas las tareas necesarias para construir el proyecto \\
+\textbf{install}	& 		Instala la aplicación tomando los binaros compilados \\
+\textbf{clean}		&		Borra los binarios de la aplicación y los archivos generados en su construcción \\
+\textbf{distclean}	&		Borra todos los archivos generados que no hacen parte del codigo fuente de la distribución \\
 \noalign{\smallskip}\hline
 \end{tabular}
 
+\subsubsection{Reglas vaciás}
 
-\subsubsection{Reglas vacias}
+Las reglas vacias son una variante directa de las reglas imperativas; estas reglas generalmente se usan para guardar el tiempo en que un evento de construcción ha ocurrido. La forma en que se puede guardar un evento de construcción es mediante la ejecución del comando \textbf{touch} sobre el \textit{target}.
+
+
+\begin{lstlisting}
+plot: source1.c header1.h
+		touch plot
+\end{lstlisting}
 
 \subsection{Variables}
 \subsubsection{Variables automáticas}
@@ -107,10 +117,21 @@ Nombre de regla \textit{target} & Función (\$) \\
 \subsection{Librerias}
 
 \section{Toolchain herramientas para construcción y simulación de Hardware}
-\section{GCC}
-\subsection{Herramientas del GCC}
+
+\section{Herramientas del GNU - Toolchain }
+\subsection{GNU binutils}
+\subsection{GNU Compiler Collection}
+\subsection{GNU Debugger}
+\subsection{Librerías C}
+\subsection{El formato ELF}
+\subsection{Script del enlazador \textit{Linker}}
+
+\section{Metodología de desarrollo Hardware/Software}
+
+
 
 \section{Glosario}
+
 binarios
 target
 reglas
@@ -118,5 +139,5 @@ prerequisitos
 
 \section{bib}
 No olvidar colocar
-
+Manual del Make tomado de la pagina de GNU project
 Managing Projects with GNU Make
