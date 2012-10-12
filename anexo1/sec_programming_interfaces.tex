@@ -1,0 +1,35 @@
+
+\subsection{Interfaz JTAG}
+A mediados de los 70s, la estructura de pruebas para tarjetas de circuito impreso (PCB, Printed Circuit Boards) se basaba en el uso de la técnica ``bed-of-nails''. Este método utilizaba un dispositivo que contenía una gran cantidad de puntos de prueba, que permitían el acceso a dispositivos en la tarjeta a través de puntos colocados en la capa de cobre para dicho fin. Las pruebas se realizaban en dos fases: con el circuito apagado y con el circuito funcionando. Con la aparición de los dispositivos de montaje superficial se empezó a colocar dispositivos en las dos caras de la tarjeta, y se redujeron de forma considerable las dimensiones de los dispositivos, disminuyendo la distancia física entre las interconexiones (0.4 - 1mm), dificultando el proceso de pruebas tradicional.
+
+A mediados de los 80s un grupo de ingenieros de pruebas miembros de compañías electrónicas europeas se reunieron para examinar el problema y buscar posibles soluciones. Este grupo se auto-denominó JETAG (Joint European Test Action Group). El método de solución propuesto por ellos estaba basado en el concepto de un registro de corrimiento serial colocado alrededor de la frontera dispositivo, de aquí el nombre ``Boundary Scan''. Después el grupo se asoció a compañías norteamericanas y la ``E'' de ``European'' desapareció del nombre de la organización convirtiéndose en JTAG (Join Test Action Group).
+
+\subsubsection{Arquitectura BOUNDARY SCAN} 
+A cada señal de entrada o salida se le adiciona un elemento de memoria multi-propósito llamado ``Boundary Scan Cell'' (BSC). Las celdas conectadas a los pines de entrada reciben el nombre de ``Celdas de entrada'', y las que están conectadas a los pines de salida ``Celdas de salida''. En la Figura \ref{jtag_basics} se muestra esta arquitectura.
+
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.6]{./anexo1/images/jtag_basics} \end{center}
+  \caption{Arquitectura Boundary Scan} \label{jtag_basics}
+\end{figure}
+
+Las BSC se configuran en un registro de corrimiento de entrada y salida paralela. Una carga paralela de los registros (captura) ocasiona que los valores de las señales aplicadas a los pines del dispositivo pasen a las celdas de entrada y que opcionalmente los valores de las señales internas del dispositivo pasen a las celdas de salida. Una descarga paralela (Actualización) ocasiona que los valores presentes en las celdas de salida pasen a los pines del dispositivo, y opcionalmente los valores almacenados en las celdas de entrada pasen al interior del dispositivo.
+
+Los datos pueden ser corridos a través del registro de corrimiento de forma serial, empezando por un pin dedicado TDI (Test Data In) y terminando en un pin de salida dedicado llamado TDO (Test Data Out). La señal de reloj se proporciona por un pin externo TCLK (Test Clock) y el modo de operación se controla por la señal TMS (Test Mode Select). Los elementos del Boundary Scan no afectan el funcionamiento del dispositivo. Y son independientes del núcleo lógico del mismo.
+
+\subsubsection{Instrucciones JTAG}
+El Standard IEEE 1149.1 describe tres instrucciones obligatorias: Bypass, Sample/Preload, y Extest \cite{TI96}.
+
+\begin{itemize}
+  \item \textbf{BYPASS} Esta instrucción permite que el chip permanezca en un modo funcional, hace que el registro de Bypass se coloque entre TDI y TDO; permitiendo la transferencia serial de datos a través del circuito integrado desde TDI hacia TDO sin afectar la operación. La codificación en binario para esta instrucción debe ser con todos sus bits en uno. 
+  
+  \item \textbf{SAMPLE/PRELOAD} Esta instrucción selecciona coloca el registro Boundary-Scan entre los terminales TDI y TDO. Durante esta instrucción, se puede acceder al registro Boundary-Scan y obtener una muestra de los datos de entrada y salida del chip a través de la operación \textit{Data Scan}. Esta instrucción también se utiliza para precargar los datos de prueba en el registro Boundary-Scan, antes de ejecutar la instrucción EXTEST. La codificación de esta instrucción la define el fabricante.
+
+  \item \textbf{EXTEST} Esta instrucción coloca al circuito integrado en modo de test externo (pruebas de interconexión) y conecta el regsitro Boundary-Scan entre TDI y TDO. Las señales que salen del circuito son cargadas en el registro boundary-scan en el flanco de bajada de TCK del estado Capture-DR; las señales de entrada al dispositivo son cargadas al registro boundary-scan durante el flanco de bajada de TCK dl estado Update-DR (ver Figura \ref{jtag_sm}). La codificación para esta instrucción está definida con todos sus bits en cero.
+  
+  \item \textbf{INTEST}  La instrucción INTEST (opcional) selecciona el registro boundary-scan, pero es utilizado para capturar las señales que salen del núcleo lógico del dispositivo, y para aplicar valores conocidos a las señales de entrada del núcleo. La codificación para esta señal es asignada por el diseñador.
+\end{itemize}
+
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.8]{./anexo1/images/jtag_sm} \end{center}
+  \caption{Arquitectura Boundary Scan} \label{jtag_sm}
+\end{figure}

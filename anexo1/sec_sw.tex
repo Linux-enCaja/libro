@@ -1,0 +1,210 @@
+
+\section{Toolchain herramientas para construcción y simulación de Hardware}
+
+\section{Herramientas abiertas para diseño de sistemas embebidos}\label{gnu_cad}
+
+\subsection{Herramientas de Desarrollo}
+En este apartado se describirán las herramientas abiertas necesarias para el desarrollo de aplicaciones software en sistemas sistemas digitales. Todas las aplicaciones mencionadas a continuación hacen parte de la cadena de herramientas GNU, que son parte de los recursos suministrados por la comunidad de software libre.
+
+\subsubsection{GNU binutils}
+Colección de utilidades para archivos binarios y están compuestas por:
+
+\begin{itemize}
+ \item  \textbf{addr2line} Convierte direcciones de un programa en nombres de archivos y números de línea. Dada una dirección y un ejecutable, usa la información de depuración en el ejecutable para determinar que nombre de archivo y número de línea está asociado con la dirección dada.
+ \item  \textbf{ar} Esta utilidad crea, modifica y extrae desde ficheros; un fichero es una colección de otros archivos en una estructura que hace posible obtener los archivos individuales. 
+ \item  \textbf{as} Utilidad que compila la salida del compilador de C (GCC).
+ \item  \textbf{c++filt} Este programa realiza un mapeo inverso: Decodifica nombres de bajo-nivel en nombres a nivel de usuario, de tal forma que el \textit{linker} pueda mantener estas funciones sobrecargadas (overloaded) ``from clashing''. 
+ \item  \textbf{gasp} GNU Assembler Macro Preprocessor
+ \item  \textbf{ld} El \textit{linker} GNU combina un número de objetos y ficheros, re-localiza sus datos y los relaciona con referencias. Normalmente el último paso en la construcción de un nuevo programa es el llamado a ld.
+ \item  \textbf{nm} Realiza un listado de símbolos de archivos tipo objeto.
+ \item  \textbf{objcopy} Copia los contenidos de un archivo tipo objeto a otro. \textit{objcopy} utiliza la librería GNU BFD para leer y escribir el archivo tipo objeto. Permite escribir el archivo destino en un formato diferente al del archivo fuente. 
+ \item  \textbf{objdump} Despliega información sobre archivos tipo objeto. 
+ \item  \textbf{ranlib} Genera un índice de contenidos de un fichero, y lo almacena en él.
+ \item  \textbf{readelf} Interpreta encabezados de un archivo ELF.
+ \item  \textbf{size} Lista el tamaño de las secciones y el tamaño total de un archivo tipo objeto.
+ \item  \textbf{strings} Imprime las secuencias de caracteres imprimibles de al menos 4 caracteres de longitud. 
+ \item  \textbf{strip} Elimina todos los símbolos de un archivo tipo objeto.
+\end{itemize}
+
+\subsubsection{Compilador}
+El \textit{GNU Compiler Collection} normalmente llamado GCC, es un grupo de compiladores de lenguajes de programación producido por el proyecto GNU. Es el compilador estándar para el software libre, de los sistemas operativos basados en Unix y algunos propietarios como Mac OS de Apple. Soporta los lenguajes ADA, C, C++, Fortran, Java, Objective-C, Objective-C++ para las arquitecturas Alpha, ARM, Atmel AVR, Blackfin, H8/300, System/370, System/390, IA-32 (x86), x86-64, IA-64 i.e. the "Itanium", Motorola 68000, Motorola 88000, MIPS, PA-RISC, PDP-11, PowerPC, SuperH, SPARC, VAX, Renesas R8C/M16C/M32C y MorphoSys. Gracias a esto puede considerarse como una herramienta universal para el desarrollo de sistemas embebidos, el código escrito en una plataforma (en un lenguaje de alto nivel) puede ser implementado en otra sin mayores cambios, esto elimina la dependencia entre el código fuente y el procesador (re-utilización de código), lo que no es posible cuando se utiliza el lenguaje ensamblador. 
+
+\subsubsection{GNU Debugger}
+El depurador oficial de GNU (GDB) al igual que GCC, soporta múltiples lenguajes y plataformas; permite monitorear y modificar las variables internas del programa y hacer llamado a funciones de forma independiente a la ejecución normal del mismo. Además, permite establecer sesiones remotas utilizando el puerto serie o TCP/IP. Aunque GDB es una aplicación que se ejecuta en consola de comandos, se han desarrollado varios front-ends como DDD o GDB/Insight.
+
+\subsubsection{Librerías C}
+Es necesario contar con las librerías standard de C: stdio, stdlib, math, etc; las más utilizadas en sistemas embebidos son:
+
+\begin{itemize}
+ \item \textbf{glibc} Es la librería C oficial del proyecto GNU; el principal inconveniente al trabajar con esta librería en sistemas embebidos es que genera ejecutables de mayor tamaño que los generados a partir de otras librerías, lo cual no la hace muy atractiva para este tipo de aplicaciones. 
+ \item \textbf{uClibc} Es una librería diseñada especialmente para sistemas embebidos, es mucho más pequeña que \textbf{glibc}.
+ \item \textbf{newlib} Al igual que \textbf{uClibc}, está diseñada para sistemas embebidos. El típico ``Hello, world!'' ocupa menos de 30k en un entorno basado en newlib, mientras que en uno basado en glibc, puede ocupar 380k. 
+ \item \textbf{diet libc} Es una versión de \textit{libc} optimizada en tamaño, puede ser utilizada para crear ejecutables estáticamente enlazados para Linux en plataformas alpha, arm, hppa, ia64, i386, mips, s390, sparc, sparc64, ppc y x86\_64.
+\end{itemize}
+
+
+
+\section{Herramientas del GNU - Toolchain }
+\subsection{GNU binutils}
+\subsection{GNU Compiler Collection}
+\subsection{GNU Debugger}
+\subsection{Librerías C}
+\subsection{El formato ELF}
+
+\subsubsection{El formato \textbf{ELF}}
+
+El formato ELF (\textit{Executable and Linkable Format}) Es un estándar para objetos, librerías y ejecutables y es el formato que generan las herramientas GNU. Como puede verse en la figura \ref{elf1} un ejecutable \textit{ELF} está compuesto por las secciones (\textit{link view}) o segmentos (\textit{execution view}). Si un programador está interesado en obtener información de secciones sobre tablas de símbolos, código ejecutable específico o información de enlazado dinámico debe utilizar \textit{link view}. Pero si busca información sobre segmentos, como por ejemplo, la localización de los segmentos \textit{text} o \textit{data} debe utilizar \textit{execution view}. El encabezado describe el layout del archivo, proporcionando información de la forma de acceder a las secciones \cite{MLH98}.
+
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.4]{./anexo1/images/ELF_Link_exec1} \end{center}
+  \caption{Formato ELF}\label{elf1}
+\end{figure}
+
+Las secciones pueden almacenar código ejecutable, datos, información de enlazado dinámico, datos de depuración, tablas de símbolos,comentarios, tablas de cadenas, y notas. Las secciones más importantes son:
+
+\begin{itemize}
+ \item \textbf{.bss}            Datos no inicializados. (RAM)
+ \item \textbf{.comment}        Información de la versión.
+ \item \textbf{.data y .data1}  Datos inicializados.    (RAM)
+ \item \textbf{.debug}          Información para depuración simbólica. 
+ \item \textbf{.dynamic}        Información sobre enlace dinámico 
+ \item \textbf{.dynstr}         Strings necesarios para el enlace dinámico 
+ \item \textbf{.dynsym}         Tabla de símbolos utilizada para enlace dinámico.
+ \item \textbf{.fini}           Código de terminación de proceso.
+ \item \textbf{.init}           Código de inicialización de proceso.
+ \item \textbf{.line}           Información de número de línea para depuración simbólica.
+ \item \textbf{.rodata y .rodta1} Datos de solo-lectura (ROM)
+ \item \textbf{.shstrtab}       Nombres de secciones.
+ \item \textbf{.symtab}         Tabla de símbolos.
+ \item \textbf{.text}           Instrucciones ejecutables (ROM)
+\end{itemize}
+
+Para aclarar el contenido de cada una de estas secciones, consideremos la siguiente aplicación sencilla:
+
+\begin{lstlisting}
+#include <stdio.h>
+
+int global;
+int global_1 = 1;
+
+int main(void)
+{
+  int i;                                // Variable no inicializada
+  int j = 2;                            // Variable inicializada
+  for(i=0; i<10; i++){
+    printf("Printing %d\n", i*j);       // Caracteres constantes
+    j = j + 1;
+    global   = i;
+    global_1 = i+j;
+  }
+  return 0;
+}
+\end{lstlisting}
+
+Generemos el objeto compilándolo con el siguiente comando:
+\textit{arm-none-linux-gnueabi-gcc -c hello.c}
+
+Examinemos que tipo de secciones tiene este ejecutable
+\textit{arm-none-linux-gnueabi-readelf -S hello.o}
+
+\begin{lstlisting}[style=numbered]
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00000000 000034 00009c 00  AX  0   0  4
+  [ 2] .rel.text         REL             00000000 000484 000020 08      9   1  4
+  [ 3] .data             PROGBITS        00000000 0000d0 000004 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00000000 0000d4 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 0000d4 000010 00   A  0   0  4
+  [ 6] .comment          PROGBITS        00000000 0000e4 00004d 00      0   0  1
+  [ 7] .ARM.attributes   ARM_ATTRIBUTES  00000000 000131 00002e 00      0   0  1
+  [ 8] .shstrtab         STRTAB          00000000 00015f 000051 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 000368 0000f0 10     10  11  4
+  [10] .strtab           STRTAB          00000000 000458 00002b 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+\end{lstlisting}
+
+La sección \textit{.text}, como se dijo anteriormente contiene las instrucciones ejecutables, por esta razón se marca como ejecutable \textit{``X''} en la columna \textit{Flg}. Es posible ver las instrucciones que se ejecutan en esta sección ejecutando:
+
+\textit{arm-none-linux-gnueabi-objdump -d -j .text hello.o}
+
+\begin{lstlisting}[style=numbered]
+00000000 <main>:
+   0:   e92d4800        stmdb   sp!, {fp, lr}
+   4:   e28db004        add     fp, sp, #4      ; 0x4
+   8:   e24dd008        sub     sp, sp, #8      ; 0x8
+   c:   e3a03002        mov     r3, #2  ; 0x2
+  10:   e50b3008        str     r3, [fp, #-8]
+  14:   e3a03000        mov     r3, #0  ; 0x0
+  18:   e50b300c        str     r3, [fp, #-12]
+  1c:   ea000013        b       70 <main+0x70>
+  20:   e51b200c        ldr     r2, [fp, #-12]
+  24:   e51b3008        ldr     r3, [fp, #-8]
+  28:   e0030392        mul     r3, r2, r3
+  2c:   e59f005c        ldr     r0, [pc, #92]   ; 90 <.text+0x90>
+  30:   e1a01003        mov     r1, r3
+  34:   ebfffffe        bl      0 <printf>
+  38:   e51b3008        ldr     r3, [fp, #-8]
+  3c:   e2833001        add     r3, r3, #1      ; 0x1
+  40:   e50b3008        str     r3, [fp, #-8]
+  44:   e59f2048        ldr     r2, [pc, #72]   ; 94 <.text+0x94>
+  48:   e51b300c        ldr     r3, [fp, #-12]
+  4c:   e5823000        str     r3, [r2]
+  50:   e51b200c        ldr     r2, [fp, #-12]
+  54:   e51b3008        ldr     r3, [fp, #-8]
+  58:   e0822003        add     r2, r2, r3
+  5c:   e59f3034        ldr     r3, [pc, #52]   ; 98 <.text+0x98>
+  60:   e5832000        str     r2, [r3]
+  64:   e51b300c        ldr     r3, [fp, #-12]
+  68:   e2833001        add     r3, r3, #1      ; 0x1
+  6c:   e50b300c        str     r3, [fp, #-12]
+  70:   e51b300c        ldr     r3, [fp, #-12]
+  74:   e3530009        cmp     r3, #9  ; 0x9
+  78:   daffffe8        ble     20 <main+0x20>
+  7c:   e3a03000        mov     r3, #0  ; 0x0
+  80:   e1a00003        mov     r0, r3
+  84:   e24bd004        sub     sp, fp, #4      ; 0x4
+  88:   e8bd4800        ldmia   sp!, {fp, lr}
+  8c:   e12fff1e        bx      lr
+\end{lstlisting}
+
+La sección \textit{.data} mantiene las variables inicializadas, y contiene:
+ 
+\textit{arm-none-linux-gnueabi-objdump -d -j .data hello.o}
+ 
+\begin{lstlisting}[style=numbered]
+00000000 <global_1>:
+   0:   01 00 00 00
+\end{lstlisting}
+
+Como vemos, la sección \textit{.data} contiene únicamente el valor de inicialización de la variable \textit{global\_1} (1) y no muestra información acerca de la variable \textit{j}, esto se debe a que la información está en el \textit{stack} del proceso. Si observamos el contenido de la sección \textit{.text} observamos que esta variable es asignada en tiempo de ejecución, en la línea \textit{0c:} se ve la asignación de esta variable:
+
+\begin{lstlisting}[style=numbered]
+0c:   e3a03002        mov     r3, #2  ; 0x2 
+10:   e50b3008        str     r3, [fp, #-8]
+\end{lstlisting}
+
+La sección \textit{.bss} mantiene la información de las variables no inicializadas. En Linux todas las variables no inicializadas, se inicializaran en cero:
+
+\textit{arm-none-linux-gnueabi-objdump -d -j .bss hello}
+ 
+\begin{lstlisting}[style=numbered]
+000145c4 <global>:
+    145c4:       00000000
+\end{lstlisting}
+   
+La sección \textit{.rodata} contiene los datos que no cambian durante la ejecución del programa, es decir, los de solo lectura, si examinamos esta sección obtenemos:
+ 
+\textit{hexdump -C hello.o | grep -i 000000d0} (la sección \textit{.rodata} comienza en la posición de memoria 0xd4)
+ 
+  
+\begin{lstlisting}[style=numbered]
+000000d0  01 00 00 00 50 72 69 6e  74 69 6e 67 20 25 64 0a  |....Printing %d.|
+000000e0  00 00 00 00 00 47 43 43  3a 20 28 43 6f 64 65 53  |.....GCC: (CodeS|
+\end{lstlisting}
+ 
+Observamos que en el archivo se almacena la cadena de caracteres \textit{Printing \%d\\n} la cual no se modifica durante la ejecución del programa.
+\subsection{Script del enlazador \textit{Linker}}
