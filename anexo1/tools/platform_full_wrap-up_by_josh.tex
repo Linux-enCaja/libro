@@ -73,36 +73,7 @@ El programa descargado a la memoria SRAM interna debe: programar una memoria no 
 
 
 
-\section{Flujo de diseño software}
 
-En la figura \ref{toolchain_flow} se ilustra la secuencia de pasos que se realizan desde la creación de un archivo de texto que posee el código fuente de una aplicación hasta su implementación en la tarjeta de desarrollo. Los pasos necesarios para generar un ejecutable para un sistema embebido son:
-
-\begin{figure}[h]
-  \begin{center} \includegraphics[scale=.6]{./images/SW_design_flow} \end{center}
-  \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow}
-\end{figure}
-
-\begin{enumerate}
- \item \textbf{Escritura del código fuente:} Creación del código fuente en cualquier editor de archivos de texto.
- \item \textbf{Compilación:} Utilizando GCC se compila el código fuente; el compilador busca en los encabezados (\textit{headers} .h) de las librerías la definición de una determinada función, pero no busca el segmento de código donde está implementada. (por ejemplo el \textit{printf} en el archivo \textit{stdio.h}). Como resultado de este paso se obtiene un archivo binario tipo objeto que incluye el código necesario para realizar la funcionalidad deseada utilizando en conjunto de instrucciones del procesador.
-
- \item \textbf{Enlazado:} En esta etapa se realizan dos tareas: 
-  \begin{enumerate} 
-    \item Se enlazan los archivos tipo objeto del proyecto junto con las librerías, si una determinada función no es definida por ninguna de las librerías pasadas como parámetro al enlazador (\textit{linker}), este generará un error y no se generará el ejecutable.
-    \item Se definen la posiciones físicas de las secciones del ejecutable (tipo ELF), esto se realiza a través de un \textit{script de enlazado} que define de forma explícita su localización.
-  \end{enumerate}
-
- \item \textbf{Extracción del archivo de programación} En algunas aplicaciones es necesario extraer únicamente las secciones que residen en los medios de almacenamiento no volátil y eliminar las demás secciones del ejecutable. Esto se realiza con la herramienta \textit{objcopy}, la cual, permite generar archivos en la mayoría de los formatos soportados por los programadores de memorias y procesadores, como por ejemplo S19 e Intel Hex. Adicionalmente se puede generar un archivo binario que contiene las instrucciones en lenguaje del procesador, y pueden ser descargadas directamente a la memoria de la plataforma.
-
- \item \textbf{Descarga del programa}. Dependiendo de la plataforma, existen varios métodos para descargar el archivo de programación:
-  \begin{enumerate}
-    \item Utilizando un \textit{loader}: El \textit{loader} es una aplicación que reside en un medio de almacenamiento no volátil y permite la descarga de archivos utilizando el puerto serie o una interfaz de red a una memoria no volátil externa.
-    \item Utilizando el puerto JTAG: El puerto JTAG (Joint Test Action Group) proporciona una interfaz capaz de controlar los registros internos del procesador, y de esta forma, acceder a las memorias de la plataforma y ejecutar un programa residente en una posición de memoria determinada.
-  \end{enumerate}
-
- \item \textbf{Depuración} Una vez se descarga la aplicación a la plataforma es necesario someterla a una serie de pruebas, para verificar su correcto funcionamiento. Esto se puede realizar con el depurador GNU (GDB) y una interfaz de comunicación que puede ser un puerto serie, USB o un adaptador de red.
- 
-\end{enumerate}
 
 
 \subsubsection{Make}
@@ -192,61 +163,7 @@ arm-none-linux-gnueabi-objcopy -O binary hello_world.elf hello_world.bin
 
 
 
-\subsubsection{Linker Script}
-Como vimos anteriormente, el \textit{linker} es el encargado de agrupar todos los archivos objeto \textit{.o}, y las librerías necesarias para crear el ejecutable, este \textit{linker} permite definir donde serán ubicados los diferentes segmentos del archivo ELF, por medio de un archivo de enlace \textit{linker script}. De esta forma podemos ajustar el ejecutable a plataformas con diferentes configuraciones de memoria. Esto brinda un grado mayor de flexibilidad de la cadena de herramientas GNU. Cuando se dispone de un sistema operativo como Linux no es necesario definir este archivo para los ejecutables, ya que el sistema operativo se encarga de guardar las secciones en el lugar indicado; sin embargo, es necesario tenerlo presente ya que como veremos más adelante existe un momento en el que el sistema operativo no ha sido cargado en la plataforma y las aplicaciones que se ejecuten deben proporcionar esta información. A continuación se muestra un ejemplo de este archivo:
 
-\lstset{emph={flash}, emphstyle=\color{red}, emph={[2]ram,base},emphstyle={[2]\color{blue}}}
-
-\begin{lstlisting}
- /* identify the Entry Point  (_vec_reset is defined in file crt.s)  */
-ENTRY(_vec_reset)
-
-/* specify the memory areas  */
-MEMORY 
-{
-    flash : ORIGIN = 0,          LENGTH = 256K    /* FLASH EPROM          */
-    ram   : ORIGIN = 0x00200000, LENGTH = 64K     /* static RAM area      */
-}
-
-/* define a global symbol _stack_end */
-_stack_end = 0x20FFFC;
-
-/* now define the output sections  */
-SECTIONS
-{
-  . = 0;            /* set location counter to address zero  */
-  .text :           /* collect all sections that should go into FLASH after startup  */
-  {
-    *(.text)        /* all .text sections (code)  */
-    *(.rodata)      /* all .rodata sections (constants, strings, etc.)  */
-    *(.rodata*)     /* all .rodata* sections (constants, strings, etc.)  */
-    *(.glue_7)      /* all .glue_7 sections  (no idea what these are) */
-    *(.glue_7t)     /* all .glue_7t sections (no idea what these are) */
-    _etext = .;     /* define a global symbol _etext just after the last code byte */
-  } >flash          /* put all the above into FLASH */
-
-  .data :           /* collect all initialized .data sections that go into RAM  */ 
-  {
-    _data = .;      /* create a global symbol marking the start of the .data section  */
-    *(.data)        /* all .data sections  */
-    _edata = .;     /* define a global symbol marking the end of the .data section  */
-  } >ram AT >flash  /* put all the above into RAM (but load the LMA initializer copy 
-                       into FLASH)  */
-
-  .bss :            /* collect all uninitialized .bss sections that go into RAM  */
-  {
-    _bss_start = .; /* define a global symbol marking the start of the .bss section */
-    *(.bss)         /* all .bss sections  */
-  } >ram            /* put all the above in RAM (it will be cleared in the startup code*/
-  . = ALIGN(4);     /* advance location counter to the next 32-bit boundary */
-  _bss_end = . ;    /* define a global symbol marking the end of the .bss section */
-}
-_end = .;           /* define a global symbol marking the end of application RAM */
-\end{lstlisting}
-
-En las primeras líneas del archivo aparece la declaración de las memorias de la plataforma; en este ejemplo, tenemos una memoria RAM de 64kB que comienza en la posición de memoria 0x00200000 y una memoria flash de 256k que comienza en la posición 0x0. A continuación se definen las secciones y el lugar donde serán almacenadas; en este caso, las secciones \textit{.text} (código ejecutable) y \textit{.rodata} (datos de solo lectura) se almacenan en una memoria no volátil la flash. Cuando el sistema sea energizado el procesador ejecutará el código almacenado en su memoria no volátil. Las secciones \textit{.data} (variables inicializadas) y \textit{.bss} (variables no inicializadas) se almacenarán en la memoria volátil RAM, ya que el acceso a las memorias no volátiles son más lentas y tienen ciclos de lectura/escritura finitos.
-
-En algunos SoCs no se dispone de una memoria no volátil, por lo que es necesario que la aplicación sea cargada por completo en la RAM. Algunos desarrolladores prefieren almacenar y ejecutar sus aplicaciones en las memorias volátiles durante la etapa de desarrollo, debido a que la programación de las memorias no volátiles toman mucho más tiempo. Obviamente una vez finalizada la etapa de desarrollo las aplicaciones deben ser almacenadas en memorias no volátiles.
 
 \section{Dispositivos semiconductores}
 En esta sección se realizará una breve descripción de los dispositivos semiconductores más utilizados para la implementación de dispositivos digitales.

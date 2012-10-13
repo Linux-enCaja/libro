@@ -1,12 +1,51 @@
 
-\section{Toolchain herramientas para construcción y simulación de Hardware}
+\section{Herramientas compilación y desarrollo de proyectos SW}%%%Esto está feo.... Nombre más específico
 
-\section{Herramientas abiertas para diseño de sistemas embebidos}\label{gnu_cad}
+%!Esto necesita sustento en un libro falta incluir referencias de esta sección
 
-\subsection{Herramientas de Desarrollo}
-En este apartado se describirán las herramientas abiertas necesarias para el desarrollo de aplicaciones software en sistemas sistemas digitales. Todas las aplicaciones mencionadas a continuación hacen parte de la cadena de herramientas GNU, que son parte de los recursos suministrados por la comunidad de software libre.
+%!Esto es solo una idea de introducción a la sección falta cambiar
+Para el desarrollo de aplicaciones \textit{software} mediante lenguales de alto nivel permíten acelerar el desarrollo de la aplicación, pero requiere de un conjunto de herramientas para la creación del archivo final. Estas herramientas llevan el conjunto de archivos fuentes y paso a paso los convierten en un archivo ejecutable por la máquina, llamado binario. 
+
+%!Esta figura toca hacerla conteniendo las dos y explicarlas en el texto de abajo
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.5]{./anexo1/images/toolchain_reducido} \end{center}
+  \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow}
+\end{figure}
+
+\section{Flujo de diseño software}
+%R Real-Time Concepts for Embedded Systems
+En la figura \ref{toolchain_flow} se ilustra la secuencia de pasos que se realizan desde la creación de un archivo de texto que posee el código fuente de una aplicación hasta su implementación en la tarjeta de desarrollo. Los pasos necesarios para generar un ejecutable para un sistema embebido son:
+
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.6]{./anexo1/images/SW_design_flow} \end{center}
+  \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow}
+\end{figure}
+
+\begin{enumerate}
+ \item \textbf{Escritura del código fuente:} Los entornos de desarrollo \textit{software} IDE (\textit{integrated development environment}) proveen de un editor de texto y la colección de herramientas están integradas en la misma aplicación, para el caso de desarrollo de aplicaciones con \textit{software} libre existen alternativas como \url{www.eclipse.com} para la integración de herramientas, pero no es un requisito para escribir códigos fuentes el uso de un editor en particualar, cada programador puede escribir sus códigos en la interfaz que le resulte más amigable. Los codigos fuentes de los programas para sistemas embebidos generalmente son escritos en C/C++. Algunas partes específicas son escritas en lenguaje ensamblador por motivos de eficiencia en tiempo de ejecución o tamaño. 
+
+ \item \textbf{Compilación:} Los archivos fuentes C y los archivos de ensamblador (generamente s) son tomados por las herramientas de compilación para crear archivos tipo objetos. Estos objetos contienen las instrucciones que el procesador deberá ejecutar cuando las funciones sean invocadas para cumplir con la funcionalidad deseada. Además, estos archivos contienen la información de las etiquetas usadas en el proceso de enlazado e información sobre la compilación misma. Por último, los objetos no contienen las direcciones específicas de donde se implementa una función, por ejemplo, el compilador busca en los encabezados (\textit{headers} .h) de la función \textit{printf} en la librerira \textit{stdio.h}, pero no busca el segmento de código donde está implementada.
+%!!!Aquí voy JRB-- Adecuando cosas!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ \item \textbf{Enlazado:} En esta etapa se realizan dos tareas: 
+  \begin{enumerate} 
+    \item Se enlazan los archivos tipo objeto del proyecto junto con las librerías, si una determinada función no es definida por ninguna de las librerías pasadas como parámetro al enlazador (\textit{linker}), este generará un error y no se generará el ejecutable.
+    \item Se definen la posiciones físicas de las secciones del ejecutable (tipo ELF), esto se realiza a través de un \textit{script de enlazado} que define de forma explícita su localización.
+  \end{enumerate}
+
+ \item \textbf{Extracción del archivo de programación} En algunas aplicaciones es necesario extraer únicamente las secciones que residen en los medios de almacenamiento no volátil y eliminar las demás secciones del ejecutable. Esto se realiza con la herramienta \textit{objcopy}, la cual, permite generar archivos en la mayoría de los formatos soportados por los programadores de memorias y procesadores, como por ejemplo S19 e Intel Hex. Adicionalmente se puede generar un archivo binario que contiene las instrucciones en lenguaje del procesador, y pueden ser descargadas directamente a la memoria de la plataforma.
+
+ \item \textbf{Descarga del programa}. Dependiendo de la plataforma, existen varios métodos para descargar el archivo de programación:
+  \begin{enumerate}
+    \item Utilizando un \textit{loader}: El \textit{loader} es una aplicación que reside en un medio de almacenamiento no volátil y permite la descarga de archivos utilizando el puerto serie o una interfaz de red a una memoria no volátil externa.
+    \item Utilizando el puerto JTAG: El puerto JTAG (Joint Test Action Group) proporciona una interfaz capaz de controlar los registros internos del procesador, y de esta forma, acceder a las memorias de la plataforma y ejecutar un programa residente en una posición de memoria determinada.
+  \end{enumerate}
+%! Recordar que hay una etapa donde se dedica completamente a las interfases de programación
+ \item \textbf{Depuración} Una vez se descarga la aplicación a la plataforma es necesario someterla a una serie de pruebas, para verificar su correcto funcionamiento. Esto se puede realizar con el depurador GNU (GDB) y una interfaz de comunicación que puede ser un puerto serie, USB o un adaptador de red.
+ 
+\end{enumerate}
 
 \subsubsection{GNU binutils}
+Todas las aplicaciones mencionadas a continuación hacen parte de la cadena de herramientas GNU, que son parte de los recursos suministrados por la comunidad de software libre.
 Colección de utilidades para archivos binarios y están compuestas por:
 
 \begin{itemize}
@@ -42,19 +81,12 @@ Es necesario contar con las librerías standard de C: stdio, stdlib, math, etc; l
  \item \textbf{diet libc} Es una versión de \textit{libc} optimizada en tamaño, puede ser utilizada para crear ejecutables estáticamente enlazados para Linux en plataformas alpha, arm, hppa, ia64, i386, mips, s390, sparc, sparc64, ppc y x86\_64.
 \end{itemize}
 
-
-
-\section{Herramientas del GNU - Toolchain }
-\subsection{GNU binutils}
-\subsection{GNU Compiler Collection}
-\subsection{GNU Debugger}
-\subsection{Librerías C}
 \subsection{El formato ELF}
 
 \subsubsection{El formato \textbf{ELF}}
 
 El formato ELF (\textit{Executable and Linkable Format}) Es un estándar para objetos, librerías y ejecutables y es el formato que generan las herramientas GNU. Como puede verse en la figura \ref{elf1} un ejecutable \textit{ELF} está compuesto por las secciones (\textit{link view}) o segmentos (\textit{execution view}). Si un programador está interesado en obtener información de secciones sobre tablas de símbolos, código ejecutable específico o información de enlazado dinámico debe utilizar \textit{link view}. Pero si busca información sobre segmentos, como por ejemplo, la localización de los segmentos \textit{text} o \textit{data} debe utilizar \textit{execution view}. El encabezado describe el layout del archivo, proporcionando información de la forma de acceder a las secciones \cite{MLH98}.
-
+%! Esta imagen me toca cambiarla vectorizarla o hacer una tabla!
 \begin{figure}[h]
   \begin{center} \includegraphics[scale=.4]{./anexo1/images/ELF_Link_exec1} \end{center}
   \caption{Formato ELF}\label{elf1}
@@ -79,6 +111,9 @@ Las secciones pueden almacenar código ejecutable, datos, información de enlazado
  \item \textbf{.text}           Instrucciones ejecutables (ROM)
 \end{itemize}
 
+%Falta explicar los ELF dinamicos usados en linux y un ejemplo de como la memoria virtual usa estos archivos
+
+%% Ejemplo de aplicación
 Para aclarar el contenido de cada una de estas secciones, consideremos la siguiente aplicación sencilla:
 
 \begin{lstlisting}
@@ -208,3 +243,58 @@ La sección \textit{.rodata} contiene los datos que no cambian durante la ejecuci
  
 Observamos que en el archivo se almacena la cadena de caracteres \textit{Printing \%d\\n} la cual no se modifica durante la ejecución del programa.
 \subsection{Script del enlazador \textit{Linker}}
+\subsubsection{Linker Script}
+Como vimos anteriormente, el \textit{linker} es el encargado de agrupar todos los archivos objeto \textit{.o}, y las librerías necesarias para crear el ejecutable, este \textit{linker} permite definir donde serán ubicados los diferentes segmentos del archivo ELF, por medio de un archivo de enlace \textit{linker script}. De esta forma podemos ajustar el ejecutable a plataformas con diferentes configuraciones de memoria. Esto brinda un grado mayor de flexibilidad de la cadena de herramientas GNU. Cuando se dispone de un sistema operativo como Linux no es necesario definir este archivo para los ejecutables, ya que el sistema operativo se encarga de guardar las secciones en el lugar indicado; sin embargo, es necesario tenerlo presente ya que como veremos más adelante existe un momento en el que el sistema operativo no ha sido cargado en la plataforma y las aplicaciones que se ejecuten deben proporcionar esta información. A continuación se muestra un ejemplo de este archivo:
+
+\lstset{emph={flash}, emphstyle=\color{red}, emph={[2]ram,base},emphstyle={[2]\color{blue}}}
+
+\begin{lstlisting}
+ /* identify the Entry Point  (_vec_reset is defined in file crt.s)  */
+ENTRY(_vec_reset)
+
+/* specify the memory areas  */
+MEMORY 
+{
+    flash : ORIGIN = 0,          LENGTH = 256K    /* FLASH EPROM          */
+    ram   : ORIGIN = 0x00200000, LENGTH = 64K     /* static RAM area      */
+}
+
+/* define a global symbol _stack_end */
+_stack_end = 0x20FFFC;
+
+/* now define the output sections  */
+SECTIONS
+{
+  . = 0;            /* set location counter to address zero  */
+  .text :           /* collect all sections that should go into FLASH after startup  */
+  {
+    *(.text)        /* all .text sections (code)  */
+    *(.rodata)      /* all .rodata sections (constants, strings, etc.)  */
+    *(.rodata*)     /* all .rodata* sections (constants, strings, etc.)  */
+    *(.glue_7)      /* all .glue_7 sections  (no idea what these are) */
+    *(.glue_7t)     /* all .glue_7t sections (no idea what these are) */
+    _etext = .;     /* define a global symbol _etext just after the last code byte */
+  } >flash          /* put all the above into FLASH */
+
+  .data :           /* collect all initialized .data sections that go into RAM  */ 
+  {
+    _data = .;      /* create a global symbol marking the start of the .data section  */
+    *(.data)        /* all .data sections  */
+    _edata = .;     /* define a global symbol marking the end of the .data section  */
+  } >ram AT >flash  /* put all the above into RAM (but load the LMA initializer copy 
+                       into FLASH)  */
+
+  .bss :            /* collect all uninitialized .bss sections that go into RAM  */
+  {
+    _bss_start = .; /* define a global symbol marking the start of the .bss section */
+    *(.bss)         /* all .bss sections  */
+  } >ram            /* put all the above in RAM (it will be cleared in the startup code*/
+  . = ALIGN(4);     /* advance location counter to the next 32-bit boundary */
+  _bss_end = . ;    /* define a global symbol marking the end of the .bss section */
+}
+_end = .;           /* define a global symbol marking the end of application RAM */
+\end{lstlisting}
+
+En las primeras líneas del archivo aparece la declaración de las memorias de la plataforma; en este ejemplo, tenemos una memoria RAM de 64kB que comienza en la posición de memoria 0x00200000 y una memoria flash de 256k que comienza en la posición 0x0. A continuación se definen las secciones y el lugar donde serán almacenadas; en este caso, las secciones \textit{.text} (código ejecutable) y \textit{.rodata} (datos de solo lectura) se almacenan en una memoria no volátil la flash. Cuando el sistema sea energizado el procesador ejecutará el código almacenado en su memoria no volátil. Las secciones \textit{.data} (variables inicializadas) y \textit{.bss} (variables no inicializadas) se almacenarán en la memoria volátil RAM, ya que el acceso a las memorias no volátiles son más lentas y tienen ciclos de lectura/escritura finitos.
+
+En algunos SoCs no se dispone de una memoria no volátil, por lo que es necesario que la aplicación sea cargada por completo en la RAM. Algunos desarrolladores prefieren almacenar y ejecutar sus aplicaciones en las memorias volátiles durante la etapa de desarrollo, debido a que la programación de las memorias no volátiles toman mucho más tiempo. Obviamente una vez finalizada la etapa de desarrollo las aplicaciones deben ser almacenadas en memorias no volátiles.
