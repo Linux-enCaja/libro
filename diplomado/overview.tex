@@ -1,0 +1,315 @@
+% \chapter{}
+\newpage
+\setcounter{page}{1}
+\setcounter{chapter}{1}
+
+\section{Motivación}
+
+Los avances en el área de la electrónica están generando una revolución cuyas
+implicaciones sociales y económicas son difíciles de estimar. Los aspectos de
+esta revolución están asociados con la base tecnológica, la relación laboral,
+la estructura industrial e incluso hasta las relaciones
+internacionales. Los computadores embebidos se están convirtiendo
+en omnipresentes y son utilizados en un amplio espectro de aplicaciones, que
+van desde juegos y dispositivos móviles hasta aplicaciones automovilísticas,
+de aviación etc. Muchos de ellos toman la forma de artefectos que 
+utilizamos en nuestra vida diaria (herramientas, vestuario, electrodomésticos,
+ etc) pero mejorados con sensores, actuadores, procesadores y software embebido.
+Las industrias han visto como se muestran signos de recesión en los mercados tradicionales, por lo que la aparición de estos sistemas embebidos en chips y software nace como una buena alternativa económica. El análisis
+de los procesos de adopción de los dispositivos tecnológicos de hoy muestra que la incorporación en el mercado de nuevos dispositivos resulta en la alteración o la creación de nuevos hábitos.
+
+Un aspecto importante del avance de la industria electrónica es el desarrollo
+de la industria de los semiconductores desde la creación del transistor en
+1947. La evolución de la tecnología continúa en el presente, donde cada vez se
+producen dispositivos más económicos, veloces y densos. En  la actualidad el
+mercado de los sistemas embebidos es el que reporta mayor cantidad de unidades
+vendidas, seguido de lejos, por el de los Computadores Personales y por último
+el de las Estaciones de trabajo (ver Fig \ref{market}). La gran disfusión de los sistemas embebidos
+ha sido en gran parte debida a los desarrollos en el área de los procesadores,
+y a la disponibilidad de Sistemas Operativos (OS) como Linux, eCos y Windows
+CE.
+
+\begin{figure}[h]
+ \begin{center} \includegraphics[scale = .6]{./images/processors} \end{center}
+  \caption{Mercado de Procesadores. Fuente: Venture Development Corporation (VDC)}\label{market}
+\end{figure}
+
+\subsection{Tamaño del Mercado}
+Como puede verse en la figura \ref{market} existe una gran porción del mercado que requiere soluciones diferentes a las ``tradicionales'' (Software ejecutándose en PCs). En este tipo de aplicaciones se requiere un sistema con capacidad de computo que realice una función determinada de forma eficiente sujeta a restricciones de consumo de potencia, tamaño y costo. Siendo estos sistemas llamados sistemas embebidos. La figura \ref{apps} muestra algunas aplicaciones comerciales de estos dispositivos. A continuación se enumeran unas cifras que dan una idea de la magnitud del mercado de los Sistemas Embebidos:
+
+\begin{figure}[h]
+ \begin{center} \includegraphics[scale = .35]{./images/applications} \end{center}
+  \caption{Algunas aplicaciones de los Sistemas Embebidos}\label{apps}
+\end{figure}
+
+\begin{itemize}
+ \item 385 millones de microprocesadores se construyeron en el 2000 para uso en computadores convencionales.
+ \item 6.4 billones de microprocesadores se construyeron en el 2000 para uso en dispositivos Embebidos.
+ \item El desarrollo de Software Embebido es una industria mundial multi-billonaria.
+ \item El mercado de los sistemas operativos embebidos y herramientas de desarrollo fue de más de US\$1.3 
+       billones en 2001 y continúa en aumento.
+ \item En 2003 la mitad de los diseños incorporaron procesadores de 32 y 64 bits que utilizaban Linux.
+\end{itemize}
+
+\begin{itemize}
+ \item 98\% de los procesadores fabricados se encuentran en un Sistema Embebido.
+ \item Se estiman un total de 16 billones de procesadores en el 2010, aprox 3 por persona.
+ \item Los sectores con mayor crecimiento son las aplicaciones en automóviles y le electrónica de consumo.
+\end{itemize}
+
+Sin embargo, a diferencia de otras industrias, no son necesarias grandes inversiones de dinero para generar aplicaciones comerciales, ya que como se puede ver en la Figura \ref{emb_dev_company_size}, donde cerca del 60\% de los desarrolladores de sistemas embebidos trabajan en compañías con menos de 10  desarrolladores.
+
+\begin{figure}[htp]
+ \begin{center} \includegraphics[scale = .16]{./images/vdc_embedded_dev_company_size} \end{center}
+  \caption{Número promedio de desarrolladores por compañía. Fuente: Venture Development Corp.}
+  \label{emb_dev_company_size}
+\end{figure}
+
+\subsection{Herramientas de Desarrollo}
+Existe una gran variedad de herramientas Hardware y Software para el diseño de Sistemas Embebidos. En el componente hardware gracias a los avances de la industria de los semiconductores, y en particular el nivel de integración, existen dispositivos que integran una Unidad de Procesamiento Central con una gran cantidad de periféricos en un solo Circuito Integrado (SoC), que cubren una gran cantidad de áreas de aplicación, entre las cuales encontramos:
+
+\begin{itemize}
+ \item Comunicaciones:
+    \begin{itemize}
+      \item Controladores para comunicaciones I2C, SPI, USB, RS232.
+      \item Controladores para red ethernet y WiFi.
+    \end{itemize}
+ \item Aplicaciones Multimedia:
+    \begin{itemize}
+      \item Audio: Codecs de Sonido.
+      \item Video: Controladores para LCD, controladores de sensores de imágen.
+    \end{itemize}
+ \item Almacenamiento:
+    \begin{itemize}
+      \item Memorias volátiles: RAM, SDRAM.
+      \item Memorias no volátiles: Flash, Nand Flash, Compact Flash, Secure Digital.
+    \end{itemize}
+ \item Procesamiento:
+    \begin{itemize}
+      \item Unidades de Punto Flotante.
+      \item Encripción.
+    \end{itemize}
+\end{itemize}
+
+El componente software por su parte debe ser capáz de manejar estos periféricos, y proporcionar funciones que permitan realizar aplicaciones con un nivel de abstracción adecuado. Actualmente existen una gran cantidad de herramientas comerciales y de código abierto disponibles para ser usadas con  Sistemas Embebidos, siendo las más populares las suministradas por la comunidad, tal como se puede observar en la Figura \ref{OS_trends}
+
+\begin{figure}[htp]
+ \begin{center} \includegraphics[scale = .5]{./images/embedded-linux-tool-trends-sm} \end{center}
+  \caption{Preferencias de herramientas para Sistemas Embebidos}
+  \label{OS_trends}
+\end{figure}
+
+En la Figura \ref{OS_trends2} se muestra una comparación de la utilización de los sistemas operativos más populares para el diseño de Sistemas Embebidos (comerciales y de  libre distribución). Como puede verse el sistema operativo Linux es el más utilizado, seguido de lejos por Windows CE. Esto obedece al caracter libre de Linux, a la facilidad de realizar drivers (lo cual es muy importante en este tipo de dispositivos ya que pueden integrar periféricos diseñados especialmente para la aplicación) y al gran soporte existente a través de un gran número de listas de discusión y a la gran cantidad de aplicaciones y librerias disponibles. Esta preferencia por Linux no solo se ve en pequeñas imdustrias, en la actualidad observamos grandes empresas como Motorola y Nokia que utilizan Linux como sistema Operativo para sus productos.
+
+\begin{figure}[htp]
+ \begin{center} \includegraphics[scale = .65]{./images/embedded_OS_sourcing_trends} \end{center}
+  \caption{Preferencias de herramientas para Sistemas Embebidos}
+  \label{OS_trends2}
+\end{figure}
+
+Como conclusión se puede decir que el mercado de los Sistemas Embebidos mueve una gran cantidad de dinero, proporciona una alternativa a las aplicaciones tradicionales, cubre una gran variedad de aplicaciones, lo cual hace ver que trabajar en el desarrollo de este tipo de sistemas sea atractivo desde el punto de vista económico. Por otro lado, se encuentran una gran variedad de herramientas Hardware y Software que facilitan su diseño; gracias al movimiento de Software libre y al bajo costo de los Dispositivos semiconductores. Asi, es posible que pequeños grupos de trabajo desarrollen aplicaciones comerciales con pequeñas inversiones de capital.
+
+
+\subsection{Plataformas de desarrollo copyleft hardware}
+Un ejemplo de difusión en transferencia tecnológica se ha venido dando hace 10 años con la creación del portal Linuxencaja, creado por Andrés Calderon y Carlos Camargo. Este portal posee la información necesaria para reproducir, modificar las siguientes plataformas de desarrollo:
+
+\subsubsection{Plataformas de desarrollo }
+
+La primera plataforma desarrollada utiliza el SoC AT91R40008 de ATME. El diagrama de bloques de la plataforma y la foto del prototipo se muestra en la figura \ref{ECB_ARM7}, posee componentes de montaje superficial siendo este el punto de partida para el estudio de técnicas de fabricación de placas de circuito impreso, y con la cual se realizaron aplicaciones \textit{standalone} y con el sistema operativo eCos. Dentro del proceso de diseño de sistemas digitales, algunas de las tareas deben ser implementadas en hardware para cumplir con los requerimientos temporales; por este motivo es importante realizar implementaciones de tareas hardware en dispositivos lógicos programables (\gls{PLD}s). Para estudiar la forma de comunicar estas tareas hardware con \gls{SoC} comerciales se diseñó un clon de la tarjeta comercial XPORT de la empresa norteamericana Charmedlabs, que permite conectarse con el procesador de la plataforma comercial \copyright GameBoy Advance de 
+Nintendo \cite{SBME07} (ver figura\ref{ECB_xport}).
+  
+
+\begin{figure}[htpb]
+  \centering
+    \mbox{
+      \subfigure[Diagrama de bloques]{\includegraphics[scale=.45]{./images/ECB_ARM7_Block.pdf}}
+      \subfigure[Prototipo]{\includegraphics[scale=.35]{./images/ECB_ARM7.jpg}}
+    }
+  \caption{Plataforma de desarrollo ECB\_ARM7} \label{ECB_ARM7}
+\end{figure}
+
+
+\begin{figure}[htpb]
+  \centering
+     \mbox{
+      \subfigure[Diagrama de bloques]{\includegraphics[scale=.4]{./images/xport_Block.pdf}}
+      \subfigure[Prototipo]{\includegraphics[scale=.25]{./images/xport.jpg}}
+     }
+  \caption{Plataforma de desarrollo UNAL\_UIS\_XPORT} \label{ECB_xport}
+\end{figure}
+
+El uso de Linux como herramienta de desarrollo ha aumentado en los últimos años, llegando a ser el sistema operativo más utilizado por los desarrolladores; empresas como Nokia, Motorola, Google, Dlink, Hewlett Packard utilizan Linux para desarrollar el firmware de sus dispositivos; por este motivo, se diseñaron plataformas que soportan la ejecución de este sistema operativo. Se diseñó una familia de plataformas denominadas ECB\_AT91 V1 (ver figura \ref{ECB_AT91_V1} \cite{CC} \cite{CC06} ), ECB\_AT91 V2 (ver figura \ref{ECB_AT91_V2}) y ECBOT (ver figura \ref{ECBOT} \cite{CC08b} \cite{CC08} \cite{CC07}). Esta familia de plataformas se encuentran registradas en el kernel oficial de Linux, por lo tanto, su soporte queda garantizado en futuras versiones del kernel. ECB\_AT91 V1 fue el punto de partida para el estudio de técnicas de fabricación de placas de circuito impreso para SoC que operan a velocidades mayores de 180MHz, y para aprender el proceso completo de adaptar el kernel de 
+Linux a una plataforma nueva. En la figura \ref{ECBOT} (a) se muestra el diagrama de bloques de estas tres arquitecturas que poseen el SoC de 180MHz de Atmel AT91RM9200. Debido a que este SoC no posee conversores análogos - digitales internos fue necesario incluir un micro-controlador de 8 bits que se comunica con el \gls{SoC} vía \gls{I2C}, el SoC realiza la programación del microcontrolador emulando un puerto paralelo en sus pines de entrada/salida de propósito general (\gls{GPIO}s) que van conectados a los pines del puerto \gls{ISP} del microcontrolador.
+
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.45]{./images/ECB_AT91_V1.jpg}
+  \caption{Plataforma de desarrollo ECB\_AT91 V1} \label{ECB_AT91_V1}
+\end{figure}
+
+
+La plataforma ECB\_AT91 V2 es el resultado del interés de utilizar dispositivos lógicos programables y SoC comerciales para crear periféricos dedicados y la creación de nuevos drivers de Linux que los controlaran, su arquitectura es idéntica a la de la plataforma ECB\_AT91 V1 pero el bus de datos, dirección y control del \gls{SoC} se conectan a la \gls{FPGA} para permitir la comunicación con los periféricos implementados en ella; la \gls{FPGA} es configurada por el \gls{SoC} utilizando unos \gls{GPIO}s que van conectados al puerto \gls{JTAG} de la \gls{FPGA}, lo que elimina la necesidad de cables adicionales de conexión, permitiendo su re-programación total de forma remota.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.7]{./images/ECB_AT91_V2.jpg}
+  \caption{Plataforma de desarrollo ECB\_AT91 V2} \label{ECB_AT91_V2}
+\end{figure}
+
+La plataforma ECBOT fue diseñada con el propósito de iniciar el estudio en robótica móvil y procesamiento de imagen; para esto, se utilizó una arquitectura similar a la de la plataforma ECB\_AT91\_V2 adicionando una conexión dedicada a un sensor de imagen y circuitos especializados para el control de sensores (6 sensores de choque, 1 sensor de imagen, movimiento de los motores basado en BEMF \footnote{Back Electro Magnetic Force} ), actuadores (8 \gls{LED}s RGB, 2 motores DC) y un coversor DC/DC que garantiza el máximo uso de las baterías. Como parte de este trabajó, se realizó la adaptación de proyectos libres que facilitan la investigación en robótica como \textit{player/stage}\footnote{http://playerstage.sourceforge.net/} y \textit{openblocks}\footnote{http://dspace.mit.edu/handle/1721.1/41550}. En la actualidad ECBOT está siendo usado por los grupos de robótica de los departamentos de Sistemas y Mecatrónica de la Universidad Nacional de Colombia. 
+
+\begin{figure}[htpb]
+  \centering
+     \mbox{
+      \subfigure[Diagrama de bloques]{\includegraphics[scale=.3]{./images/ECBOT_Block.png}}
+      \subfigure[Prototipo]{\includegraphics[scale=.35]{./images/ECBOT.png}}
+     }
+  \caption{Plataforma de desarrollo ECBOT} \label{ECBOT}
+\end{figure}
+
+Los SoC utilizados en las plataformas anteriores no pueden ser utilizados en aplicaciones de procesamiento de señales o de imágenes en tiempo real (a menos que se implemente algún periférico en la \gls{FPGA}), ya que su arquitectura no está diseñada para este fin. Los \gls{DSP}s son procesadores especializados para ejecutar las operaciones más comunes en procesamiento digital de señales. Pensando en este tipo de aplicaciones se diseñó la plataforma ECB\_BF532 \cite{CC11f} que utiliza el \gls{DSP} BF532 de la familia Blackfin de Analog Devices. Esta plataforma es utilizada en los cursos de procesamiento digital de señales del Departamento de Ingeniería Eléctrica y Electrónica de la Universidad Nacional de Colombia.
+
+\begin{figure}[htpb]
+  \centering
+     \mbox{
+       \subfigure[Diagrama de bloques]{\includegraphics[scale=.4]{./images/ECB_BF532_Block.pdf}}
+      \subfigure[Prototipo]{\includegraphics[scale=.35]{./images/ECB_BF532.png}}
+     }
+  \caption{Plataforma de desarrollo ECB\_BF532} \label{ECB_BF532}
+\end{figure}
+
+La plataforma SIE\cite{CC11c}, permite el desarrollo de aplicaciones gráficas y esta compuesta por un procesador MIPS fabricado por la compañía China Ingenic y por una \gls{FPGA} (Spartan 3E de Xilinx) lo que posibilita la implementación de tareas hardware y la creación de controladores específicos en el sistema operativo Linux. En la actualidad esta pataforma esta siendo utilizada en tres de los cuatro cursos de la línea de electrónica digital en el Departamento de Ingeniería Eléctrica y Electrónica de la Universidad Nacional de Colombia.
+
+\begin{figure}[htpb]
+  \centering
+     \mbox{
+      \subfigure[Diagrama de bloques]{\includegraphics[scale=.5]{./images/SIE_block_diagram.png}}
+      \subfigure[Prototipo]{\includegraphics[scale=.35]{./images/SIE.jpg}}
+     }
+  \caption{Plataforma de desarrollo SIE} \label{SIE}
+\end{figure}
+
+
+La plataforma STAMP (se encuentra en proceso de pruebas al momento de escribir este documento) es el resultado del interés por el estudio del sistema operativo Android. Debido a los requerimientos de memoria de este sistema operativo, las plataformas anteriormente diseñadas no pueden ejecutar aplicaciones Android. Por este motivo se utilizó el SoC de Freescale iMX233 que incluye el controlador de memorias \gls{DDR} (las que son más económicas y de mayor densidad que las \gls{SDRAM} utilizadas en las plataformas existentes); adicionalmente, este SoC permite inicializar desde una memoria \gls{SD}, lo que elimina la necesidad de utilizar memorias NAND, reduciendo de forma considerable el costo. En la figura \ref{stamp} se puede observar el diagrama de bloques y una foto del prototipo de esta plataforma.
+
+\begin{figure}[htpb]
+  \centering
+     \mbox{
+      \subfigure[Diagrama de bloques]{\includegraphics[scale=.5]{./images/STAMP_block_diagram.pdf}}
+      \subfigure[Prototipo]{\includegraphics[scale=.4]{./images/stamp.png}}
+     }
+  \caption{Plataforma de desarrollo STAMP} \label{stamp}
+\end{figure}
+
+
+
+\subsubsection{Técnicas de fabricación}
+
+Durante el proceso de concepción, diseño, implementación y operación de estas plataformas se trabajó con diferentes proveedores de bienes y servicios nacionales y extranjeros, y se utilizaron diferentes técnicas para su construcción y montaje. En la tabla \ref{plat_review} se resumen las principales características de cada plataforma: \gls{CPU} utilizada, número de capas del \gls{PCB}, tipo de montaje: manual o automático, cantidad de unidades producidas, sistema operativo (\gls{OS}) estudiado y adaptado totalmente a la plataforma y finalmente las universidades que utilizan estas plataformas.
+
+\begin{table}[htpb]
+  \caption{Características de las plataformas de desarrollo concebidas, diseñadas e implementadas}
+  \centering
+    \footnotesize
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+      \hline
+      \textbf{Plataforma} & \textbf{CPU}  & \textbf{Capas} 
+                                              & \textbf{Montaje}    & \textbf{Cant.}
+                                                                          &\textbf{OS} &\textbf{Usuario}
+      \\ \hline 
+       ECB\_ARM7          &ARM7,33M      & 2 & local Manual.       & 2   & eCos    & UN
+      \\ \hline 
+       UN\_UIS\_XPORT     &ARM7,50M      & 2 & local Manual.       & 2   & eCos    & UN, UIS
+      \\ \hline 
+       ECB\_AT91\_V1      &ARM920,180M   & 2 & local Manual/Autom. & 100 & Linux   & UN, UIS, ULA, ENAP, UDFJC, USTA
+      \\ \hline 
+       ECB\_AT91\_V2      &ARM920 180M   & 4 & local Manual.       & 30  & Linux   & UN, UIS, ULA, ENAP, UDFJC 
+      \\ \hline 
+       ECBOT              &ARM920 180M   & 4 & local Manual.       & 20  & Linux   & UN, UIS
+      \\ \hline 
+       ECB\_BF532         &Blackfin 400M & 4 & local Manual.       & 5   & uCLinux & UN
+      \\ \hline 
+       SIE                &MIPS32  300M  & 2 & externo Autom.      & 80  & Linux   & UN, UIS, ULA, ECI
+      \\ \hline 
+       STAMP              &ARM926  454M  & 2 & local Manual.       & 2   & Android & UN
+      \\ \hline 
+    \end{tabular}
+  \label{plat_review}
+\end{table}
+
+\subsubsection{Proceso de diseño y fabricación}
+La figura \ref{pcb_design_flow} muestra los pasos que se siguieron en la elaboración de las plataformas de desarrollo; esta metodología puede ser utilizada para la realización de cualquier nivel de producción; el montaje de prototipos puede realizarse de forma manual o automática, dependiendo de los recursos económicos, de la disponibilidad de equipo y de personal especializado.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[scale=.45]{./images/proceso_de_fabricacion_PCBs.pdf}
+  \caption{Flujo de diseño para las placas de circuito impreso} \label{pcb_design_flow}
+\end{figure}
+
+En esta etapa se adquirieron las siguientes habilidades:
+
+\begin{itemize}
+ \item Concepción, diseño, implementación y operación de tarjetas electrónicas que utilizan SoC de 32 bits.
+   \subitem Técnicas de diseño de placas de circuito impreso.
+   \subitem Técnicas de montaje manual y automático.
+   \subitem Metodología para el diseño e implementación de tarjetas electrónicas.
+   \subitem Diseño de protocolo de pruebas.
+ \item Adaptación del sistema operativo Linux a una nueva plataforma.
+\end{itemize}
+
+
+
+
+
+
+
+\section{Objetivos}
+
+\subsection{Generales}
+
+El objetivo principal de este curso es el estudio de Metodologías de diseño que permitan utilizar los avances tecnológicos actuales para dar soluciones a los siguientes problemas:
+
+\begin{itemize}
+ \item Dependencia hacia proveedores externos: La mayoría de las aplicaciones son creadas por empresas externas que no suministran ninguna información sobre su funcionamiento, ni suministran la forma de modificar el funcionamiento inicial. Como consecuencia de esto los módulos existentes o no funcionan o funcionan de forma incorrecta.
+ 
+ \item Desactualización tecnológica y baja calidad de los circuitos digitales: Una gran cantidad de módulos utilizan procesadores de 8 bits con limitada capacidad de comunicaciones lo que impide conocer su estado de operación de forma remota; esto, debido al escaso poder de computo y a las herramientas de bajo nivel utilizadas. Por otro lado, los circuitos impresos utilizados son de muy baja calidad (de una capa, sin capas de silkscreen o antisolder) y no cumplen con las normas mínimas para ser utilizados durante largos períodos de tiempo. 
+ 
+ \item Sobre-dimensionamiento: Se utiliza una gran cantidad de computadores personales para realizar tareas que podrían ser implementadas por un sistema embebido.
+ 
+ \item Disminución de la producción local: Los diseñadores nacionales no diseñan sus placas de circuito impreso y dependen de productos provenientes de Asia; los escasos productos nacionales son realizados sin cumplir normas internacionales y con técnicas de fabricación rudimentarias.
+\end{itemize}
+
+\subsection{Específicos}
+
+\begin{itemize}
+ \item Entender el flujo de diseño de sistemas digitales.
+ \item Aprender a utilizar herramientas abiertas para realizar el flujo de diseño completo desde la concepción hasta la implementación física.
+ \item Entender la arquitectura de los sistemas digitales modernos.
+ \item Implementación de tareas hardware y software en dispositivos semiconductores modernos.
+ 
+ \item Estudio de los requerimientos hardware y software para la ejecución de Linux en un sistema Embebido con limitaciones de recursos (Velocidad de procesamiento, memoria).
+ \item Realizar drivers de Linux que permitan la interfaz con dispositivos Hardware externos.
+ \item Aprender a crear una imagen del kernel a la medida para una aplicación embebida.
+ \item Crear Sistemas de archivos optimiados para una apicación.
+ \item Aprender el uso de librerías gráficas para implementación de aplicaciones.
+ 
+ \item Apropiar técnicas de diseño de circuitos impresos cumpliendo normas de calidad.
+ \item Entender el proceso de fabricación y montaje de placas de circuito impreso.
+ \item Entender cuales son los puntos a tener en cuenta en el montaje a gran escala de placas de circuito impreso.
+ 
+\end{itemize}
+
+\section{Metodología}
+Debido a la naturaleza del tema, el curso tendrá un componente teórico en el que se darán las bases conceptuales del tópico a tratar, posteriormente se realizarán laboratorios prácticos con el fín de afianzar los conocimientos. Las prácticas se realizarán con la tarjeta de desarrollo stamp (ver Figura \ref{ecb_at91}.
+
+\begin{figure}[htp]
+    \begin{center} \includegraphics[scale=0.4]{images/SAKC_DC.jpg}\end{center}
+    \begin{center} \includegraphics[scale=0.4]{images/Sakc.png}\end{center}
+ \caption{Plataforma de Desarrollo stamp}
+  \label{ecb_at91}
+\end{figure}
+
+
+\section{Duración}
+El curso tendrá una duración de 100 horas.

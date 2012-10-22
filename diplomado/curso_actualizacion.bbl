@@ -1,0 +1,53 @@
+\begin{thebibliography}{1}
+
+\bibitem{SBME07}
+{S. Banguero} and {M. Erazo}.
+\newblock {\em Plataforma de {D}esarrollo para {S}istemas {E}mbebidos {B}asada
+  en el {G}ame{B}oy {A}dvance}.
+\newblock Universidad Industrial de Santander, 2007.
+
+\bibitem{CC}
+{C. Camargo}.
+\newblock E{CB}\_{A}{T}91 y {ECBOT} {P}lataformas {A}biertas para el desarrollo
+  de {S}istemas {E}mbebidos.
+\newblock {\em URL: http://wiki.emqbit.com/free-ecb-at91}.
+
+\bibitem{CC06}
+{C. Camargo}.
+\newblock First {C}olombian {L}inux {SBC} runs {D}ebian.
+\newblock URL:
+  http://www.linuxfordevices.com/c/a/News/First-Colombian-Linux-SBC-runs-Debian/,
+  2006.
+
+\bibitem{CC08b}
+{C. Camargo}.
+\newblock E{CBOT}: {A}rquitectura {A}bierta para {R}obots {M}\'obiles.
+\newblock {\em VII conferencia Iberoamericana en Sistemas, Cibern\'etica e
+  Inform\'atica}, 2008.
+
+\bibitem{CC08}
+{C. Camargo}.
+\newblock E{CBOT} y {ECB}\_{A}{T}91 {P}lataformas {A}biertas para el {D}ise\~no
+  de {S}istemas {E}mbebidos y {C}o-{D}ise\~no {HW}/{SW}.
+\newblock {\em VIII Jornadas de Computaci\'on Reconfigurable y Aplicaciones,
+  Madrid Espa\~na}, September 2008.
+
+\bibitem{CC07}
+{C. Camargo}.
+\newblock E{CBOT}: {A}rquitectura {A}bierta para {R}obots {M}\'oviles.
+\newblock {\em IEEE Colombian Workshop on Circuits and Systems}, 2007.
+
+\bibitem{CC11f}
+{C. Camargo}.
+\newblock P{LATAFORMAS} {ABIERTAS} {HARDWARE}/{SOFTWARE} {PARA} {APLICACIONES}
+  {EN} {ROBOTICA}.
+\newblock {\em V Congreso Internacional de Ingenier\'{\i}a Mec\'anica y III de
+  Ingenier\'{\i}a Mecatr\'onica (por publicar)}, 2011.
+
+\bibitem{CC11c}
+{C. Camargo}.
+\newblock S{IE}: {P}lataforma {H}ardware copyleft para la {E}nse\~nanza de
+  {S}istemas {D}igitales.
+\newblock {\em XVII Workshop de Iberchip, Bogot\'a Colombia}, February 2011.
+
+\end{thebibliography}
