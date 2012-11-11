@@ -1,4 +1,8 @@
-\chapter{CONTENIDO}
+
+
+\chapter{Contenido del Diplomado}
+
+%\section{Temario}
 
 \begin{itemize}
 
@@ -6,74 +10,70 @@
   \item \textbf{Sistema Operativo Linux}
   \normalsize
     \begin{itemize}
-      \item El sistema Operativo Linux
-      \item Operaciones básicas en Linux
+      \item Definiciones y generalidades.
+      \item Operaciones básicas en Linux.
         \begin{itemize}
-          \item Instalación de aplicaciones
-          \item Variables de entorno
+          \item Instalación de aplicaciones.
+          \item Variables de entorno.
           \item Comandos básicos.
         \end{itemize}
-    \end{itemize}
-
-    
-    
+    \end{itemize}    
 
 
  \large
-  \item \textbf{Sistemas Embebidos -- Herramientas GNU}
+  \item \textbf{Sistemas Embebidos - Herramientas GNU}
   \normalsize
     \begin{itemize}
-      \item ¿Qúe es un sistema Embebido?
+      \item Definiciones y generalidades.
       \item Flujo de diseño de un Sistema Embebido.
         \begin{itemize}
           \item Tareas Hardware
           \item Tareas Software
         \end{itemize}
+	  \item Cadena de herramientas GNU para compilación cruzada de sistemas embebidos.
     \end{itemize}
 
  \large
   \item \textbf{Máquinas de Estado Algorítmicas (ASM)}
   \normalsize
     \begin{itemize}
-      \item Implementación de tareas hardware usando máquinas de estado algorítmicas.
+      \item Implementación de tareas Hardware usando máquinas de estado algorítmicas.
         \begin{itemize}
           \item Multiplicador binario implementado en una ASM.
           \item Divisor binario implementado en una ASM.
         \end{itemize}
       \item Dispositivos lógicos programables.
-      \item Lenguajes de descripción de hardware verilog y VHDL.
-      \item \textbf{Práctica I: Ejemplos de implementación}
+      \item Lenguajes de descripción.
+      \item \textbf{Práctica I: Ejemplos de implementación.}
     \end{itemize}
 
  \large
-  \item \textbf{Sistemas sobre silicio (SoC)}
+  \item \textbf{Sistemas Sobre Silicio (SoC)}
   \normalsize
     \begin{itemize}
       \item Implementación de tareas software usando SoCs.
         \begin{itemize}
-          \item Arquitectura del Procesador MICO32.
-          \item Arquitectura del SoC LM32.
-          \item Programación del SoC LM32.
+          \item Arquitectura del procesador MICO32.
+          \item Arquitectura y programación del SoC LM32.
             \begin{itemize}
-              \item Interfaz con los periféricos.
-              \item Herramientas GNU
+              \item Herramientas GNU.
+              \item Interfaz con los periféricos.              
             \end{itemize}
         \end{itemize}
-      \item \textbf{Práctica II: Ejemplos de implementación}
+      \item \textbf{Práctica II: Ejemplos de implementación.}
     \end{itemize}
 
  \large
-  \item \textbf{Aplicaciones utilizando SoC comerciales}
+  \item \textbf{Aplicaciones Utilizando SoC Comerciales}
   \normalsize
     \begin{itemize}
-      \item Plataforma de Desarrollo stamp.
+      \item Plataforma de desarrollo AndroidStamp.
         \begin{itemize}
           \item Arquitectura del procesador iMX233.
-          \item Tarjeta de Desarrollo STAMP
-          \item Implementación del Programa: Hello World
-          \item Implementación del Programa: Blinker
+          \item Generalidades de la tarjeta de desarrollo.
+          \item Implementación de programas de ejemplo: Hello World, Blinker.
         \end{itemize}
-      \item \textbf{Práctica III: Ejemplos de implementación sobre el iMX233 utilizando herramientas GNU}
+      \item \textbf{Práctica III: Ejemplos de implementación sobre el iMX233.}
     \end{itemize}
 
     
@@ -81,14 +81,12 @@
   \item \textbf{Detalles del Sistema Operativo Linux}
   \normalsize
     \begin{itemize}
-      \item Kernel overview
-      \item Requerimientos HW/SW
+      \item Definiciones y generalidades del kernel.
+      \item Requerimientos HW/SW.
       \item Estructura del código fuente.
-      \item Proceso de inicio de linux
-      \item Drivers de Dispositivos
-      \item Módulos del Kernel
-
-      \item \textbf{Práctica IV: Configuración, compilación e inicio de un kernel ``a la medida'' utilizando la interfaz de red para descargarlo a la memoria SDRAM}
+      \item Proceso de inicio de Linux.
+      \item Drivers de dispositivos.
+      \item \textbf{Práctica IV: Configuración, compilación e inicio de un kernel ``a la medida'' utilizando la interfaz de red.}
     \end{itemize}
 
   \large
@@ -96,43 +94,26 @@
   \normalsize
     \begin{itemize}
       \item Estructura de un sistema de archivos.
-      \item Archivos Importantes: Archivos de configuración, archivos de dispositivos.
+      \item Archivos importantes: archivos de configuración y archivos de dispositivos.
       \item Sistemas de archivos disponibles: Debian, Buildroot, Openembedded.
-      \item ¿Qué es un módulo?
-      \item Diferencias entre el espacio de usario y el espacio de kernel.
-      \item Estructura de un módulo.
-      \item \textbf{Práctica IV: Configuración, compilación de 2 sistemas de archivos: Debian y Buildroot, utilizando NFS}
-      \item \textbf{Práctica V:  Creación de un Módulo Sencillo}
+      \item Diferencias entre el espacio de usuario y el espacio de kernel.
+      \item Definición y estructura de un módulo kernel.
+      \item \textbf{Práctica IV: Configuración, compilación de dos sistemas de archivos: Debian y Buildroot, utilizando NFS.}
+      \item \textbf{Práctica V:  Creación de un módulo sencillo.}
     \end{itemize}
-
-% 
-%   \large
-%   \item \textbf{Interfaces de red}
-%   \normalsize
-%     \begin{itemize}
-%       \item Introducción a la programación en Sockets.
-%       \item Uso de librería libcurl para desarrollo de aplicaciones basadas en web.
-%       \item Introducción a HTML5 y WEBSOCKETS.
-%       \item Protocolos de capa de aplicación (SSH, NTP, PPP)
-%     \end{itemize}
-% 
-%   \large
-%   \item \textbf{Desarrollo de aplicaciones Multimedia}
-%   \normalsize
-%     \begin{itemize}
-%       \item Introducción a ALSA.
-%       \item Introducción a QT.
-%     \end{itemize}
 
   \large
-  \item \textbf{Diseño, fabricación y montaje de placas de circuito impreso}
+  \item \textbf{Diseño, Fabricación y Montaje de Placas de Circuito Impreso}
   \normalsize
     \begin{itemize}
-      \item XXXXX
-      \item XXXXX
-      \item XXXXX
-      \item XXXXX
-      \item XXXXX
+      \item Diseño de esquemáticos y creación de componentes.
+      \item Ubicación de componentes pre-ruteo y creación de footprints.
+      \item Ruteo manual y automático.
+      \item Revisión de reglas.
+      \item Generacón de archivos para fabricación y ensamble.
+      \item \textbf{Práctica VI:  Diseño y ruteo de un circuito impreso básico.}
     \end{itemize}
-
 \end{itemize}
+
+
+
