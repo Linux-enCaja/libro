@@ -13,6 +13,9 @@ RERUNBIB = "No file.*\.bbl|Citation.*undefined"
 
 all: pdf
 
+view: 
+	evince $(MAINDOC).pdf
+
 pdf: $(MAINDOC).tex
 	pdflatex $(TEXSRC)
 	bibtex $(MAINDOC)

@@ -1,0 +1,58 @@
+\documentclass[]{report}
+
+
+\usepackage{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[spanish]{babel}
+
+% \usepackage{pgf}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{colortbl}
+\usepackage{subfigure}
+\usepackage{url}
+
+
+% \usepackage{multicol}
+% \usepackage{multirow}
+
+\usepackage{pdfpages}
+\usepackage{lscape}
+
+\usepackage[acronym,toc,shortcuts]{glossaries}
+
+\pagestyle{myheadings}
+\markboth{Sistemas Embebidos}{Diplomado en Herramientas Modernas para Diseño y Fabricación de Dispositivos Digitales}
+
+\usepackage{longtable}
+
+\parindent 1cm
+\parskip 0.2cm
+\topmargin 0.2cm
+\oddsidemargin 1cm
+\evensidemargin 0.5cm
+\textwidth 15cm
+\textheight 21cm
+
+ \input acronym
+ 
+\begin{document}
+\bibliographystyle{unsrt}
+
+\input title
+\tableofcontents
+
+\parindent=1cm
+
+  \input overview
+  \input contents
+  \input metodologia
+  \input information
+%   \input presupuesto
+
+  \bibliography{biblio}
+  
+  
+\end{document} 
+
+
