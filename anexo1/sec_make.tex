@@ -2,14 +2,19 @@
 %Para qué se usa ....
 %Implicaciones en el desarrollo de este libro
 %El problema que los proyectos son muy extensos en código y reconstruir todo es tedioso y repititivo....
-s
-El desarrollo de aplicaciones a partir de herramientas libres se apoya en la herramienta de construcción \textit{make}, la cual automatiza la creación los archivos binarios de una aplicación. La herramienta construcción \textit{make} comunmente llamada constructor, utiliza el archivo \textbf{Makefile} para tomar la especificación del proyecto a construir. Con base en el \textit{Makefile} se ejecutan las reglas necesarias para construir el proyecto. En general el objetivo final del \textit{make} es construir una aplicación, pero dada la flexibilidad que tiene se utiliza para construir cualquier tipo de proyecto que requiera muchas etapas de compilación.
+Para el desarrollo de proyectos de software libre se utiliza la herramienta de construcción \textit{make}. Esta herramienta desarrolla de manera automática los pasos necesarios para la generación de un archivo de implmentación de un proyecto. La utilidad \textit{make} comunmente llamada constructor, hace parte de las utlidades entregadas por la comunidad de software libre (GNU). Donde, la función principal de \textit{make} es controlar la generación de ejecutables y otros archivos auxiliares a partir de un código fuente. Para esto \textit{make} utiliza un archivo de nombre \textbf{Makefile}, donde se encuentra la especificación del proyecto. Dicha especificación se realiza mediante la utilización de elementos del constructor como reglas, \textit{targets} y comandos de ejecución. Dada la flexibilidad de la herramienta \textit{make}, se utiliza para construir cualquier tipo de proyecto que requiera muchas etapas de compilación, síntesis o simulación.
 
-\subsection{Target, prerequisitos y reglas asociadas}
+\begin{figure}[h]
+  \begin{center} \includegraphics[scale=.75]{./anexo1/images/toolchain/make} \end{center}
+  \caption{Herramienta \textit{make} y Makefile}\label{make}
+\end{figure}
 
-El constructor a través de las reglas descritas en el archivo \textit{Makefile} determina cual y cuando se debe reconstruir un archivo para completar la construcción del proyecto completo; todo esto se realiza  en base a las marcas de tiempo de los archivos fuentes y el de salida (\textit{target}). Sí los archivos fuentes que son prerequisitos de una regla tiene una marca de tiempo más reciente, el constructor determina que este archivo se debe reconstruir.\\
 
-Las reglas del constructor se componen de un \textit{target} o archivo de salida (generalmente un archivo de salida por regla) y una serie de pre-requisitos para cada regla. Los pre-requisitos de cada regla se deben encontrar en las rutas de búsqueda del constructor para completar la construcción del proyecto; sí algún pre-rerquisito no existe el construcctor buscará una regla asociada para su construción. Dado el caso que no exista algún archivo pre-requisito ni una regla asociada a este, el constructor falla con un mensaje de error de falta de pre-requisitos. A continuación se muestra un ejemplo de la sintaxis de una regla para compilar \textit{foo.c} en \textit{foo.o}
+	\subsection{Target, prerequisitos y reglas asociadas}
+
+El \textit{make} toma las reglas del archivo \textit{Makefile} para determinar qué archivo se debe debe reconstruir para obtener el archivo binario de la aplicación. Esta desición se toma en base a las marcas de tiempo de los archivos fuentes, y el de salida (\textit{target}). Las marcas de tiempo son campos dentro del archivo que indican la fecha de creación y la fecha de la última modificación del archivo. Con base en esto, sí los archivos fuentes que son prerequisitos de una regla tiene una marca de tiempo más reciente, el constructor determina que este archivo se debe reconstruir.\\
+
+Las reglas del constructor se componen de un \textit{target} o archivo de salida (generalmente un archivo de salida por regla) y una serie de pre-requisitos para cada regla. Los pre-requisitos de la regla se deben encontrar en las rutas de búsqueda del constructor. Sí algún pre-rerquisito no existe el construcctor buscará una regla asociada para su construción y procederá a generar dicho archivo. Dado el caso que no exista algún archivo pre-requisito ni una regla asociada a este, el constructor falla con un mensaje de error de falta de pre-requisitos. A continuación se muestra un ejemplo de la sintaxis de una regla para compilar \textit{foo.c} en \textit{foo.o}
 
 \begin{lstlisting}
 target1.o:	source1.c header1.h
@@ -20,17 +25,17 @@ En las reglas del constructor, el nombre del archivo ubicado antes de los dos pu
 
 Los pre-requisitos son los archivos que el \textit{target} necesita para su construcción, en este caso \textit{source1.c} y \textit{header1.h}. El tipo de archivo del \textit{target} y de los prerequisitos no tiene importancia dado que únicamente se verifica su existencía y marca de tiempo. La línea que sigue al \textit{target} se le conoce como la primer linea de ejecución de la regla o \textit{recipe}. Es necesario identar con un carácter de tabulación ($\rightarrow$) las lineas de comandos para que el constructor las ejecute correctamente. La ejecución del \textit{recipe} se realiza en una consola diferente a la en que se invoca el comando \textit{make}. Cuando se tienen lineas muy extensas se puede usar el carácter \textit{backslash} \textbf{\\}
 
-\subsubsection{Tipos de reglas del constructor}
+\subsection{Tipos de reglas}
 
 Existen diferentes tipos de reglas que el constructor puede tomar como referencia para ejecutar comandos externos. Estas reglas pueden ser reglas explícitas, reglas basadas en comodines, reglas imperativas o reglas vacías.
 
-\paragraph{Reglas explicitas:} Las reglas explícitas son las que constructor toma cuando un \textit{target} no se encuentra actualizado. El anterior ejemplo muestra como una regla explicita asociada al \textit{target1.o}. En algunas ocaciones dos o más \textit{targets} tienen los mismos prerequisitos para estos casos se pueden definir todos los \textit{targets} en una lista y asociarlos a una sola regla:
+\subsubsection{Reglas explicitas:} Las reglas explícitas son las que constructor toma cuando un \textit{target} no se encuentra actualizado. El anterior ejemplo muestra como una regla explicita asociada al \textit{target1.o}. En algunas ocaciones dos o más \textit{targets} tienen los mismos prerequisitos para estos casos se pueden definir todos los \textit{targets} en una lista y asociarlos a una sola regla:
 
 \begin{lstlisting}
 target1.o target2.o:	source1.c header1.h
 \end{lstlisting}
 
-\paragraph{Reglas basadas en comodines \textit{Wildcards}:}
+\subsubsection{Reglas basadas en comodines \textit{Wildcards}:}
 
 Cuando los proyectos contienen una gran cantidad de objetos por construir la cración de un \textit{Makefile} puede tornarse en una tarea repititiva y tomar un tiempo considerable. Para evitar esto el constructor tiene la herramienta de comodines (\textit{wildcards}), los comodines permiten agilizar la creación de un \textit{Makefile} mediante la reducción de la cantidad de códigos que deban construir. Dada la relación estrecha entre el constructor y el \textit{shell} los comodines allí utilizados son heredados por el constructor, los comodines más utilizados son:
 \begin{itemize}
@@ -39,7 +44,7 @@ Cuando los proyectos contienen una gran cantidad de objetos por construir la cra
 	\item \textbf{?}	:   El funcionamiento de este carácter es similar al \textbf{\*} pero en este caso no se remplaza una cadena completa sino un solo carácter.
 \end{itemize}
 
-\paragraph{Reglas de ejecución imperativa (.\textit{PHONY}):}
+\subsubsection{Reglas de ejecución imperativa (.\textit{PHONY}):}
 
 Generalmente las reglas incluidas en los \textit{Makefile} son reglas de tipo explicitas, como ya se mencionó estas reglas revisan la relación entre el  \textit{target} y sus prerequisitos. Si se requiere que una regla se ejecute sin tomar en cuenta ninguna relación de los prerequisitos y el \textit{target} se puede usar las reglas de tipo imperativa (.\textit{PHONY}). Un ejemplo claro de cuando se requiere utilizar las reglas imperativas en el caso de tener el siguiente \textit{Makefile}. Este archivo  tiene la regla \textit{clean} la cual no tiene prerequisitos y ejecuta el comando \textbf{rm -f *.o} para eleminar todos los archivos con extensión \textit{o}. La ejecución de esta regla se puede realizar mediante  \textbf{\$ make clean}. 
 
@@ -86,7 +91,7 @@ Por otra parte existen reglas tipo \textit{PHONY} prestablecidas o estándares, e
 	\end{tabular}
 \end{table}
 
-\subsubsection{Reglas vaciás}
+	\subsubsection{Reglas vaciás}
 
 Las reglas vacias son una variante directa de las reglas imperativas; estas reglas generalmente se usan para guardar un evento de construcción. La forma en que se puede guardar un evento de construcción es mediante la ejecución del comando \textbf{touch} sobre el \textit{target}. 
 

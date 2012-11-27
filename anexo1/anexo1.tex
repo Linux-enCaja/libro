@@ -1,3 +1,5 @@
+\tableofcontents
+
 %%%%%%%%%%%%%%%%%%%%% chapter.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% At the end, it won't supposed to have
 %% %! For Obs
@@ -26,93 +28,6 @@ Introduccion ....
 %%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{anexo1/sec_make.tex}
 
-\section{Makefile}
-%Para qué se usa ....
-%Implicaciones en el desarrollo de este libro
-%El problema que los proyectos son muy extensos en código y reconstruir todo es tedioso y repititivo....
-
-El desarrollo de aplicaciones con herramientas libres se apoya en la herramienta de construcción \textit{make}, la cual automatiza la creación los archivos finales de implementación Hardware/Software. El constructor \textit{make} generalmente utiliza el archivo \textbf{Makefile} como especificación del proyecto que se desee procesar, basado en este el \textit{make} ejecuta las reglas que en él se especifiquen. En general el objetivo del \textit{make} es construir una aplicación, pero dada la flexibilidad que tiene se utiliza en la construcción de casi cualquier tipo de proyecto donde se requieran de muchas etapas en la construcción de un proyecto. % No me gusta el final.....JRB
-
-\subsection{Target, prerequisitos y reglas asociadas}
-
-La herramienta \textit{make} a través de las reglas descritas en el archivo \textit{Makefile} determina cual de los objetos o archivos del proyecto debe reconstruir. \textit{make} toma la marca de tiempo del archivo de salida y la de los fuentes, si los fuentes que son prerequisitos de una regla tiene una marca de tiempo mas actual el constructor marca este archivo para su reconstrucción. Las reglas del constructor se componen de un \textit{target} (archivo de salida) y una serie de pre-requisitos para cada regla; los pre-requisitos son los archivos que deben existir dentro de las rutas de búsqueda del constructor. A continuación se muestra un ejemplo de un \textit{Makefile} para compilar \textit{foo.c} en \textit{foo.o}
-
-\begin{lstlisting}
-target1.o:	source1.c header1.h
-			gcc -c source1.c
-\end{lstlisting}
-
-El nombre del archivo ubicado antes de los dos puntos (\textbf{:}) se llama \textit{target}, en este caso \textit{target1.o}\textbf{:}, la lista de archivos que suceden a los dos puntos (\textbf{:}) se llama lista de prerequisitos. Los prerequisitos son los archivos necesarios para la construcción del \textit{target}, en este caso \textit{source1.c} y \textit{header1.h}. El tipo de archivo del \textit{target} y los prerequisitos no tiene importancia solo su existencia o marca de tiempo. La linea que sigue al \textit{target} se conoce como la primer linea de ejecución de la regla. Las líneas de de comandos de cosntrución sedeben identar con un caracter de tabulación ($\rightarrow$) para que el constructor las ejecute correctamente, esta ejecución se realiza en una consola diferente a la en que se invoca el comando  \textit{make}.
-
-\subsubsection{Tipos de reglas del constructor}
-
-Existen diferentes tipos de reglas que conllevan a la construcción de un \textit{target}. Estas reglas pueden ser reglas explícitas, reglas basadas en comodines, reglas imperativas o reglas vacias.
-
-\paragraph{Reglas explicitas:} Las reglas explícitas se toman cuando un \textit{target} no se encuentra actualizado. El anterior ejemplo muestra como una regla explicita asociada al \textit{target1.o}. En algunas ocaciones dos o más \textit{targets} tienen los mismos prerequisitos para estos casos se pueden definir todos los \textit{targets} en una lista y asociarlos a una sola regla:
-
-\begin{lstlisting}
-target1.o target2.o:	source1.c header1.h
-\end{lstlisting}
-
-\paragraph{Reglas basadas en comodines \textit{Wildcards}:}
-
-Cuando los proyectos contienen una gran cantidad de objetos por construir la cración de un \textit{Makefile} puede tornarse en una tarea repititiva y tomardando un tiempo considerable. Para evitar esto el constructor hereda los comodines (\textit{wildcards}) usados en \textbf{shell}; los comodines permiten agilizar la creación de un \textit{Makefile} mediante la reducción de la cantidad código en las reglas de construcción, los comodines más utilizados son listados acontinuación:
-\begin{tabular}{lll}
-%\begin{enumerate}[]
-	%\item
-	
-\hline\noalign{\smallskip}
-\noalign{\smallskip}\hline\noalign{\smallskip}
-	\textbf{\~}	&:&   Este símbolo se usa para representar la ruta de la carpeta \textit{home} del usuario que ejecuta el constructor.\\
-	%\item
-	\textbf{\*}	&:&   El asterísco es usado para reemplazar una cadena de caracteres completa por ejemplo: Los siguientes archivos \textit{target1.o}, \textit{target2.o} y \textit{target3.o} se pueden representar como \textit{*.o}\\
-	%\item
-	\textbf{?}	&:&   El funcionamiento de este carácter es similar al \textbf{\*} pero en este caso no se remplaza una cadena completa sino un solo carácter.
-%\end{enumerate}
-\end{tabular}
-
-\paragraph{Reglas de ejecución imperativa (.PHONY):}
-
-Generalmente las reglas incluidas en los \textit{Makefile} son reglas de tipo explicitas, como ya se mencionó estas reglas revisan la relación entre el  \textit{target} y sus prerequisitos. Si se requiere que una regla se ejecute sin tomar en cuenta ninguna relación de los prerequisitos y el \textit{target} se puede usar las reglas de tipo imperativa (.PHONY). Un ejemplo claro de cuando se requiere utilizar las reglas imperativas en el caso de tener el siguiente \textit{Makefile}. Este archivo  tiene la regla \textit{clean} la cual no tiene prerequisitos y ejecuta el comando \textbf{rm -f *.o} para eleminar todos los archivos con extensión \textit{o}. La ejecución de esta regla se puede realizar mediante  \textbf{\$ make clean}. 
-
-\begin{lstlisting}
-clean:
-		rm -f *.o
-\end{lstlisting}
-
-La anterior regla se ejecuta sin ningún inconveniente cuando no existe un archivo llamado \textit{clean} dentro de las rutas de búsqueda del cosntructor, dado que no tiene ningún pre-requisito esta regla siempre se ejecuta al ser invocada. Pero si en la ruta del constructor existe un archivo de nombre \textit{clean} el constructor determina que el \textit{target} de dicha regla se encuentra al día y no se debe ejecutar sus comandos de construcción terminando su ejecución con la siguiente salida:
-
-\begin{lstlisting}
-\$ make clean
-make: 'clean' is upt to date.
-\end{lstlisting}
-
-Para prevenir este comportamiento indeseado se puede declarar la regla de la siguiente manera:
-
-\begin{lstlisting}
-.PHONY: clean
-clean:
-		rm -f *.o
-\end{lstlisting}
-
-La regla \textit{.PHONY} fuerza la ejecución de la regal clean independientemente si el \textit{target} está al día, todos los comandos de la regla se ejecutan cuando se invoca o es pre-requisito de otra regla en ejecución.
-
-Por otra parte existen reglas tipo \textit{PHONY} prestablecidas o estándares, estas reglas son definidas directamente por el constructor. Cada una de ellas se muestran en la siguiente tabla:
-
-\begin{tabular}{llr}
-\hline\noalign{\smallskip}
-Nombre de regla \textit{target} & Función (\$) \\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-\textbf{all} 		& 		Realiza todas las tareas necesarias para construir el proyecto \\
-\textbf{install}	& 		Instala la aplicación tomando los binaros compilados \\
-\textbf{clean}		&		Borra los binarios de la aplicación y los archivos generados en su construcción \\
-\textbf{distclean}	&		Borra todos los archivos generados que no hacen parte del codigo fuente de la
-%\noalign{\smallskip}
-\end{tabular}
-
-
-\subsubsection{Reglas vacias}
-=======
 %%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % This section is intended to provide a review on how to use the 
@@ -153,7 +68,7 @@ GNU
 GPL
 licencias
 
-\section{bib}
+\section{Bibliografía}
 No olvidar colocar
 Manual del Make tomado de la pagina de GNU project
 Managing Projects with GNU Make

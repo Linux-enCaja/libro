@@ -1,53 +1,52 @@
 
-\section{Herramientas compilación y desarrollo de proyectos SW}%%%Esto está feo.... Nombre más específico
+\section{Herramientas de compilación y desarrollo de proyectos SW}%%%Esto está feo.... Nombre más específico
 
 %!Esto necesita sustento en un libro falta incluir referencias de esta sección
 
-%!Esto es solo una idea de introducción a la sección falta cambiar
-Para el desarrollo de aplicaciones \textit{software} mediante lenguales de alto nivel permíten acelerar el desarrollo de la aplicación, pero requiere de un conjunto de herramientas para la creación del archivo final. Estas herramientas llevan el conjunto de archivos fuentes y paso a paso los convierten en un archivo ejecutable por la máquina, llamado binario. 
-
+Las aplicaciones \textit{software} escritas en lenguales de alto nivel permíten acelerar el desarrollo de la aplicación, pero requiere de un conjunto de herramientas para la creación del archivo final, estas herramientas se conocen como \textit{toolchain}. Estas herramientas tiene como entradas los archivos fuentes de la aplicación y como salida el archivo bienario de la aplicación. El \textit{toolchain} convierte paso a paso los archivos fuentes en un archivo ejecutable por la máquina (binario). En la figura \ref{toolchain_flow_reduced} se ilustra el flujo del \textit{toolchain}.
 %!Esta figura toca hacerla conteniendo las dos y explicarlas en el texto de abajo
 \begin{figure}[h]
   \begin{center} \includegraphics[scale=.5]{./anexo1/images/toolchain_reducido} \end{center}
-  \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow}
+  \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow_reduced}
 \end{figure}
 
-\section{Flujo de diseño software}
+%\section{Flujo de diseño software} No me gusta el titulo
 %R Real-Time Concepts for Embedded Systems
-En la figura \ref{toolchain_flow} se ilustra la secuencia de pasos que se realizan desde la creación de un archivo de texto que posee el código fuente de una aplicación hasta su implementación en la tarjeta de desarrollo. Los pasos necesarios para generar un ejecutable para un sistema embebido son:
+En la figura \ref{toolchain_flow} se ilustra la secuencia de pasos que se realizan desde la creación de un archivo de texto que posee el código fuente de una aplicación hasta su implementación en una tarjeta de desarrollo. Los pasos necesarios para generar un ejecutable para un sistema embebido son:
 
 \begin{figure}[h]
-  \begin{center} \includegraphics[scale=.6]{./anexo1/images/SW_design_flow} \end{center}
+  \begin{center} \includegraphics[scale=.6]{./anexo1/images/toolchain/toolchain_gcc_ext} \end{center}
   \caption{Flujo de diseño SW utilizando la cadena de herramientas GNU}\label{toolchain_flow}
 \end{figure}
 
 \begin{enumerate}
- \item \textbf{Escritura del código fuente:} Los entornos de desarrollo \textit{software} IDE (\textit{integrated development environment}) proveen de un editor de texto y la colección de herramientas están integradas en la misma aplicación, para el caso de desarrollo de aplicaciones con \textit{software} libre existen alternativas como \url{www.eclipse.com} para la integración de herramientas, pero no es un requisito para escribir códigos fuentes el uso de un editor en particualar, cada programador puede escribir sus códigos en la interfaz que le resulte más amigable. Los codigos fuentes de los programas para sistemas embebidos generalmente son escritos en C/C++. Algunas partes específicas son escritas en lenguaje ensamblador por motivos de eficiencia en tiempo de ejecución o tamaño. 
+ \item \textbf{Escritura del código fuente:} Los entornos de desarrollo \textit{software} IDE (\textit{integrated development environment}) integran un editor de texto con la colección de herramientas de compilación lo que permite todo el ambiente de desarrollo en una sola aplicación, para el caso de desarrollo de aplicaciones con \textit{software} libre existen alternativas como Eclipse \url{www.eclipse.com}, Adjunta, Geany, Gedit, entre otras para la integración de herramientas. El uso de un IDE no es un requisito para escribir códigos fuentes, cada programador puede escribir sus códigos en la interfaz que le resulte más amigable. Los codigos fuentes de los programas para sistemas embebidos generalmente son escritos en C/C++. Algunas partes específicas son escritas en lenguaje ensamblador por motivos de eficiencia en tiempo de ejecución o tamaño del archivo binario. 
 
- \item \textbf{Compilación:} Los archivos fuentes C y los archivos de ensamblador (generamente s) son tomados por las herramientas de compilación para crear archivos tipo objetos. Estos objetos contienen las instrucciones que el procesador deberá ejecutar cuando las funciones sean invocadas para cumplir con la funcionalidad deseada. Además, estos archivos contienen la información de las etiquetas usadas en el proceso de enlazado e información sobre la compilación misma. Por último, los objetos no contienen las direcciones específicas de donde se implementa una función, por ejemplo, el compilador busca en los encabezados (\textit{headers} .h) de la función \textit{printf} en la librerira \textit{stdio.h}, pero no busca el segmento de código donde está implementada.
-%!!!Aquí voy JRB-- Adecuando cosas!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ \item \textbf{Compilación:} Los archivos fuentes C y los archivos de ensamblador (generamente de extensión \textit{.s}) son tomados por las herramientas de compilación para crear archivos tipo objetos. Estos objetos contienen las instrucciones que el procesador deberá ejecutar cuando las funciones sean invocadas para cumplir con la funcionalidad deseada. Además, los objetos de la aplicación se puede agregar información de las etiquetas usadas en el proceso de enlazado, esto permíte correr depuraciones con nombres amigables al usuario. Por último, los objetos no contienen las direcciones específicas de donde se implementa una función, por ejemplo, el compilador busca en los encabezados (\textit{headers} .h) de la función \textit{printf} en la librerira \textit{stdio.h}, pero no busca el segmento de código donde está implementada, refierase a la figura \ref{toolchain_flow} para ubicar el compilardor \textit{gcc} y los códigos fuentes de la aplicación (archivos .c, .h y .s).
+
  \item \textbf{Enlazado:} En esta etapa se realizan dos tareas: 
   \begin{enumerate} 
     \item Se enlazan los archivos tipo objeto del proyecto junto con las librerías, si una determinada función no es definida por ninguna de las librerías pasadas como parámetro al enlazador (\textit{linker}), este generará un error y no se generará el ejecutable.
-    \item Se definen la posiciones físicas de las secciones del ejecutable (tipo ELF), esto se realiza a través de un \textit{script de enlazado} que define de forma explícita su localización.
+    \item Se definen la posiciones físicas de las secciones del ejecutable (tipo ELF), esto se realiza a través de un \textit{script de enlazado} que define de forma explícita su localización, refierase a la figura \ref{toolchain_flow} para ubicar el \textit{script} de enlazado \textit{ldscript} y el enlazador \textbf{ld}.
   \end{enumerate}
 
- \item \textbf{Extracción del archivo de programación} En algunas aplicaciones es necesario extraer únicamente las secciones que residen en los medios de almacenamiento no volátil y eliminar las demás secciones del ejecutable. Esto se realiza con la herramienta \textit{objcopy}, la cual, permite generar archivos en la mayoría de los formatos soportados por los programadores de memorias y procesadores, como por ejemplo S19 e Intel Hex. Adicionalmente se puede generar un archivo binario que contiene las instrucciones en lenguaje del procesador, y pueden ser descargadas directamente a la memoria de la plataforma.
+ \item \textbf{Extracción del archivo de programación} En algunas aplicaciones es necesario extraer únicamente las secciones que residen en los medios de almacenamiento no volátil y eliminar las demás secciones del ejecutable. Esto se realiza con la herramienta \textit{objcopy}, la cual, permite generar archivos en la mayoría de los formatos soportados por los programadores de memorias y procesadores, como por ejemplo S19 e Intel Hex. Adicionalmente se puede generar un archivo binario que contiene las instrucciones en lenguaje del procesador para ser descargadas directamente a la memoria de la plataforma, refierase a la figura \ref{toolchain_flow} para ubicar la herramienta de extracción \textit{objcopy}.
 
  \item \textbf{Descarga del programa}. Dependiendo de la plataforma, existen varios métodos para descargar el archivo de programación:
   \begin{enumerate}
     \item Utilizando un \textit{loader}: El \textit{loader} es una aplicación que reside en un medio de almacenamiento no volátil y permite la descarga de archivos utilizando el puerto serie o una interfaz de red a una memoria no volátil externa.
-    \item Utilizando el puerto JTAG: El puerto JTAG (Joint Test Action Group) proporciona una interfaz capaz de controlar los registros internos del procesador, y de esta forma, acceder a las memorias de la plataforma y ejecutar un programa residente en una posición de memoria determinada.
+    \item Utilizando el puerto JTAG: El puerto JTAG (\textit{Joint Test Action Group}) proporciona una interfaz capaz de controlar los registros internos del procesador, y de esta forma, acceder a las memorias de la plataforma para ejecutar un programa sobre el mismo.
   \end{enumerate}
 %! Recordar que hay una etapa donde se dedica completamente a las interfases de programación
- \item \textbf{Depuración} Una vez se descarga la aplicación a la plataforma es necesario someterla a una serie de pruebas, para verificar su correcto funcionamiento. Esto se puede realizar con el depurador GNU (GDB) y una interfaz de comunicación que puede ser un puerto serie, USB o un adaptador de red.
+ \item \textbf{Depuración} Una vez se descarga la aplicación a la plataforma se puede verificar su funcionamiento mediante el sometimiento de la mísma a serie de pruebas representativas de su funcionamiento. Esto se puede realizar con la herramienta de depuración GNU/GDB y una interfaz de comunicación que puede ser un puerto serie, USB o un adaptador de red.
  
 \end{enumerate}
 
-\subsubsection{GNU binutils}
-Todas las aplicaciones mencionadas a continuación hacen parte de la cadena de herramientas GNU, que son parte de los recursos suministrados por la comunidad de software libre.
-Colección de utilidades para archivos binarios y están compuestas por:
+\subsection{GNU binutils}
+Todas las aplicaciones mencionadas a continuación hacen parte del GNU/\textit{toolchain}, que son parte de los recursos suministrados por la comunidad de software libre. Colección de utilidades para archivos binarios y están compuestas por:
 
+
+%! No lo revisé a profundidad - JRB
 \begin{itemize}
  \item  \textbf{addr2line} Convierte direcciones de un programa en nombres de archivos y números de línea. Dada una dirección y un ejecutable, usa la información de depuración en el ejecutable para determinar que nombre de archivo y número de línea está asociado con la dirección dada.
  \item  \textbf{ar} Esta utilidad crea, modifica y extrae desde ficheros; un fichero es una colección de otros archivos en una estructura que hace posible obtener los archivos individuales. 
@@ -66,10 +65,10 @@ Colección de utilidades para archivos binarios y están compuestas por:
 \end{itemize}
 
 \subsubsection{Compilador}
-El \textit{GNU Compiler Collection} normalmente llamado GCC, es un grupo de compiladores de lenguajes de programación producido por el proyecto GNU. Es el compilador estándar para el software libre, de los sistemas operativos basados en Unix y algunos propietarios como Mac OS de Apple. Soporta los lenguajes ADA, C, C++, Fortran, Java, Objective-C, Objective-C++ para las arquitecturas Alpha, ARM, Atmel AVR, Blackfin, H8/300, System/370, System/390, IA-32 (x86), x86-64, IA-64 i.e. the "Itanium", Motorola 68000, Motorola 88000, MIPS, PA-RISC, PDP-11, PowerPC, SuperH, SPARC, VAX, Renesas R8C/M16C/M32C y MorphoSys. Gracias a esto puede considerarse como una herramienta universal para el desarrollo de sistemas embebidos, el código escrito en una plataforma (en un lenguaje de alto nivel) puede ser implementado en otra sin mayores cambios, esto elimina la dependencia entre el código fuente y el procesador (re-utilización de código), lo que no es posible cuando se utiliza el lenguaje ensamblador. 
+El \textit{GNU Compiler Collection} normalmente llamado GCC, es un grupo de compiladores de lenguajes de programación producido por el proyecto GNU. Es el compilador estándar para el software libre, de los sistemas operativos basados en Unix y algunos propietarios como Mac OS de Apple. Soporta los lenguajes ADA, C, C++, Fortran, Java, Objective-C, Objective-C++ para las arquitecturas Alpha, ARM, Atmel AVR, Blackfin, H8/300, System/370, System/390, IA-32 (x86), x86-64, IA-64 i.e. the "Itanium", Motorola 68000, Motorola 88000, MIPS, PA-RISC, PDP-11, PowerPC, SuperH, SPARC, VAX, Renesas R8C/M16C/M32C y MorphoSys. Por todo esto se puede  considerar a GCC como una herramienta universal para el desarrollo de aplicaciones en sistemas embebidos. El código escrito para una determinada plataforma (en un lenguaje de alto nivel) se puede implementar en otra sin mayores cambios, con esto se elimina la dependencia entre el código fuente y el procesador (re-utilización de código), cosa que no es posible cuando se utiliza el lenguaje ensamblador. 
 
 \subsubsection{GNU Debugger}
-El depurador oficial de GNU (GDB) al igual que GCC, soporta múltiples lenguajes y plataformas; permite monitorear y modificar las variables internas del programa y hacer llamado a funciones de forma independiente a la ejecución normal del mismo. Además, permite establecer sesiones remotas utilizando el puerto serie o TCP/IP. Aunque GDB es una aplicación que se ejecuta en consola de comandos, se han desarrollado varios front-ends como DDD o GDB/Insight.
+El depurador oficial de GNU (GDB) al igual que GCC, soporta múltiples lenguajes y plataformas; permite monitorear y modificar las variables internas del programa y hacer llamado a funciones de forma independiente a la ejecución normal del mismo. Además, permite establecer sesiones remotas utilizando el puerto serie o TCP/IP. Aunque GDB es una aplicación que se ejecuta en consola de comandos, se han desarrollado varios front-ends como DDD o GDB/Insight para la integración en entornos mas agradables al usuario.
 
 \subsubsection{Librerías C}
 Es necesario contar con las librerías standard de C: stdio, stdlib, math, etc; las más utilizadas en sistemas embebidos son:
@@ -83,10 +82,9 @@ Es necesario contar con las librerías standard de C: stdio, stdlib, math, etc; l
 
 \subsection{El formato ELF}
 
-\subsubsection{El formato \textbf{ELF}}
-
-El formato ELF (\textit{Executable and Linkable Format}) Es un estándar para objetos, librerías y ejecutables y es el formato que generan las herramientas GNU. Como puede verse en la figura \ref{elf1} un ejecutable \textit{ELF} está compuesto por las secciones (\textit{link view}) o segmentos (\textit{execution view}). Si un programador está interesado en obtener información de secciones sobre tablas de símbolos, código ejecutable específico o información de enlazado dinámico debe utilizar \textit{link view}. Pero si busca información sobre segmentos, como por ejemplo, la localización de los segmentos \textit{text} o \textit{data} debe utilizar \textit{execution view}. El encabezado describe el layout del archivo, proporcionando información de la forma de acceder a las secciones \cite{MLH98}.
+El formato ELF (\textit{Executable and Linkable Format}) Es un estándar para objetos, librerías y ejecutables. Las herramientas GNU generan sus correspondientes salidas en el formato ELF. En la figura \ref{elf1} puede observarse la constitución de un ejecutable \textit{ELF}, este archivo está compuesto por las secciones (\textit{link view}) o segmentos (\textit{execution view}). Si un programador está interesado en obtener información de secciones sobre tablas de símbolos, código ejecutable específico o información de enlazado dinámico debe utilizar \textit{link view}. Pero si busca información sobre segmentos, como por ejemplo, la localización de los segmentos \textit{text} o \textit{data} debe utilizar \textit{execution view}. El encabezado describe el layout del archivo, proporcionando información de la forma de acceder a las secciones \cite{MLH98}.
 %! Esta imagen me toca cambiarla vectorizarla o hacer una tabla!
+
 \begin{figure}[h]
   \begin{center} \includegraphics[scale=.4]{./anexo1/images/ELF_Link_exec1} \end{center}
   \caption{Formato ELF}\label{elf1}
